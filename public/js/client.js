@@ -46,7 +46,7 @@ const initTodo = () => {
                 ${renderTitle({ title, done })}
             </div>
             <!-- INSERT DELETE BUTTON HERE -->
-            <a style="color:red;" href="#" role="button" oncluck="handleTodoDelete(event, '${id}')">
+            <a style="color:red;" href="#" role="button" onclick="handleTodoDelete(event, '${id}')">
                 <i class="far fa-lg fa-trash-alt"></i>
             </a>
         </li>
