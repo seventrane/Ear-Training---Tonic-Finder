@@ -46,5 +46,13 @@ router.patch('/:id', asyncMiddleware(async (req, res) => {
   res.json(updated);
 }));
 
+router.delete('/:id', asyncMiddleware(async (req, res) => {
+    const { id } = req.params;
+    const deleted = await prisma.TodoItem.delete({
+        where: { id },
+    });
+    res.json(deleted);
+}));
 
 module.exports = router;
+
