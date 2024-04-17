@@ -30,6 +30,14 @@
             margin-left: -29px;
             cursor: pointer;
         }
+
+        .active.right {
+          background: lightgreen;
+        }
+
+        .active.wrong {
+          background: red;
+        }
     </style>
 </head>
 
@@ -153,8 +161,14 @@
                      setTimeout(function (){
 
                       audio.pause();
-
+                      const songPlaying = document.querySelector('div.playing');
+                      songPlaying.classList.remove('playing');
                       }, 15000);
+                 }
+
+                 function stopSong(note) {
+                    const audio = document.querySelector(`audio[data-sound="${note}"]`);
+                    audio.pause();
                  }
 
                  songs.forEach(song => {
@@ -166,10 +180,29 @@
                  });
 
                  keys.forEach(key => {
+                    
                      key.addEventListener('mousedown', () => {
+                      const currentSong = document.querySelector('div.playing');
                          const note = key.dataset.note;
                          playSound(note);
                          key.classList.add('active');
+
+                      if(currentSong != null) {
+                        const currentKey = currentSong.dataset.note;
+                        if(note.slice(0,-1) == currentKey) {
+                          key.classList.add('right');
+                          console.log("WIN WIN WIN!");
+                          stopSong(currentKey);
+                          alert("YOU GOT IT! IT'S "+currentKey);
+                         } else {
+                          key.classList.add('wrong');
+                          console.log("LOSE LOSE LOSE!");
+                          console.log(note, currentKey);
+                         }
+                      }
+
+
+                        
                      });
 
                      key.addEventListener('mouseup', () => {
