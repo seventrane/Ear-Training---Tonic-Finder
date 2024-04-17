@@ -272,10 +272,14 @@
                         const song = currentSong.dataset.song;
                         if(note == currentKey) {
                           key.classList.add('right');
+                          songKeys.forEach(key1 => {
+                            if(key != key1) {key1.classList.remove('wrong');}
+                          });
                           console.log("WIN WIN WIN!");
                           stopSong(song);
                           setTimeout(function (){
                               alert("YOU GOT IT! IT'S "+currentKey);
+                              key.classList.remove('right');
                           }, 200);
                          } else {
                           key.classList.add('wrong');
@@ -293,11 +297,6 @@
                          const note = key.dataset.note;
                          playSound(note);
                          key.classList.add('active');
-
-                    
-
-
-                        
                      });
 
                      key.addEventListener('mouseup', () => {
