@@ -9,6 +9,13 @@
 
     <style>
         .hide {display: none;}
+        
+        
+
+        .content {
+          padding: 13px;
+        }
+
         .key {
             float: left;
             width: 40px;
@@ -31,12 +38,12 @@
             cursor: pointer;
         }
 
-        .active.right {
-          background: lightgreen;
+        .right {
+          background: green!important;
         }
 
-        .active.wrong {
-          background: red;
+        .wrong {
+          background: red!important;
         }
 
         .song {
@@ -46,6 +53,23 @@
 
         .playing {
           background: teal;
+        }
+
+        .keysWrapper {
+          display: flex;
+          margin: 5px 0;
+        }
+
+        .keysWrapper > div {
+          background: gray;
+          border: 1px solid;
+          border-radius: 10px;
+          margin-right: 2px;
+          width: 55px;
+          text-align: center;
+          line-height: 2em;
+          color: black;
+          font-size: 0.9em;
         }
     </style>
 </head>
@@ -89,8 +113,9 @@
 
 
      <div class="piano_zone">
-         <h2>PIANO</h2>
          <div class="content">
+            <h2>EAR TRAINIG - TONIC FINDER</h2>
+            <div class="songsWrapper">
               <div class="song" data-song="001" data-note="A#">Bohemian Rhapsody</div>
               <audio data-sound="001" src="pianoSongs/bohemianRhapsody.mp3"></audio>
 
@@ -120,64 +145,80 @@
 
               <div class="song" data-song="010" data-note="D">Hotel California The Eagles</div>
               <audio data-sound="010" src="pianoSongs/hotelCaliforniaEagles.mp3"></audio>
+            </div>
+            <div class="keysWrapper">
+              <div data-note="C">C</div>
+              <div data-note="C#">C#/Db</div>
+              <div data-note="D">D</div>
+              <div data-note="D#">D#/Eb</div>
+              <div data-note="E">E</div>
+              <div data-note="F">F</div>
+              <div data-note="F#">F#/Gb</div>
+              <div data-note="G">G</div>
+              <div data-note="G#">G#/Ab</div>
+              <div data-note="A">A</div>
+              <div data-note="A#">A#/Bb</div>
+              <div data-note="B">B</div>
+            </div>
+            <div class="piano">
+                <div class="key" data-note="C3"></div>
+                <div class="black-key" data-note="C#3"></div>
+                <div class="key" data-note="D3"></div>
+                <div class="black-key" data-note="D#3"></div>
+                <div class="key" data-note="E3"></div>
+                <div class="key" data-note="F3"></div>
+                <div class="black-key" data-note="F#3"></div>
+                <div class="key" data-note="G3"></div>
+                <div class="black-key" data-note="G#3"></div>
+                <div class="key" data-note="A3"></div>
+                <div class="black-key" data-note="A#3"></div>
+                <div class="key" data-note="B3"></div>
 
-             <div class="key" data-note="C3"></div>
-             <div class="black-key" data-note="C#3"></div>
-             <div class="key" data-note="D3"></div>
-             <div class="black-key" data-note="D#3"></div>
-             <div class="key" data-note="E3"></div>
-             <div class="key" data-note="F3"></div>
-             <div class="black-key" data-note="F#3"></div>
-             <div class="key" data-note="G3"></div>
-             <div class="black-key" data-note="G#3"></div>
-             <div class="key" data-note="A3"></div>
-             <div class="black-key" data-note="A#3"></div>
-             <div class="key" data-note="B3"></div>
+                <audio data-sound="C3" src="pianomp3/C3.mp3"></audio>
+                <audio data-sound="C#3" src="pianomp3/Db3.mp3"></audio>
+                <audio data-sound="D3" src="pianomp3/D3.mp3"></audio>
+                <audio data-sound="D#3" src="pianomp3/Eb3.mp3"></audio>
+                <audio data-sound="E3" src="pianomp3/E3.mp3"></audio>
+                <audio data-sound="F3" src="pianomp3/F3.mp3"></audio>
+                <audio data-sound="F#3" src="pianomp3/Gb3.mp3"></audio>
+                <audio data-sound="G3" src="pianomp3/G3.mp3"></audio>
+                <audio data-sound="G#3" src="pianomp3/Ab3.mp3"></audio>
+                <audio data-sound="A3" src="pianomp3/A3.mp3"></audio>
+                <audio data-sound="A#3" src="pianomp3/Bb3.mp3"></audio>
+                <audio data-sound="B3" src="pianomp3/B3.mp3"></audio>
 
-             <audio data-sound="C3" src="pianomp3/C3.mp3"></audio>
-             <audio data-sound="C#3" src="pianomp3/Db3.mp3"></audio>
-             <audio data-sound="D3" src="pianomp3/D3.mp3"></audio>
-             <audio data-sound="D#3" src="pianomp3/Eb3.mp3"></audio>
-             <audio data-sound="E3" src="pianomp3/E3.mp3"></audio>
-             <audio data-sound="F3" src="pianomp3/F3.mp3"></audio>
-             <audio data-sound="F#3" src="pianomp3/Gb3.mp3"></audio>
-             <audio data-sound="G3" src="pianomp3/G3.mp3"></audio>
-             <audio data-sound="G#3" src="pianomp3/Ab3.mp3"></audio>
-             <audio data-sound="A3" src="pianomp3/A3.mp3"></audio>
-             <audio data-sound="A#3" src="pianomp3/Bb3.mp3"></audio>
-             <audio data-sound="B3" src="pianomp3/B3.mp3"></audio>
+                <div class="key" data-note="C4"></div>
+                <div class="black-key" data-note="C#4"></div>
+                <div class="key" data-note="D4"></div>
+                <div class="black-key" data-note="D#4"></div>
+                <div class="key" data-note="E4"></div>
+                <div class="key" data-note="F4"></div>
+                <div class="black-key" data-note="F#4"></div>
+                <div class="key" data-note="G4"></div>
+                <div class="black-key" data-note="G#4"></div>
+                <div class="key" data-note="A4"></div>
+                <div class="black-key" data-note="A#4"></div>
+                <div class="key" data-note="B4"></div>
 
-             <div class="key" data-note="C4"></div>
-             <div class="black-key" data-note="C#4"></div>
-             <div class="key" data-note="D4"></div>
-             <div class="black-key" data-note="D#4"></div>
-             <div class="key" data-note="E4"></div>
-             <div class="key" data-note="F4"></div>
-             <div class="black-key" data-note="F#4"></div>
-             <div class="key" data-note="G4"></div>
-             <div class="black-key" data-note="G#4"></div>
-             <div class="key" data-note="A4"></div>
-             <div class="black-key" data-note="A#4"></div>
-             <div class="key" data-note="B4"></div>
-
-             <audio data-sound="C4" src="pianomp3/C4.mp3"></audio>
-             <audio data-sound="C#4" src="pianomp3/Db4.mp3"></audio>
-             <audio data-sound="D4" src="pianomp3/D4.mp3"></audio>
-             <audio data-sound="D#4" src="pianomp3/Eb4.mp3"></audio>
-             <audio data-sound="E4" src="pianomp3/E4.mp3"></audio>
-             <audio data-sound="F4" src="pianomp3/F4.mp3"></audio>
-             <audio data-sound="F#4" src="pianomp3/Gb4.mp3"></audio>
-             <audio data-sound="G4" src="pianomp3/G4.mp3"></audio>
-             <audio data-sound="G#4" src="pianomp3/Ab4.mp3"></audio>
-             <audio data-sound="A4" src="pianomp3/A4.mp3"></audio>
-             <audio data-sound="A#4" src="pianomp3/Bb4.mp3"></audio>
-             <audio data-sound="B4" src="pianomp3/B4.mp3"></audio>
+                <audio data-sound="C4" src="pianomp3/C4.mp3"></audio>
+                <audio data-sound="C#4" src="pianomp3/Db4.mp3"></audio>
+                <audio data-sound="D4" src="pianomp3/D4.mp3"></audio>
+                <audio data-sound="D#4" src="pianomp3/Eb4.mp3"></audio>
+                <audio data-sound="E4" src="pianomp3/E4.mp3"></audio>
+                <audio data-sound="F4" src="pianomp3/F4.mp3"></audio>
+                <audio data-sound="F#4" src="pianomp3/Gb4.mp3"></audio>
+                <audio data-sound="G4" src="pianomp3/G4.mp3"></audio>
+                <audio data-sound="G#4" src="pianomp3/Ab4.mp3"></audio>
+                <audio data-sound="A4" src="pianomp3/A4.mp3"></audio>
+                <audio data-sound="A#4" src="pianomp3/Bb4.mp3"></audio>
+                <audio data-sound="B4" src="pianomp3/B4.mp3"></audio>
+              </div>
 
              <script>
                  const keys = document.querySelectorAll('.key, .black-key');
 
                  const songs = document.querySelectorAll('.song');
-                 
+                 const songKeys = document.querySelectorAll('.keysWrapper > div');
                  /*{bohemianRhapsody: 'A#', gravityJohnMayer: 'G'}
 */
 
@@ -222,6 +263,29 @@
                     });
                  });
 
+                 songKeys.forEach(key => {
+                  key.addEventListener('mousedown', () => {
+                      const currentSong = document.querySelector('div.playing');
+                      const note = key.dataset.note;
+                  if(currentSong != null) {
+                        const currentKey = currentSong.dataset.note;
+                        const song = currentSong.dataset.song;
+                        if(note == currentKey) {
+                          key.classList.add('right');
+                          console.log("WIN WIN WIN!");
+                          stopSong(song);
+                          setTimeout(function (){
+                              alert("YOU GOT IT! IT'S "+currentKey);
+                          }, 200);
+                         } else {
+                          key.classList.add('wrong');
+                          console.log("LOSE LOSE LOSE!");
+                          console.log(note, currentKey);
+                         }
+                      }
+                 });
+                });
+
                  keys.forEach(key => {
                     
                      key.addEventListener('mousedown', () => {
@@ -230,20 +294,7 @@
                          playSound(note);
                          key.classList.add('active');
 
-                      if(currentSong != null) {
-                        const currentKey = currentSong.dataset.note;
-                        const song = currentSong.dataset.song;
-                        if(note.slice(0,-1) == currentKey) {
-                          key.classList.add('right');
-                          console.log("WIN WIN WIN!");
-                          stopSong(song);
-                          alert("YOU GOT IT! IT'S "+currentKey);
-                         } else {
-                          key.classList.add('wrong');
-                          console.log("LOSE LOSE LOSE!");
-                          console.log(note, currentKey);
-                         }
-                      }
+                    
 
 
                         
