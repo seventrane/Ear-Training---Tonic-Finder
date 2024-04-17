@@ -14,6 +14,10 @@
           padding: 13px;
         }
 
+        .piano {
+          height: 208px;
+        }
+
         .key {
             float: left;
             width: 40px;
@@ -134,20 +138,25 @@
 
         .songVolText {
           font-weight: bold;
-          display: block;
         }
 
         .songVolInput {
           vertical-align: middle;
+          margin-right: 80px;
         }
 
         .pianoVolText {
           font-weight: bold;
-          display: block;
         }
 
         .pianoVolInput {
           vertical-align: middle;
+          display: inline-block;
+        }
+
+        .volume_controls {
+          position: absolute;
+          bottom: 20px;
         }
     </style>
 </head>
@@ -228,8 +237,7 @@
               <audio data-sound="010" src="pianoSongs/hotelCaliforniaEagles.mp3"></audio>
               <div></div>
             </div>
-            <label class="songVolText">Song Volume: </label>
-            <input class="songVolInput" type="range" id="volume" value="100">
+           
 
          
 
@@ -248,8 +256,6 @@
               <div data-note="B">B</div>
             </div>
 
-            <label class="pianoVolText">Piano Volume: </label>
-            <input class="pianoVolInput" type="range" id="volume2" value="100">
 
 
             <div class="piano">
@@ -304,6 +310,14 @@
                 <audio data-sound="A4" src="pianomp3/A4.mp3"></audio>
                 <audio data-sound="A#4" src="pianomp3/Bb4.mp3"></audio>
                 <audio data-sound="B4" src="pianomp3/B4.mp3"></audio>
+              </div>
+
+              <div class="volume_controls">
+                <label class="songVolText">Song Volume: </label>
+                <input class="songVolInput" type="range" id="volume" value="100">
+                
+                <label class="pianoVolText">Piano Volume: </label>
+                <input class="pianoVolInput" type="range" id="volume2" value="100">
               </div>
 
              <script>
