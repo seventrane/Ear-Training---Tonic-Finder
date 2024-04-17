@@ -74,6 +74,8 @@
      <div class="piano_zone">
          <h2>PIANO</h2>
          <div class="content">
+              <div class="song" data-note="A#">Bohemian Rhapsody</div>
+              <audio data-sound="A#" src="pianoSongs/bohemianRhapsody.mp3"></audio>
 
              <div class="key" data-note="C3"></div>
              <div class="black-key" data-note="C#3"></div>
@@ -130,12 +132,38 @@
              <script>
                  const keys = document.querySelectorAll('.key, .black-key');
 
+                 const songs = document.querySelectorAll('.song');
+                 
+                 /*{bohemianRhapsody: 'A#', gravityJohnMayer: 'G'}
+*/
+
+
                  function playSound(note) {
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
                      if (!audio) return;
                      audio.currentTime = 0;
                      audio.play();
                  }
+
+                 function playSong(note) {
+                     const audio = document.querySelector(`audio[data-sound="${note}"]`);
+                     if (!audio) return;
+                     audio.currentTime = 0;
+                     audio.play();
+                     setTimeout(function (){
+
+                      audio.pause();
+
+                      }, 15000);
+                 }
+
+                 songs.forEach(song => {
+                    song.addEventListener('mousedown', () => {
+                      const note = song.dataset.note;
+                      playSong(note);
+                      song.classList.add('playing');
+                    });
+                 });
 
                  keys.forEach(key => {
                      key.addEventListener('mousedown', () => {
