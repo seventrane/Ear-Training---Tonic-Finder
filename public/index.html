@@ -218,6 +218,22 @@
                          playSound(note);
                          key.classList.add('active');
                          event.preventDefault();
+
+                         const currentSong = document.querySelector('div.playing');
+
+                        if(currentSong != null) {
+                          const currentKey = currentSong.dataset.note;
+                          if(note.slice(0,-1) == currentKey) {
+                            key.classList.add('right');
+                            console.log("WIN WIN WIN!");
+                            stopSong(currentKey);
+                            alert("YOU GOT IT! IT'S "+currentKey);
+                          } else {
+                            key.classList.add('wrong');
+                            console.log("LOSE LOSE LOSE!");
+                            console.log(note, currentKey);
+                          }
+                        }
                      });
 
                      key.addEventListener('touchend', () => {
