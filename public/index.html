@@ -9,8 +9,6 @@
 
     <style>
         .hide {display: none;}
-        
-        
 
         .content {
           padding: 13px;
@@ -45,10 +43,34 @@
         .wrong {
           background: red!important;
         }
-
+        .songsWrapper {
+          display: flex;
+          flex-wrap: wrap;
+          margin: 23px 0;
+        }
         .song {
+          font-size: 0.8em;
+          padding: 6px;
           display: block;
-          width: fit-content;
+          width: 228px;
+          cursor: pointer;
+          border-bottom: 1px dotted gray;
+          border-left: 1px dashed gray;
+        }
+        
+        .songsWrapper > div:last-child {
+          border-left: 1px dashed gray;
+        }
+        
+        .song:nth-child(3n-1) {
+          border-right: 1px dashed gray;
+        }
+
+        .song:nth-child(1), 
+        .song:nth-child(3),  
+        .song:nth-child(5)  {
+          border-top: 1px dotted gray;
+
         }
 
         .playing {
@@ -57,7 +79,7 @@
 
         .keysWrapper {
           display: flex;
-          margin: 5px 0;
+          margin: 10px 0;
         }
 
         .keysWrapper > div {
@@ -70,6 +92,19 @@
           line-height: 2em;
           color: black;
           font-size: 0.9em;
+          cursor: pointer;
+        }
+
+        .stop_music {
+          position: absolute;
+          top: 1.5%;
+          right: 21.2%;
+          border: solid 1px;
+          padding: 5px;
+          font-size: 0.9em;
+          background: gold;
+          font-weight: 600;
+          font-family: cursive;
         }
     </style>
 </head>
@@ -115,6 +150,9 @@
      <div class="piano_zone">
          <div class="content">
             <h2>EAR TRAINING - TONIC FINDER</h2>
+            
+            <div class="stop_music">Stop Music</div>
+
             <div class="songsWrapper">
               <div class="song" data-song="001" data-note="A#">Bohemian Rhapsody</div>
               <audio data-sound="001" src="pianoSongs/bohemianRhapsody.mp3"></audio>
@@ -145,6 +183,7 @@
 
               <div class="song" data-song="010" data-note="D">Hotel California The Eagles</div>
               <audio data-sound="010" src="pianoSongs/hotelCaliforniaEagles.mp3"></audio>
+              <div></div>
             </div>
             <div class="keysWrapper">
               <div data-note="C">C</div>
@@ -221,7 +260,12 @@
                  const songKeys = document.querySelectorAll('.keysWrapper > div');
                  /*{bohemianRhapsody: 'A#', gravityJohnMayer: 'G'}
 */
+                const btn = document.querySelector('.stop_music');
 
+                btn.addEventListener('click', () => {
+                  const currentSong = document.querySelector('div.playing');
+                  stopSong(currentSong.dataset.song);
+                });
 
                  function playSound(note) {
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
