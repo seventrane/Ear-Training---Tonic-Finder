@@ -46,7 +46,7 @@
         .songsWrapper {
           display: flex;
           flex-wrap: wrap;
-          margin: 23px 0;
+          margin: 23px 0 10px;
           width: 50%;
         }
         .song {
@@ -80,20 +80,35 @@
 
         .keysWrapper {
           display: flex;
-          margin: 10px 0;
+          margin: 20px 0;
+          flex-direction: row;
+          align-items: flex-start;
         }
 
         .keysWrapper > div {
           background: gray;
           border: 1px solid;
           border-radius: 10px;
-          margin-right: 2px;
-          width: 55px;
+          width: 100px;
           text-align: center;
-          line-height: 2em;
-          color: black;
-          font-size: 0.9em;
+          line-height: 1.6em;
+          color: orange;
+          font-size: 1.6em;
           cursor: pointer;
+          font-weight: 700;
+        }
+
+        .keysWrapper > div:nth-child(2n) {
+          margin-left: -45px;
+        }
+
+        .keysWrapper > div:nth-child(odd) {
+          margin-top: 55px;
+          margin-left: -45px;
+        }
+
+        .keysWrapper >div:first-child {
+          margin-left: 0!important;
         }
 
         .keysWrapper > div:hover {
@@ -115,6 +130,24 @@
 
         .stop_music:hover {
           background: goldenrod;
+        }
+
+        .songVolText {
+          font-weight: bold;
+          display: block;
+        }
+
+        .songVolInput {
+          vertical-align: middle;
+        }
+
+        .pianoVolText {
+          font-weight: bold;
+          display: block;
+        }
+
+        .pianoVolInput {
+          vertical-align: middle;
         }
     </style>
 </head>
@@ -195,6 +228,11 @@
               <audio data-sound="010" src="pianoSongs/hotelCaliforniaEagles.mp3"></audio>
               <div></div>
             </div>
+            <label class="songVolText">Song Volume: </label>
+            <input class="songVolInput" type="range" id="volume" value="100">
+
+         
+
             <div class="keysWrapper">
               <div data-note="C">C</div>
               <div data-note="C#">C#/Db</div>
@@ -209,6 +247,11 @@
               <div data-note="A#">A#/Bb</div>
               <div data-note="B">B</div>
             </div>
+
+            <label class="pianoVolText">Piano Volume: </label>
+            <input class="pianoVolInput" type="range" id="volume2" value="100">
+
+
             <div class="piano">
                 <div class="key" data-note="C3"></div>
                 <div class="black-key" data-note="C#3"></div>
@@ -264,6 +307,8 @@
               </div>
 
              <script>
+                 let globalVol = 1;
+                 let globalNoteVol = 1;
                  const keys = document.querySelectorAll('.key, .black-key');
 
                  const songs = document.querySelectorAll('.song');
@@ -271,6 +316,25 @@
                  /*{bohemianRhapsody: 'A#', gravityJohnMayer: 'G'}
 */
                 const btn = document.querySelector('.stop_music');
+
+                
+
+                volume.addEventListener("input", (e) => {
+                  const currentSong = document.querySelector('div.playing');
+                  let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
+                  
+                  audio.volume = e.currentTarget.value / 100;
+                  globalVol = audio.volume;   
+                });
+
+                volume2.addEventListener("input", (e) => {
+                  const currentKey = document.querySelector('.key');
+                  
+                  let audio = document.querySelector(`audio[data-sound="${currentKey.dataset.note}"]`);
+                  
+                  audio.volume = e.currentTarget.value / 100;
+                  globalNoteVol = audio.volume;   
+                });
 
                 btn.addEventListener('click', () => {
                   const currentSong = document.querySelector('div.playing');
@@ -281,6 +345,7 @@
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
                      if (!audio) return;
                      audio.currentTime = 0;
+                     audio.volume = globalNoteVol;
                      audio.play();
                  }
 
@@ -292,6 +357,7 @@
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
                      if (!audio) return;
                      audio.currentTime = 0;
+                     audio.volume = globalVol;
                      audio.play();
                      const songPlaying = document.querySelector(`div[data-song="${note}"]`);
 
