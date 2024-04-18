@@ -11,3 +11,154 @@ a {
   max-width: 600px;
   margin: auto;
 }
+
+.hide {display: none;}
+
+.content {
+  padding: 13px;
+}
+
+.piano {
+  height: 208px;
+}
+
+.key {
+    float: left;
+    width: 40px;
+    height: 200px;
+    background-color: white;
+    border: 1px solid black;
+    /* display: inline-block; */
+    margin: 4px;
+    cursor: pointer;
+}
+
+.black-key {
+    float: left;
+    width: 30px;
+    height: 120px;
+    background-color: black;
+    position: relative;
+    margin-top: 4px;
+    margin-left: -29px;
+    cursor: pointer;
+}
+
+.right {
+  background: green!important;
+}
+
+.wrong {
+  background: red!important;
+}
+.songsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 23px 0 10px;
+  width: 64%;
+}
+.song {
+  font-size: 0.8em;
+  padding: 6px;
+  display: block;
+  width: 228px;
+  cursor: pointer;
+  border-bottom: 1px dotted gray;
+  border-left: 1px dashed gray;
+}
+
+.songsWrapper > div:last-child {
+  border-left: 1px dashed gray;
+}
+
+.song:nth-child(3n-1) {
+  border-right: 1px dashed gray;
+}
+
+.song:nth-child(1), 
+.song:nth-child(3),  
+.song:nth-child(5)  {
+  border-top: 1px dotted gray;
+
+}
+
+.playing {
+  background: teal;
+}
+
+.keysWrapper {
+  display: flex;
+  margin: 20px 0;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.keysWrapper > div {
+  background: gray;
+  border: 1px solid;
+  border-radius: 10px;
+  width: 100px;
+  text-align: center;
+  line-height: 1.6em;
+  color: orange;
+  font-size: 1.6em;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.keysWrapper > div:nth-child(2n) {
+  margin-left: -45px;
+}
+
+.keysWrapper > div:nth-child(odd) {
+  margin-top: 55px;
+  margin-left: -45px;
+}
+
+.keysWrapper >div:first-child {
+  margin-left: 0!important;
+}
+
+.keysWrapper > div:hover {
+  background: darkgray;
+}
+
+.stop_music {
+  position: absolute;
+  top: 2.5%;
+  left: 45%;
+  border: solid 1px;
+  padding: 5px;
+  font-size: 0.9em;
+  background: gold;
+  font-weight: 600;
+  font-family: cursive;
+  cursor: pointer;
+}
+
+.stop_music:hover {
+  background: goldenrod;
+}
+
+.songVolText {
+  font-weight: bold;
+}
+
+.songVolInput {
+  vertical-align: middle;
+  margin-right: 80px;
+}
+
+.pianoVolText {
+  font-weight: bold;
+}
+
+.pianoVolInput {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.volume_controls {
+  position: absolute;
+  bottom: 20px;
+}
