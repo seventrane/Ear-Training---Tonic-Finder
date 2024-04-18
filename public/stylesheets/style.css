@@ -152,7 +152,7 @@ a {
   }
 }
 
-.stop_music:hover {
+.stop_music:hover, .start_music:hover {
   background: goldenrod;
 }
 
