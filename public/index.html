@@ -163,38 +163,6 @@
 
   <body>
 
-    
-<div class="hide">
-    <h1 class="text-center" id="todo">Express + Prisma + MongoDB</h1>
-    <h2 class="text-center">To Do List</h2>
-
-    <section style="background-color:rgb(3 0 244 / 6%);">
-      <div class="container-lg p-4">
-        <div class="row d-flex justify-content-center align-items-center">
-          <div class="col col-xl-10">
-
-            <div class="card">
-              <div class="card-body p-4">
-
-                <form class="d-flex justify-content-center align-items-center mb-3" id="todo-form">
-                  <div class="form-outline flex-fill">
-                    <input type="text" id="add-input" class="form-control" />
-                    <label class="form-label" for="add-input">New task...</label>
-                  </div>
-                  <button type="submit" class="btn btn-info ms-2">Add</button>
-                </form>
-
-                <ul class="list-group mb-0" id="todo-list" />
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js" ></script>
     <script type="text/javascript" src="../js/client.js" ></script>
 
@@ -374,8 +342,13 @@
                      audio.volume = globalVol;
                      audio.play();
                      const songPlaying = document.querySelector(`div[data-song="${note}"]`);
+                     const songs = document.querySelectorAll('div.song');
+                     songs.forEach(song => {
+                        song.classList.remove('activa');
+                     });
 
                      songPlaying.classList.add('playing');
+                     songPlaying.classList.add('activa');
                      setTimeout(function (){
 
                       audio.pause();
@@ -399,7 +372,7 @@
 
                  songKeys.forEach(key => {
                   key.addEventListener('mousedown', () => {
-                      const currentSong = document.querySelector('div.playing');
+                      const currentSong = document.querySelector('div.activa');
                       const note = key.dataset.note;
                   if(currentSong != null) {
                         const currentKey = currentSong.dataset.note;
