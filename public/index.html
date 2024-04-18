@@ -9,6 +9,70 @@
 
     <style>
        /*local style*/
+
+       /* SLIDER SWITCH STYLES */
+
+       .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+        }
+
+        .switch input { 
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+
+        .slider.round:before {
+          border-radius: 50%;
+        }
+
+
     </style>
 </head>
 
@@ -17,14 +81,14 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js" ></script>
     <script type="text/javascript" src="js/client.js" ></script>
 
-
      <div class="piano_zone">
          <div class="content">
             <h2>EAR TRAINING - TONIC FINDER</h2>
             
             <div class="stop_music">Stop Music</div>
+            <div class="start_music">Start Game</div>
 
-            <div class="songsWrapper">
+            <div class="songsWrapper" style="width:49%;">
               <div class="song" data-song="001" data-note="A#">Bohemian Rhapsody</div>
               <audio data-sound="001" src="pianoSongs/bohemianRhapsody.mp3"></audio>
 
@@ -126,15 +190,28 @@
                 <audio data-sound="B4" src="pianomp3/B4.mp3"></audio>
               </div>
 
-              <div class="volume_controls">
-                <label class="songVolText">Song Volume: </label>
-                <input class="songVolInput" type="range" id="volume" value="100">
+              <div class="settings">
                 
-                <label class="pianoVolText">Piano Volume: </label>
-                <input class="pianoVolInput" type="range" id="volume2" value="100">
+                <h4>Songs Will Play:</h4>
+                <div class="behavior_controls">
+                  <span>Manual</span>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                  <span>Auto</span>
+                </div>
+
+                <div class="volume_controls">
+                  <label class="songVolText">Song Volume: </label>
+                  <input class="songVolInput" type="range" id="volume" value="100">
+                  
+                  <label class="pianoVolText">Piano Volume: </label>
+                  <input class="pianoVolInput" type="range" id="volume2" value="100">
+                </div>
               </div>
 
-             <script>
+              <script>
                  let globalVol = 1;
                  let globalNoteVol = 1;
                  const keys = document.querySelectorAll('.key, .black-key');
@@ -224,7 +301,6 @@
                           songKeys.forEach(key1 => {
                             if(key != key1) {key1.classList.remove('wrong');}
                           });
-                          console.log("WIN WIN WIN!");
                           stopSong(song);
                           setTimeout(function (){
                               alert("YOU GOT IT! IT'S "+currentKey);
@@ -232,8 +308,6 @@
                           }, 200);
                          } else {
                           key.classList.add('wrong');
-                          console.log("LOSE LOSE LOSE!");
-                          console.log(note, currentKey);
                          }
                       }
                  });
