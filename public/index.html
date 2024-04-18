@@ -196,7 +196,7 @@
                 <div class="behavior_controls">
                   <span>Manual</span>
                   <label class="switch">
-                    <input type="checkbox">
+                    <input class="switch_check" type="checkbox">
                     <span class="slider round"></span>
                   </label>
                   <span>Auto</span>
@@ -214,11 +214,13 @@
               <script>
                  let globalVol = 1;
                  let globalNoteVol = 1;
+                 let globalPlayingStyle = 0;
                  const keys = document.querySelectorAll('.key, .black-key');
 
                  const songs = document.querySelectorAll('.song');
                  const songKeys = document.querySelectorAll('.keysWrapper > div');
                  const btn = document.querySelector('.stop_music');
+                 const btn2 = document.querySelector('.start_music');
 
                  volume.addEventListener("input", (e) => {
                     const currentSong = document.querySelector('div.playing');
@@ -241,6 +243,16 @@
                   const currentSong = document.querySelector('div.playing');
                   stopSong(currentSong.dataset.song);
                 });
+
+                btn2.addEventListener('click', () => {
+                  console.log("START GAME NOW");
+                });
+
+
+
+                 function playSongAuto() {
+                  console.log("PLAYING AUTOMATICALLY");
+                 }
 
                  function playSound(note) {
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
@@ -373,6 +385,20 @@
                      if (!keyElement) return;
                      keyElement.classList.remove('active');
                  });
+
+                const checkBox = document.querySelector("input.switch_check");
+                checkBox.addEventListener('click', ()=> {
+                    if(checkBox.checked) {
+                      globalPlayingStyle = 1;
+                      console.log("CHECKED");
+                    } else {
+                      globalPlayingStyle = 0
+                      console.log("NOT CHECKED");
+                    }
+                    console.log(globalPlayingStyle);
+                });
+
+
              </script>
 
          </div>
