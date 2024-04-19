@@ -124,7 +124,7 @@ a {
   background: darkgray;
 }
 
-.stop_music, .start_music {
+.stop_music, .start_music, .next_music {
   position: absolute;
   top: 2.5%;
   left: 45%;
@@ -137,12 +137,12 @@ a {
   cursor: pointer;
 }
 
-.start_music {
+.start_music, .next_music {
   left: 40%;
 }
 
 @media only screen and (min-width: 390px) {
-  .start_music {
+  .start_music, .next_music {
     right: 15%;
     left: unset;
   }
@@ -166,7 +166,7 @@ a {
 
 
 
-.stop_music:hover, .start_music:hover {
+.stop_music:hover, .start_music:hover, .next_music:hover {
   background: goldenrod;
 }
 
