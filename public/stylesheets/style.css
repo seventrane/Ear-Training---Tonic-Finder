@@ -104,6 +104,7 @@ a {
   font-size: 1.6em;
   cursor: pointer;
   font-weight: 700;
+  user-select: none;
 }
 
 .keysWrapper > div:nth-child(2n) {
