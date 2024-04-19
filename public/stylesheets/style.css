@@ -141,18 +141,6 @@ a {
   left: 40%;
 }
 
-@media only screen and (max-width: 820px) {
-  .start_music {
-    right: 15%;
-    left: unset;
-  }
-
-  .stop_music {
-    left: unset;
-    right: 0%;
-  }
-}
-
 @media only screen and (min-width: 390px) {
   .start_music {
     right: 15%;
@@ -163,7 +151,20 @@ a {
     left: unset;
     right: 5%;
   }
+
+  .songsWrapper {
+    width: 75%!important;
+  }
 }
+
+@media only screen and (min-width: 1281px) {
+  .songsWrapper {
+    width: 47%!important;
+  }
+}
+
+
+
 
 .stop_music:hover, .start_music:hover {
   background: goldenrod;
