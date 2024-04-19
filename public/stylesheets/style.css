@@ -153,6 +153,18 @@ a {
   }
 }
 
+@media only screen and (min-width: 390px) {
+  .start_music {
+    right: 15%;
+    left: unset;
+  }
+
+  .stop_music {
+    left: unset;
+    right: 5%;
+  }
+}
+
 .stop_music:hover, .start_music:hover {
   background: goldenrod;
 }
