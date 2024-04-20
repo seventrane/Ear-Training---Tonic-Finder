@@ -157,12 +157,21 @@ a {
   }
 }
 
-@media only screen and (min-width: 1281px) {
+@media only screen and (min-width: 1281px) and (max-width: 1433) {
   .songsWrapper {
-    width: 47%!important;
+    width: 75%!important;
+  }
+
+  .behavior_controls {
+     margin-bottom: 0%!important;
   }
 }
 
+@media only screen and (min-width: 1434) {
+  .songsWrapper {
+
+  }
+}
 
 
 
@@ -189,7 +198,7 @@ a {
 }
 
 .behavior_controls {
-    margin-bottom: 24%;
+  //  margin-bottom: 24%;
     display: flex;
     align-items: center;
     flex-direction: row;
