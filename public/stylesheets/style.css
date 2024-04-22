@@ -82,8 +82,13 @@ a {
 
 }
 
-.playing {
+.activa {
   background: teal;
+}
+
+.playing > i.fa {
+  display: inline-block!important;
+  user-select: none;
 }
 
 .keysWrapper {

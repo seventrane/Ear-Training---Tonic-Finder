@@ -90,34 +90,64 @@
             <div class="next_music hide">Nextt Song</div>
 
             <div class="songsWrapper" style="width:49%;">
-              <div class="song" data-song="1" data-note="A#">Bohemian Rhapsody</div>
+              <div class="song" data-song="1" data-note="A#">
+                Bohemian Rhapsody
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="1" src="pianoSongs/bohemianRhapsody.mp3"></audio>
 
-              <div class="song" data-song="2" data-note="G">Gravity John Mayer</div>
+              <div class="song" data-song="2" data-note="G">
+                Gravity John Mayer
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="2" src="pianoSongs/gravityJohnmayer.mp3"></audio>
 
-              <div class="song" data-song="3" data-note="A#">Purple Rain Prince</div>
+              <div class="song" data-song="3" data-note="A#">
+                Purple Rain Prince
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="3" src="pianoSongs/purpleRainPrince.mp3"></audio>
 
-              <div class="song" data-song="4" data-note="A">September EWF</div>
+              <div class="song" data-song="4" data-note="A">
+                September EWF
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="4" src="pianoSongs/septemberEWF.mp3"></audio>
 
-              <div class="song" data-song="5" data-note="A">Stairway to Heaven Led Zeppelin</div>
+              <div class="song" data-song="5" data-note="A">
+                Stairway to Heaven Led Zeppelin
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="5" src="pianoSongs/stairwayToHeavenLed.mp3"></audio>
 
-              <div class="song" data-song="6" data-note="F#">Billie Jean Michael Jackson</div>
+              <div class="song" data-song="6" data-note="F#">
+                Billie Jean Michael Jackson
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="6" src="pianoSongs/billieJeanMJ.mp3"></audio>
 
-              <div class="song" data-song="7" data-note="F#">Wonderwall Oasis</div>
+              <div class="song" data-song="7" data-note="F#">
+                Wonderwall Oasis
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="7" src="pianoSongs/wonderwallOasis.mp3"></audio>
 
-              <div class="song" data-song="8" data-note="F">Happy Pharrell Williams</div>
+              <div class="song" data-song="8" data-note="F">
+                Happy Pharrell Williams
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="8" src="pianoSongs/happyPharell.mp3"></audio>
 
-              <div class="song" data-song="9" data-note="A">Someone Like You Adele</div>
+              <div class="song" data-song="9" data-note="A">
+                Someone Like You Adele
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="9" src="pianoSongs/someoneLikeYouAdele.mp3"></audio>
 
-              <div class="song" data-song="10" data-note="B">Hotel California The Eagles</div>
+              <div class="song" data-song="10" data-note="B">
+                Hotel California The Eagles
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
               <audio data-sound="10" src="pianoSongs/hotelCaliforniaEagles.mp3"></audio>
               <div></div>
             </div>
@@ -248,7 +278,7 @@
                 });
 
                 function randomSong() {
-                  if((globalPlayingStyle == 1) && (globalSongsPlayed.length < 10)) {
+                  if(globalSongsPlayed.length < 10) {
                      // console.log("CHECKED");
                      btn2.style.display = 'none';
                      btn3.style.display = 'block';
@@ -315,9 +345,11 @@
 
                      songPlaying.classList.add('playing');
                      songPlaying.classList.add('activa');
+                    // document.querySelector("div.playing > i.fa").classList.remove("hide");
                      setTimeout(function (){
 
                       audio.pause();
+                    //  document.querySelector("div.playing > i.fa").classList.add("hide");
                       songPlaying.classList.remove('playing');
                       }, 30000);
                  }
@@ -338,8 +370,8 @@
 
                  songKeys.forEach(key => {
                   key.addEventListener('mousedown', () => {
-                    alert("TEST");
                       const currentSong = document.querySelector('div.activa');
+                      const songPlaying = document.querySelector('div.playing');
                       const note = key.dataset.note;
                   if(currentSong != null) {
                         const currentKey = currentSong.dataset.note;
@@ -349,11 +381,13 @@
                           songKeys.forEach(key1 => {
                             if(key != key1) {key1.classList.remove('wrong');}
                           });
-                          stopSong(song);
+                          if(songPlaying != null) {
+                            stopSong(song);
+                          }
                           setTimeout(function (){
-                              alert("YOU GOT IT! IT'S "+currentKey);
                               key.classList.remove('right');
-                          }, 200);
+                              randomSong();
+                          }, 600);
                          } else {
                           key.classList.add('wrong');
                          }
