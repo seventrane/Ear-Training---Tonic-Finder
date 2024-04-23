@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="stylesheets/style.css" />
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
        /*local style*/
@@ -82,12 +83,14 @@
     <script type="text/javascript" src="js/client.js" ></script>
 
      <div class="piano_zone">
-         <div class="content">
+         <div class="content clearfix">
             <h2>EAR TRAINING - TONIC FINDER</h2>
             
-            <div class="stop_music">Stop Music</div>
-            <div class="start_music">Start Game</div>
+            <div class="stop_music hide">Stop Music</div>
+            <div class="start_music hide">Start Music</div>
+            <div class="start_game">Start Game</div>
             <div class="next_music hide">Nextt Song</div>
+            <div class="repeat_music hide">Repeat Song</div>
 
             <div class="songsWrapper" style="width:49%;">
               <div class="song" data-song="1" data-note="A#">
@@ -173,7 +176,7 @@
                 <div class="key" data-note="D3"></div>
                 <div class="black-key" data-note="D#3"></div>
                 <div class="key" data-note="E3"></div>
-                <div class="key" data-note="F3"></div>
+                <div class="key half" data-note="F3"></div>
                 <div class="black-key" data-note="F#3"></div>
                 <div class="key" data-note="G3"></div>
                 <div class="black-key" data-note="G#3"></div>
@@ -194,12 +197,12 @@
                 <audio data-sound="A#3" src="pianomp3/Bb3.mp3"></audio>
                 <audio data-sound="B3" src="pianomp3/B3.mp3"></audio>
 
-                <div class="key" data-note="C4"></div>
+                <div class="key half" data-note="C4"></div>
                 <div class="black-key" data-note="C#4"></div>
                 <div class="key" data-note="D4"></div>
                 <div class="black-key" data-note="D#4"></div>
                 <div class="key" data-note="E4"></div>
-                <div class="key" data-note="F4"></div>
+                <div class="key half" data-note="F4"></div>
                 <div class="black-key" data-note="F#4"></div>
                 <div class="key" data-note="G4"></div>
                 <div class="black-key" data-note="G#4"></div>
@@ -251,9 +254,11 @@
 
                  const songs = document.querySelectorAll('.song');
                  const songKeys = document.querySelectorAll('.keysWrapper > div');
-                 const btn = document.querySelector('.stop_music');
-                 const btn2 = document.querySelector('.start_music');
+                 const stopBtn = document.querySelector('.stop_music');
+                 const btn2 = document.querySelector('.start_game');
                  const btn3 = document.querySelector('.next_music');
+                 const repeatBtn = document.querySelector('.repeat_music');
+                 const startMusicBtn = document.querySelector('.start_music');
 
                  volume.addEventListener("input", (e) => {
                     const currentSong = document.querySelector('div.playing');
@@ -272,9 +277,24 @@
                     globalNoteVol = audio.volume;   
                 });
 
-                btn.addEventListener('click', () => {
+                stopBtn.addEventListener('click', () => {
                   const currentSong = document.querySelector('div.playing');
                   stopSong(currentSong.dataset.song);
+                  startMusicBtn.classList.remove("hide");
+                  stopBtn.classList.add("hide");
+                });
+
+                repeatBtn.addEventListener('click', ()=> {
+                  const currentSong = document.querySelector('div.playing');
+                  playSong(currentSong.dataset.song);
+
+                });
+
+                startMusicBtn.addEventListener('click', ()=> {
+                  const currentSong = document.querySelector('div.activa');
+                  playSong(currentSong.dataset.song);
+                  startMusicBtn.classList.add("hide");
+                  stopBtn.classList.remove("hide");
                 });
 
                 function randomSong() {
@@ -295,7 +315,8 @@
 
                       }
                     } else {
-                      console.log("NOT CHECKED");
+                      //console.log("NOT CHECKED");
+                      globalSongsPlayed.length = 0;
                       console.log("STYLE: "+globalPlayingStyle);
                       console.log("LENGTH: "+globalSongsPlayed.length);
                       btn2.style.display = 'block';
@@ -313,6 +334,7 @@
                  // console.log("START GAME NOW");
                   ///btn2.hide();
                   randomSong();
+                  startMusicBtn.classList.add("hide");
                 });
 
                  function playSongAuto() {
@@ -339,18 +361,24 @@
                      audio.play();
                      const songPlaying = document.querySelector(`div[data-song="${note}"]`);
                      const songs = document.querySelectorAll('div.song');
+                     const repeatBtn = document.querySelector('div.repeat_music');
+                     const stopBtn = document.querySelector('div.stop_music');
+
                      songs.forEach(song => {
                         song.classList.remove('activa');
                      });
 
                      songPlaying.classList.add('playing');
                      songPlaying.classList.add('activa');
+                     repeatBtn.classList.remove('hide');
+                     stopBtn.classList.remove('hide');
                     // document.querySelector("div.playing > i.fa").classList.remove("hide");
                      setTimeout(function (){
 
                       audio.pause();
                     //  document.querySelector("div.playing > i.fa").classList.add("hide");
                       songPlaying.classList.remove('playing');
+                      stopBtn.classList.add("hide");
                       }, 30000);
                  }
 

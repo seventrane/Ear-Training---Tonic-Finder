@@ -23,14 +23,17 @@ a {
 }
 
 .key {
-    float: left;
-    width: 40px;
-    height: 200px;
-    background-color: white;
-    border: 1px solid black;
-    /* display: inline-block; */
-    margin: 4px;
-    cursor: pointer;
+  float: left;
+  width: 60px;
+  height: 225px;
+  background-color: white;
+  border: 1px solid black;
+  /* display: inline-block; */
+  /* margin-right: 4px; */
+  cursor: pointer;
+  margin-top: 4px;
+  margin-left: -15px;
+  user-select: none;
 }
 
 .black-key {
@@ -40,8 +43,13 @@ a {
     background-color: black;
     position: relative;
     margin-top: 4px;
-    margin-left: -29px;
+    margin-left: -16px;
     cursor: pointer;
+    user-select: none;
+}
+
+.key.half {
+  margin-left: -1px !important;
 }
 
 .right {
@@ -129,30 +137,39 @@ a {
   background: darkgray;
 }
 
-.stop_music, .start_music, .next_music {
-  position: absolute;
-  top: 2.5%;
-  left: 45%;
-  border: solid 1px;
-  padding: 5px;
-  font-size: 0.9em;
-  background: gold;
-  font-weight: 600;
-  font-family: cursive;
-  cursor: pointer;
+.stop_music, .start_game, .next_music, .repeat_music,.start_music {
+    /* position: absolute; */
+    top: 2.5%;
+    left: 45%;
+    border: solid 1px;
+    padding: 5px;
+    font-size: 0.9em;
+    background: gold;
+    font-weight: 600;
+    font-family: cursive;
+    cursor: pointer;
+    width: 8em;
+    text-align: center;
+    float: right;
+    user-select: none;
 }
 
-.start_music, .next_music {
+.start_game, .next_music {
   left: 40%;
 }
 
+.repeat_music {
+  left: 30%;
+}
+
+
 @media only screen and (min-width: 390px) {
-  .start_music, .next_music {
+  .start_game, .next_music {
     right: 15%;
     left: unset;
   }
 
-  .stop_music {
+  .stop_music, .start_music {
     left: unset;
     right: 5%;
   }
@@ -180,7 +197,7 @@ a {
 
 
 
-.stop_music:hover, .start_music:hover, .next_music:hover {
+.stop_music:hover, .start_game:hover, .next_music:hover, .start_music:hover {
   background: goldenrod;
 }
 
@@ -211,7 +228,21 @@ a {
     column-gap: 2%;
 }
 
+.piano_zone {
+  margin: 0 auto;
+  width: 60%;
+  background: cadetblue;
+  border: 11px solid black;
+}
+
 .settings {
-  position: absolute;
+ // position: absolute;
   bottom: 20px;
+  float: left;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
