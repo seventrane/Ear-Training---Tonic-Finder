@@ -73,6 +73,7 @@ a {
   cursor: pointer;
   border-bottom: 1px dotted gray;
   border-left: 1px dashed gray;
+  user-select: none;
 }
 
 .songsWrapper > div:last-child {
