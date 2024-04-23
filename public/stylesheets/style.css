@@ -63,7 +63,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   margin: 23px 0 10px;
-  width: 64%;
+//  width: 64%;
 }
 .song {
   font-size: 0.8em;
@@ -175,13 +175,13 @@ a {
   }
 
   .songsWrapper {
-    width: 75%!important;
+   // width: 75%!important;
   }
 }
 
 @media only screen and (min-width: 1281px) and (max-width: 1433) {
   .songsWrapper {
-    width: 75%!important;
+   // width: 75%!important;
   }
 
   .behavior_controls {
@@ -231,6 +231,7 @@ a {
 .piano_zone {
   margin: 0 auto;
   width: 92%;
+  max-width: 860px;
   background: cadetblue;
   border: 11px solid black;
 }
