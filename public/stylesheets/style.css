@@ -197,7 +197,7 @@ a {
 
 
 
-.stop_music:hover, .start_game:hover, .next_music:hover, .start_music:hover {
+.stop_music:hover, .start_game:hover, .next_music:hover, .start_music:hover, .repeat_music:hover {
   background: goldenrod;
 }
 

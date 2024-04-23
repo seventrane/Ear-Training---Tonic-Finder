@@ -287,7 +287,7 @@
                 });
 
                 repeatBtn.addEventListener('click', ()=> {
-                  const currentSong = document.querySelector('div.playing');
+                  const currentSong = document.querySelector('div.activa');
                   playSong(currentSong.dataset.song);
 
                 });
@@ -320,9 +320,9 @@
                       //console.log("NOT CHECKED");
                       globalSongsPlayed.length = 0;
                       console.log("STYLE: "+globalPlayingStyle);
-                      console.log("LENGTH: "+globalSongsPlayed.length);
                       btn2.style.display = 'block';
                       btn3.style.display = 'none';
+                      //randomSong();
                     }
                 }
 
@@ -377,10 +377,11 @@
                     // document.querySelector("div.playing > i.fa").classList.remove("hide");
                      setTimeout(function (){
 
-                      audio.pause();
+                        audio.pause();
                     //  document.querySelector("div.playing > i.fa").classList.add("hide");
                       songPlaying.classList.remove('playing');
-                      stopBtn.classList.add("hide");
+                     
+                     // stopBtn.classList.add('hide');
                       }, 30000);
                  }
 
@@ -426,6 +427,8 @@
 
                  key.addEventListener('touchstart', () => {
                     /* use if you need something to be only on TOUCH. if nothing here TOUCH uses MOUSEDOWN above*/
+                    preventDefault();
+                    stopPropagation();
                  });
                 });
 
