@@ -161,6 +161,19 @@
               </div>
               <audio data-sound="11" src="pianoSongs/allTheSmallThingsBlink182.mp3"></audio>
 
+              <div class="song" data-song="12" data-note="F" data-quality="minor">
+                Smells Like Teen Spirit
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
+              <audio data-sound="12" src="pianoSongs/smellsLikeTeenSpiritNirvana.mp3"></audio>
+              
+              <div class="song" data-song="13" data-note="C" data-quality="major">
+                Build Me Up Butter Cup                
+                <i class="fa fa-solid fa-volume-up hide"></i>
+              </div>
+              <audio data-sound="13" src="pianoSongs/BuildMeUpButterCup.mp3"></audio>
+
+
               
 
               <div></div>
@@ -309,12 +322,11 @@
                 });
 
                 function randomSong() {
-                  if(globalSongsPlayed.length < 10) {
+                  if(globalSongsPlayed.length < $(".song").length) {
                      // console.log("CHECKED");
                      btn2.style.display = 'none';
                      btn3.style.display = 'block';
-                      var randSong = Math. floor(Math. random()*10) + 1;
-
+                      var randSong = Math. floor(Math. random()*$(".song").length) + 1;
                       if(globalSongsPlayed.includes(randSong)) {
                         console.log("LENGTH: "+globalSongsPlayed.length);
                         randomSong();
