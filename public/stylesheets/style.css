@@ -220,7 +220,7 @@ a {
 }
 
 .behavior_controls {
-    margin-bottom: 24%;
+    margin-bottom: 2%;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -230,14 +230,19 @@ a {
 
 .piano_zone {
   margin: 0 auto;
-  width: 60%;
+  width: 92%;
   background: cadetblue;
   border: 11px solid black;
 }
 
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
 .settings {
- // position: absolute;
-  bottom: 20px;
+  bottom: 5px;
+  margin-top: 2em;
   float: left;
 }
 
