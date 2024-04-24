@@ -270,7 +270,7 @@
               </div>
 
               <script>
-                 let globalVol = 1;
+                 let globalVol = 0.1;
                  let globalNoteVol = 1;
                  let globalPlayingStyle = 0;
                  let globalSongsPlayed = [];
@@ -284,10 +284,15 @@
                  const repeatBtn = document.querySelector('.repeat_music');
                  const startMusicBtn = document.querySelector('.start_music');
 
+                 $("document").ready(function() {
+                    console.log(globalVol);
+                    volume.value = globalVol;
+                 });
+
                  volume.addEventListener("input", (e) => {
                     const currentSong = document.querySelector('div.playing');
                     let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
-                      
+                     // console.log(e.currentTarget.value);
                     audio.volume = e.currentTarget.value / 100;
                     globalVol = audio.volume;   
                 });
