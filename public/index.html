@@ -233,18 +233,18 @@
                 <div class="black-key" data-note="A#3"></div>
                 <div class="key" data-note="B3"></div>
 
-                <audio preload="auto" data-sound="C3" src="pianomp3/C3.mp3"></audio>
-                <audio preload="auto" data-sound="C#3" src="pianomp3/Db3.mp3"></audio>
-                <audio preload="auto" data-sound="D3" src="pianomp3/D3.mp3"></audio>
-                <audio preload="auto" data-sound="D#3" src="pianomp3/Eb3.mp3"></audio>
-                <audio preload="auto" data-sound="E3" src="pianomp3/E3.mp3"></audio>
-                <audio preload="auto" data-sound="F3" src="pianomp3/F3.mp3"></audio>
-                <audio preload="auto" data-sound="F#3" src="pianomp3/Gb3.mp3"></audio>
-                <audio preload="auto" data-sound="G3" src="pianomp3/G3.mp3"></audio>
-                <audio preload="auto" data-sound="G#3" src="pianomp3/Ab3.mp3"></audio>
-                <audio preload="auto" data-sound="A3" src="pianomp3/A3.mp3"></audio>
-                <audio preload="auto" data-sound="A#3" src="pianomp3/Bb3.mp3"></audio>
-                <audio preload="auto" data-sound="B3" src="pianomp3/B3.mp3"></audio>
+                <audio preload="auto" data-sound="C3" src="pianomp3/jobro/C3.wav"></audio>
+                <audio preload="auto" data-sound="C#3" src="pianomp3/jobro/Db3.wav"></audio>
+                <audio preload="auto" data-sound="D3" src="pianomp3/jobro/D3.wav"></audio>
+                <audio preload="auto" data-sound="D#3" src="pianomp3/jobro/Eb3.wav"></audio>
+                <audio preload="auto" data-sound="E3" src="pianomp3/jobro/E3.wav"></audio>
+                <audio preload="auto" data-sound="F3" src="pianomp3/jobro/F3.wav"></audio>
+                <audio preload="auto" data-sound="F#3" src="pianomp3/jobro/Gb3.wav"></audio>
+                <audio preload="auto" data-sound="G3" src="pianomp3/jobro/G3.wav"></audio>
+                <audio preload="auto" data-sound="G#3" src="pianomp3/jobro/Ab3.wav"></audio>
+                <audio preload="auto" data-sound="A3" src="pianomp3/jobro/A3.wav"></audio>
+                <audio preload="auto" data-sound="A#3" src="pianomp3/jobro/Bb3.wav"></audio>
+                <audio preload="auto" data-sound="B3" src="pianomp3/jobro/B3.wav"></audio>
 
                 <div class="key half" data-note="C4"></div>
                 <div class="black-key" data-note="C#4"></div>
@@ -259,18 +259,18 @@
                 <div class="black-key" data-note="A#4"></div>
                 <div class="key" data-note="B4"></div>
 
-                <audio preload="auto" data-sound="C4" src="pianomp3/C4.mp3"></audio>
-                <audio preload="auto" data-sound="C#4" src="pianomp3/Db4.mp3"></audio>
-                <audio preload="auto" data-sound="D4" src="pianomp3/D4.mp3"></audio>
-                <audio preload="auto" data-sound="D#4" src="pianomp3/Eb4.mp3"></audio>
-                <audio preload="auto" data-sound="E4" src="pianomp3/E4.mp3"></audio>
-                <audio preload="auto" data-sound="F4" src="pianomp3/F4.mp3"></audio>
-                <audio preload="auto" data-sound="F#4" src="pianomp3/Gb4.mp3"></audio>
-                <audio preload="auto" data-sound="G4" src="pianomp3/G4.mp3"></audio>
-                <audio preload="auto" data-sound="G#4" src="pianomp3/Ab4.mp3"></audio>
-                <audio preload="auto" data-sound="A4" src="pianomp3/A4.mp3"></audio>
-                <audio preload="auto" data-sound="A#4" src="pianomp3/Bb4.mp3"></audio>
-                <audio preload="auto" data-sound="B4" src="pianomp3/B4.mp3"></audio>
+                <audio preload="auto" data-sound="C4" src="pianomp3/jobro/C4.wav"></audio>
+                <audio preload="auto" data-sound="C#4" src="pianomp3/jobro/Db4.wav"></audio>
+                <audio preload="auto" data-sound="D4" src="pianomp3/jobro/D4.wav"></audio>
+                <audio preload="auto" data-sound="D#4" src="pianomp3/jobro/Eb4.wav"></audio>
+                <audio preload="auto" data-sound="E4" src="pianomp3/jobro/E4.wav"></audio>
+                <audio preload="auto" data-sound="F4" src="pianomp3/jobro/F4.wav"></audio>
+                <audio preload="auto" data-sound="F#4" src="pianomp3/jobro/Gb4.wav"></audio>
+                <audio preload="auto" data-sound="G4" src="pianomp3/jobro/G4.wav"></audio>
+                <audio preload="auto" data-sound="G#4" src="pianomp3/jobro/Ab4.wav"></audio>
+                <audio preload="auto" data-sound="A4" src="pianomp3/jobro/A4.wav"></audio>
+                <audio preload="auto" data-sound="A#4" src="pianomp3/jobro/Bb4.wav"></audio>
+                <audio preload="auto" data-sound="B4" src="pianomp3/jobro/B4.wav"></audio>
               </div>
 
               <div class="settings">
@@ -325,6 +325,16 @@
                     audio.volume = e.currentTarget.value / 100;
                     globalVol = audio.volume;   
                 });
+
+                volume.addEventListener("touchmove", (e) => {
+                  console.log(e.currentTarget.value);
+                  const currentSong = document.querySelector('div.playing');
+                    let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
+                     // console.log(e.currentTarget.value);
+                    audio.volume = e.currentTarget.value / 100;
+                    globalVol = audio.volume;   
+                });
+
 
                 volume2.addEventListener("input", (e) => {
                     const currentKey = document.querySelector('.key');
@@ -399,19 +409,22 @@
                  }
 
                  function playSound(note) {
-                     const audio = document.querySelector(`audio[data-sound="${note}"]`);
+                  const audio = document.querySelector(`audio[data-sound="${note}"]`);
                      if (!audio) return;
-                   //  audio.currentTime = 0.5;
+                     audio.currentTime = 0.0;
                     // if (note = 'D') {audio.currentTime = 0.8;}
                      audio.volume = globalNoteVol;
                      audio.play();
                  }
 
                  function stopSound(note) {
+                  
+                  /*
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
                      if (!audio) return;
                      audio.pause();
-                 }
+                 */
+                    }
 
                  function playSong(note) {
                      if (currPlaying = document.querySelector('div.playing')) {
@@ -509,7 +522,7 @@
 
                      key.addEventListener('mouseleave', () => {
                          key.classList.remove('active');
-                         stopSound(key.dataset.note);
+                        // stopSound(key.dataset.note);
                      });
 
                      key.addEventListener('touchstart', (event) => {
@@ -521,7 +534,7 @@
 
                      key.addEventListener('touchend', () => {
                          key.classList.remove('active');
-                         stopSound(key.dataset.note);
+                         //stopSound(key.dataset.note);
                      });
                  });
 
@@ -539,7 +552,7 @@
                      const keyElement = document.querySelector(`.key[data-note="${key}"]`);
                      if (!keyElement) return;
                      keyElement.classList.remove('active');
-                      stopSound(key.dataset.note);
+                     // stopSound(key.dataset.note);
                  });
 
                 const checkBox = document.querySelector("input.switch_check");
