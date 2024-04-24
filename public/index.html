@@ -655,10 +655,13 @@
                      });
 
                      key.addEventListener('touchstart', (event) => {
+                      const currentSong = document.querySelector('div.playing');
                          const note = key.dataset.note;
-                         playSound(note);
+                         soundManager.stopAll();
+                         soundManager.play(note);
+                          //playSound(note);
+                          event.preventDefault();
                          key.classList.add('active');
-                         event.preventDefault();
                      });
 
                      key.addEventListener('touchend', () => {
@@ -668,12 +671,12 @@
                  });
 
                  window.addEventListener('keydown', (event) => {
-                     const key = event.key.toUpperCase();
-                     const keyElement = document.querySelector(`.key[data-note="${key}"]`);
-                     if (!keyElement) return;
-                     const note = keyElement.dataset.note;
-                     playSound(note);
-                     keyElement.classList.add('active');
+                  const currentSong = document.querySelector('div.playing');
+                         const note = key.dataset.note;
+                         soundManager.stopAll();
+                         soundManager.play(note);
+                          //playSound(note);
+                         key.classList.add('active');
                  });
 
                  window.addEventListener('keyup', (event) => {
