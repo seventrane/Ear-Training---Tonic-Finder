@@ -59,16 +59,17 @@ a {
 .wrong {
   background: red!important;
 }
+
 .songsWrapper {
   display: flex;
   flex-wrap: wrap;
-  margin: 23px 0 10px;
-//  width: 64%;
+  margin: 13px 0 10px;
 }
-.song {
+
+.song_old {
   font-size: 0.8em;
   padding: 6px;
-  display: block;
+  display: inline-block;
   width: 228px;
   cursor: pointer;
   border-bottom: 1px dotted gray;
@@ -76,6 +77,18 @@ a {
   user-select: none;
 }
 
+.song {
+  font-size: 0.8em;
+  cursor: pointer;
+  user-select: none;
+  margin-right: 7px;
+}
+
+.song:hover {
+  background: cyan;
+}
+
+/* OLD 
 .songsWrapper > div:last-child {
   border-left: 1px dashed gray;
 }
@@ -90,6 +103,7 @@ a {
   border-top: 1px dotted gray;
 
 }
+*/
 
 .activa {
   background: teal;

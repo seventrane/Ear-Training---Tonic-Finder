@@ -398,16 +398,13 @@
 
                      songPlaying.classList.add('playing');
                      songPlaying.classList.add('activa');
+                     btn2.classList.add('hide');
+                     btn3.classList.remove('hide');
                      repeatBtn.classList.remove('hide');
                      stopBtn.classList.remove('hide');
-                    // document.querySelector("div.playing > i.fa").classList.remove("hide");
                      setTimeout(function (){
-
                         audio.pause();
-                    //  document.querySelector("div.playing > i.fa").classList.add("hide");
-                      songPlaying.classList.remove('playing');
-                     
-                     // stopBtn.classList.add('hide');
+                        songPlaying.classList.remove('playing');
                       }, 30000);
                  }
 
