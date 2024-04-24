@@ -81,7 +81,160 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js" ></script>
     <script type="text/javascript" src="js/client.js" ></script>
+    <script type="text/javascript" src="js/soundmanager2-jsmin.js" ></script>
 
+    <script>
+        soundManager.setup({
+        // url: '',
+        // flashVersion: 9, // optional: shiny features (default = 8)
+         // optional: ignore, // Flash where possible, use 100% HTML5 mode
+          preferFlash: false,
+          onready: function() {
+            // Ready to use; soundManager.createSound() etc. can now be called.
+            soundManager.createSound({
+              url: ["pianomp3/jobro/C3.wav"],
+              id: "C3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Db3.wav"],
+              id: "Db3",
+              autoLoad: true
+            });
+            
+            soundManager.createSound({
+              url: ["pianomp3/jobro/D3.wav"],
+              id: "D3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Eb3.wav"],
+              id: "Eb3",
+              autoLoad: true
+            });
+            soundManager.createSound({
+              url: ["pianomp3/jobro/E3.wav"],
+              id: "E3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/F3.wav"],
+              id: "F3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Gb3.wav"],
+              id: "Gb3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/G3.wav"],
+              id: "G3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Ab3.wav"],
+              id: "Ab3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/A3.wav"],
+              id: "A3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Bb3.wav"],
+              id: "Bb3",
+              autoLoad: true
+            });
+            
+            soundManager.createSound({
+              url: ["pianomp3/jobro/B3.wav"],
+              id: "B3",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/C4.wav"],
+              id: "C4",
+              autoLoad: true
+            });
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Db4.wav"],
+              id: "Db4",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/D4.wav"],
+              id: "D4",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Eb4.wav"],
+              id: "Eb4",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/E4.wav"],
+              id: "E4",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/F4.wav"],
+              id: "F4",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Gb4.wav"],
+              id: "Gb4",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/G4.wav"],
+              id: "G4",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Ab4.wav"],
+              id: "Ab4",
+              autoLoad: true
+            });
+            
+            soundManager.createSound({
+              url: ["pianomp3/jobro/A4.wav"],
+              id: "A4",
+              autoLoad: true
+            });
+
+            soundManager.createSound({
+              url: ["pianomp3/jobro/Bb4.wav"],
+              id: "Bb4",
+              autoLoad: true
+            });
+            soundManager.createSound({
+              url: ["pianomp3/jobro/B4.wav"],
+              id: "B4",
+              autoLoad: true
+            });
+
+          }
+        }).beginDelayedInit();
+      </script>
      <div class="piano_zone">
          <div class="content clearfix">
             <h2>EAR TRAINING - TONIC FINDER</h2>
@@ -221,56 +374,30 @@
 
             <div class="piano">
                 <div class="key" data-note="C3"></div>
-                <div class="black-key" data-note="C#3"></div>
+                <div class="black-key" data-note="Db3"></div>
                 <div class="key" data-note="D3"></div>
-                <div class="black-key" data-note="D#3"></div>
+                <div class="black-key" data-note="Eb3"></div>
                 <div class="key" data-note="E3"></div>
                 <div class="key half" data-note="F3"></div>
-                <div class="black-key" data-note="F#3"></div>
+                <div class="black-key" data-note="Gb3"></div>
                 <div class="key" data-note="G3"></div>
-                <div class="black-key" data-note="G#3"></div>
+                <div class="black-key" data-note="Ab3"></div>
                 <div class="key" data-note="A3"></div>
-                <div class="black-key" data-note="A#3"></div>
+                <div class="black-key" data-note="Bb3"></div>
                 <div class="key" data-note="B3"></div>
 
-                <audio preload="auto" data-sound="C3" src="pianomp3/jobro/C3.wav"></audio>
-                <audio preload="auto" data-sound="C#3" src="pianomp3/jobro/Db3.wav"></audio>
-                <audio preload="auto" data-sound="D3" src="pianomp3/jobro/D3.wav"></audio>
-                <audio preload="auto" data-sound="D#3" src="pianomp3/jobro/Eb3.wav"></audio>
-                <audio preload="auto" data-sound="E3" src="pianomp3/jobro/E3.wav"></audio>
-                <audio preload="auto" data-sound="F3" src="pianomp3/jobro/F3.wav"></audio>
-                <audio preload="auto" data-sound="F#3" src="pianomp3/jobro/Gb3.wav"></audio>
-                <audio preload="auto" data-sound="G3" src="pianomp3/jobro/G3.wav"></audio>
-                <audio preload="auto" data-sound="G#3" src="pianomp3/jobro/Ab3.wav"></audio>
-                <audio preload="auto" data-sound="A3" src="pianomp3/jobro/A3.wav"></audio>
-                <audio preload="auto" data-sound="A#3" src="pianomp3/jobro/Bb3.wav"></audio>
-                <audio preload="auto" data-sound="B3" src="pianomp3/jobro/B3.wav"></audio>
-
                 <div class="key half" data-note="C4"></div>
-                <div class="black-key" data-note="C#4"></div>
+                <div class="black-key" data-note="Db4"></div>
                 <div class="key" data-note="D4"></div>
-                <div class="black-key" data-note="D#4"></div>
+                <div class="black-key" data-note="Eb4"></div>
                 <div class="key" data-note="E4"></div>
                 <div class="key half" data-note="F4"></div>
-                <div class="black-key" data-note="F#4"></div>
+                <div class="black-key" data-note="Gb4"></div>
                 <div class="key" data-note="G4"></div>
-                <div class="black-key" data-note="G#4"></div>
+                <div class="black-key" data-note="Ab4"></div>
                 <div class="key" data-note="A4"></div>
-                <div class="black-key" data-note="A#4"></div>
+                <div class="black-key" data-note="Bb4"></div>
                 <div class="key" data-note="B4"></div>
-
-                <audio preload="auto" data-sound="C4" src="pianomp3/jobro/C4.wav"></audio>
-                <audio preload="auto" data-sound="C#4" src="pianomp3/jobro/Db4.wav"></audio>
-                <audio preload="auto" data-sound="D4" src="pianomp3/jobro/D4.wav"></audio>
-                <audio preload="auto" data-sound="D#4" src="pianomp3/jobro/Eb4.wav"></audio>
-                <audio preload="auto" data-sound="E4" src="pianomp3/jobro/E4.wav"></audio>
-                <audio preload="auto" data-sound="F4" src="pianomp3/jobro/F4.wav"></audio>
-                <audio preload="auto" data-sound="F#4" src="pianomp3/jobro/Gb4.wav"></audio>
-                <audio preload="auto" data-sound="G4" src="pianomp3/jobro/G4.wav"></audio>
-                <audio preload="auto" data-sound="G#4" src="pianomp3/jobro/Ab4.wav"></audio>
-                <audio preload="auto" data-sound="A4" src="pianomp3/jobro/A4.wav"></audio>
-                <audio preload="auto" data-sound="A#4" src="pianomp3/jobro/Bb4.wav"></audio>
-                <audio preload="auto" data-sound="B4" src="pianomp3/jobro/B4.wav"></audio>
               </div>
 
               <div class="settings">
@@ -511,13 +638,15 @@
                      key.addEventListener('mousedown', () => {
                       const currentSong = document.querySelector('div.playing');
                          const note = key.dataset.note;
-                         playSound(note);
+                         soundManager.stopAll();
+                         soundManager.play(note);
+                          //playSound(note);
                          key.classList.add('active');
                      });
 
                      key.addEventListener('mouseup', () => {
                          key.classList.remove('active');
-                         stopSound(key.dataset.note);
+                       //  stopSound(key.dataset.note);
                      });
 
                      key.addEventListener('mouseleave', () => {
