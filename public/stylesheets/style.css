@@ -12,7 +12,7 @@ a {
   margin: auto;
 }
 
-.hide {display: none;}
+.hide {display: none!important;}
 
 .content {
   padding: 13px;
@@ -266,4 +266,31 @@ a {
   content: "";
   clear: both;
   display: table;
+}
+
+.announcement {
+  border-radius: 10px;
+  opacity: 0.8;
+  background: darkslateblue;
+  padding: 6px;
+  display: flex;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.announcement > h3 {
+  color: floralwhite;
+  font-size: 1.4em;
+  font-family: monospace;
+  margin: 0;
+}
+
+.settings.noBanner {
+    margin-top: 5em;
+    float: left;
+    margin-bottom: 3em;
 }

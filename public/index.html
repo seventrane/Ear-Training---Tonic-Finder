@@ -90,7 +90,7 @@
               <div class="stop_music hide">Stop Music</div>
               <div class="start_music hide">Start Music</div>
               <div class="start_game">Start Game</div>
-              <div class="next_music hide">Nextt Song</div>
+              <div class="next_music hide">Next Song</div>
               <div class="repeat_music hide">Repeat Song</div>
             </div>
 
@@ -274,9 +274,13 @@
               </div>
 
               <div class="settings">
-                
-                <h4>Songs Will Play:</h4>
-                <div class="behavior_controls">
+                <div class="announcement">
+                  <h3>1. Click Start Game</h3>
+                  <h3>2. Use the keyboard to assist you identifying the tonic</h3>
+                  <h3>3. Then select the tonic from the letters above the keyboard</h3>
+                </div>
+                <h4 class="hide">Songs Will Play:</h4>
+                <div class="behavior_controls hide">
                   <span>Manual</span>
                   <label class="switch">
                     <input class="switch_check" type="checkbox">
@@ -453,6 +457,8 @@
                       const songPlaying = document.querySelector('div.playing');
                       const note = key.dataset.note;
                   if(currentSong != null) {
+                        $(".announcement").hide();
+                        $(".settings").addClass("noBanner");
                         const currentKey = currentSong.dataset.note;
                         const song = currentSong.dataset.song;
                         if(note == currentKey) {
