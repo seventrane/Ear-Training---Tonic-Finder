@@ -20,6 +20,9 @@ a {
 
 .piano {
   height: 208px;
+  margin: 0 auto;
+  margin-left: 1.26em;
+  width: 101%;
 }
 
 .key {
@@ -32,20 +35,20 @@ a {
   /* margin-right: 4px; */
   cursor: pointer;
   margin-top: 4px;
-  margin-left: -15px;
+  margin-left: -23px;
   user-select: none;
 }
 
 .black-key {
-    float: left;
-    width: 30px;
-    height: 120px;
-    background-color: black;
-    position: relative;
-    margin-top: 4px;
-    margin-left: -16px;
-    cursor: pointer;
-    user-select: none;
+  float: left;
+  width: 45px;
+  height: 120px;
+  background-color: black;
+  position: relative;
+  margin-top: 4px;
+  margin-left: -24px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .key.half {
