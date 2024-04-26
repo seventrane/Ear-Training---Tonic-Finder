@@ -283,6 +283,7 @@ a {
   align-content: center;
   flex-direction: column;
   align-items: center;
+  user-select: none;
 }
 
 .announcement > h3 {
