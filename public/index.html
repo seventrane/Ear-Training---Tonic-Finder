@@ -248,7 +248,7 @@
             </div>
 
             <div class="songsWrapper" style="">
-              <div class="song" data-song="1" data-note="A#">
+              <div class="song hide" data-song="1" data-note="A#">
                 Bohemian Rhapsody
                 <i class="fa fa-solid fa-volume-up hide"></i>
               </div>
@@ -443,16 +443,16 @@
 
             <div class="keysWrapper">
               <div data-note="C">C</div>
-              <div data-note="C#">C#/Db</div>
+              <div data-note="Db">Db</div>
               <div data-note="D">D</div>
-              <div data-note="D#">D#/Eb</div>
+              <div data-note="Eb">Eb</div>
               <div data-note="E">E</div>
               <div data-note="F">F</div>
-              <div data-note="F#">F#/Gb</div>
+              <div data-note="Gb">Gb</div>
               <div data-note="G">G</div>
-              <div data-note="G#">G#/Ab</div>
+              <div data-note="Ab">Ab</div>
               <div data-note="A">A</div>
-              <div data-note="A#">A#/Bb</div>
+              <div data-note="Bb">Bb</div>
               <div data-note="B">B</div>
             </div>
 
@@ -692,6 +692,7 @@
                         $(".settings").addClass("noBanner");
                         const currentKey = currentSong.dataset.note;
                         const song = currentSong.dataset.song;
+                        console.log(note);
                         if(note == currentKey) {
                           key.classList.add('right');
                           songKeys.forEach(key1 => {
