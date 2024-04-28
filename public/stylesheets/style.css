@@ -45,12 +45,13 @@ a {
   width: 45px;
   height: 120px;
   background-color: black;
+  border: 1px solid black;
   position: relative;
   margin-top: 4px;
   margin-left: -24px;
   cursor: pointer;
   user-select: none;
-  z-index: 2;
+  z-index: 3;
 }
 
 .key.half {
@@ -58,14 +59,31 @@ a {
 }
 .key:after, .black-key:after {
   content: '';
-  height: 2em;
-  width: 99%;
+  height: 0.5em;
+  width: 100%;
   display: block;
   position: absolute;
-  border: 1px solid black;
   background: gray;
   bottom: 0;
   margin: 0 auto;
+}
+
+.black-key::after {
+  content: '';
+  background: white;
+  opacity: 0.165;
+}
+
+.active {
+  //background: lightseagreen;
+  border: 2px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  z-index: 2;
+}
+
+.active:after {
+  background: white;
 }
 
 .right {
@@ -312,6 +330,3 @@ a {
     margin-bottom: 3em;
 }
 
-.active {
-  background: lightseagreen;
-}
