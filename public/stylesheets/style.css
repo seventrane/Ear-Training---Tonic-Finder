@@ -31,6 +31,7 @@ a {
   height: 225px;
   background-color: white;
   border: 1px solid black;
+  position: relative;
   /* display: inline-block; */
   /* margin-right: 4px; */
   cursor: pointer;
@@ -49,10 +50,22 @@ a {
   margin-left: -24px;
   cursor: pointer;
   user-select: none;
+  z-index: 2;
 }
 
 .key.half {
   margin-left: -1px !important;
+}
+.key:after, .black-key:after {
+  content: '';
+  height: 2em;
+  width: 99%;
+  display: block;
+  position: absolute;
+  border: 1px solid black;
+  background: gray;
+  bottom: 0;
+  margin: 0 auto;
 }
 
 .right {
