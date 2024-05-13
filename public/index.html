@@ -11,67 +11,7 @@
     <style>
        /*local style*/
 
-       /* SLIDER SWITCH STYLES */
-
-       .switch {
-          position: relative;
-          display: inline-block;
-          width: 60px;
-          height: 34px;
-        }
-
-        .switch input { 
-          opacity: 0;
-          width: 0;
-          height: 0;
-        }
-
-        .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: #ccc;
-          -webkit-transition: .4s;
-          transition: .4s;
-        }
-
-        .slider:before {
-          position: absolute;
-          content: "";
-          height: 26px;
-          width: 26px;
-          left: 4px;
-          bottom: 4px;
-          background-color: white;
-          -webkit-transition: .4s;
-          transition: .4s;
-        }
-
-        input:checked + .slider {
-          background-color: #2196F3;
-        }
-
-        input:focus + .slider {
-          box-shadow: 0 0 1px #2196F3;
-        }
-
-        input:checked + .slider:before {
-          -webkit-transform: translateX(26px);
-          -ms-transform: translateX(26px);
-          transform: translateX(26px);
-        }
-
-        /* Rounded sliders */
-        .slider.round {
-          border-radius: 34px;
-        }
-
-        .slider.round:before {
-          border-radius: 50%;
-        }
+      
 
 
     </style>
@@ -234,6 +174,8 @@
 
           }
         }).beginDelayedInit();
+		
+		
       </script>
      <div class="piano_zone">
          <div class="content clearfix">
@@ -247,7 +189,48 @@
               <div class="repeat_music hide">Repeat Song</div>
             </div>
 
+			<div class="player">
+				<!--  Music Player -->
+				
+				<div class="music-box">
+				  <div class="album">
+				    <div class="photo"></div>
+				    <div class="infos">
+				      <div class="song_musicplayer">
+						<span>Current Song</span>
+						  <small class="hide">Current Artist</small></div>
+				    </div>
+				  </div>
+				  <div class="dashboard">
+				    <div class="list">
+				      <div class="list-btn"><span></span></div>
+				    </div>
+				    <div class="player">
+				      <div class="time"><small class="current_musicplayer">0:56</small> / <small class="duration_musicplayer">3:04</small></div>
+				      <div class="time-rail">
+				        <div class="thumb"></div>
+				        <div class="track"></div>
+				      </div>
+				    </div>
+				    <div class="action-button disabledd"><a class="random"><i class="fa fa-random"></i></a><a class="prev" onclick="prevSong()"><i class="fa fa-step-backward"></i></a><a class="play-pause active_musicplayer"><i class="fa fa-pause" ></i></a><a class="stop hide"><i class="fa fa-stop"></i></a><a class="next" onclick="randomSong()"><i class="fa fa-step-forward"></i></a><a class="repeat"><i class="fa fa-repeat"></i></a><a class="volume"><i class="fa fa-volume-up"></i></a></div>
+				  </div>
+				  <div class="lists">
+				    <div class="label">MENU</div>
+				    <div class="box"></div>
+				    <ul>
+				      <li><span>Flamingo<small>Oliver Heldens</small></span><em>3:04</em></li>
+				    </ul>
+				  </div>
+				</div>
+				
+				<!--  end of music player -->
+				
+			</div>
             <div class="songsWrapper">
+				
+		
+				
+				
               <div class="song hide" data-song="1" data-note="Bb">
                 Bohemian Rhapsody
                 <i class="fa fa-solid fa-volume-up hide"></i>
@@ -523,14 +506,36 @@
                  const btn3 = document.querySelector('.next_music');
                  const repeatBtn = document.querySelector('.repeat_music');
                  const startMusicBtn = document.querySelector('.start_music');
+				 
+				 
 
+		
+		 	
                  $("document").ready(function() {
                     console.log(globalVol);
                     volume.value = globalVol;
+					
+			 		/* MUSIC PLAYER JS */
+
+			 		  $(".list-btn").click(function() {
+			 		    $(this).parent().toggleClass("active_musicplayer");
+			 		    return $(".lists").toggleClass("active_musicplayer");
+			 		  });
+
+			 		  $(".action-button").find('a').click(function() {
+			 		    if ($(this).hasClass("random") || $(this).hasClass("play-pause") || $(this).hasClass("repeat")) {
+			 		  //    return $(this).toggleClass("active_musicplayer");
+			 		    }
+			 		  });
+					  
+					
                  });
+				 
+		 		/* End of MUSIC PLAYER JS */
+				 
 
                  volume.addEventListener("input", (e) => {
-                    const currentSong = document.querySelector('div.playing');
+                    const currentSong = document.querySelector('div.activa');
                     let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
                      // console.log(e.currentTarget.value);
                     audio.volume = e.currentTarget.value / 100;
@@ -539,7 +544,7 @@
 
                 volume.addEventListener("touchmove", (e) => {
                   console.log(e.currentTarget.value);
-                  const currentSong = document.querySelector('div.playing');
+                  const currentSong = document.querySelector('div.activa');
                     let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
                      // console.log(e.currentTarget.value);
                     audio.volume = e.currentTarget.value / 100;
@@ -555,6 +560,19 @@
                     audio.volume = e.currentTarget.value / 100;
                     globalNoteVol = audio.volume;   
                 });
+				
+				$(`div.action-button > .play-pause`).on('click', () => {
+					if ($(`div.action-button > .play-pause`).hasClass("active_musicplayer")) {
+						$('.play-pause').toggleClass('active_musicplayer');
+						startMusicBtn.click();
+					} else {
+						$('.play-pause').toggleClass('active_musicplayer');
+						//console.log('TESt: ', $(".playing"));
+						
+	                    //const currentSong = document.querySelector('div.playing');
+	                    stopBtn.click();;
+					}
+				});
 
                 stopBtn.addEventListener('click', () => {
                   const currentSong = document.querySelector('div.playing');
@@ -604,8 +622,9 @@
 
                 btn2.addEventListener('click', () => {
                   console.log("START GAME NOW");
-                  
+                  $(".disabledd").removeClass('disabledd');
                   randomSong();
+				  $('.playing').addClass('lastPlayed');
                 });
 
                 btn3.addEventListener('click', () => {
@@ -636,7 +655,13 @@
                      audio.pause();
                  */
                     }
-
+				 
+				 function prevSong() {
+					 console.log("PREV SONG");
+					 const prevSong = document.querySelector('div.lastPlayed');
+					 playSong(prevSong.dataset.song);
+				 }
+					
                  function playSong(note) {
                      if (currPlaying = document.querySelector('div.playing')) {
                         stopSong(currPlaying.dataset.song);
@@ -645,17 +670,41 @@
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
                      if (!audio) return;
                      audio.currentTime = 0;
+					 
                      audio.volume = globalVol;
                      audio.play();
+					 audio.ontimeupdate = function () {
+						 $(".current_musicplayer").text(sToTime(audio.currentTime).slice(3))
+						 
+		   			         var railWidth = (audio.currentTime / audio.duration) * 100; // Calculate the percentage width
+		   					 console.log(audio.currentTime);
+		   			         // Update the width of the thumb element
+						     var position = (audio.currentTime / audio.duration) * railWidth; // Calculate the position
+
+						           // Update the left position of the thumb element
+						     $(".thumb").css("left", position + "px");
+				 
+					 }
+					 
+					 $('.duration_musicplayer').text(sToTime(audio.duration).slice(3));
                      const songPlaying = document.querySelector(`div[data-song="${note}"]`);
                      const songs = document.querySelectorAll('div.song');
                      const repeatBtn = document.querySelector('div.repeat_music');
                      const stopBtn = document.querySelector('div.stop_music');
-
+                     const songDisplaying = document.querySelector('div.song_musicplayer > span');
+					 const artistDisplaying = document.querySelector('div.song_musicplayer > small');
+					 const playBtn = document.querySelector('a.play-pause');
+					 
                      songs.forEach(song => {
                         song.classList.remove('activa');
                      });
 
+					 songPlaying.classList.remove('hide');
+					 songDisplaying.innerText = songPlaying.innerText;
+					 $('.song_musicplayer').find('br').remove();
+					 //console.log(songDisplaying.innerText);
+					 playBtn.classList.remove('active_musicplayer');
+					 
                      songPlaying.classList.add('playing');
                      songPlaying.classList.add('activa');
                      btn2.classList.add('hide');
@@ -665,14 +714,31 @@
                      setTimeout(function (){
                         audio.pause();
                         songPlaying.classList.remove('playing');
-                      }, 30000);
+                      }, 90000);
                  }
+				 
+				 function sToTime(t) {
+				   return padZero(parseInt((t / (60 * 60)) % 24)) + ":" +
+				          padZero(parseInt((t / (60)) % 60)) + ":" + 
+				          padZero(parseInt((t) % 60));
+				 }
+				 function padZero(v) {
+				   return (v < 10) ? "0" + v : v;
+				 }
 
                  function stopSong(note) {
                     const audio = document.querySelector(`audio[data-sound="${note}"]`);
                     audio.pause();
                     const songPlaying = document.querySelector('div.playing');
                     songPlaying.classList.remove('playing');
+					const songLastPlayed = '';
+					if (songLastplayed = document.querySelector('div.lastPlayed')) {
+						songLastplayed.classList.remove('lastPlayed');
+					}
+                    songPlaying.classList.add('lastPlayed');
+				 	const playBtn = document.querySelector('a.play-pause');
+				 	playBtn.classList.add('active_musicplayer');
+					
                  }
 
                  songs.forEach(song => {
