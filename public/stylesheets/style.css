@@ -83,8 +83,21 @@ a {
   z-index: 2;
 }
 
+.black-key.active {
+  //background: lightseagreen;
+  border: 1px solid white;
+  border-top: 1px solid black;
+  border-bottom: 1px solid white;
+  z-index: 2;
+}
+
 .active:after {
   background: white;
+}
+
+.black-key.active:after {
+  background: black;
+  opacity: 1;
 }
 
 .right {
