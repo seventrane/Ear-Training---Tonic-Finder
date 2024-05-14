@@ -130,11 +130,11 @@ a {
   cursor: pointer;
   user-select: none;
   margin-right: 7px;
-  display: none;
+  //display: none;
 }
 
 .song:hover {
-  background: cyan;
+ color: #ffba49;
 }
 
 /* OLD 
@@ -155,7 +155,7 @@ a {
 */
 
 .activa {
-  background: teal;
+  color: #ffba49;
 }
 
 .playing > i.fa {
@@ -432,7 +432,7 @@ body {
 //  left: 50%;
  // transform: translate(-50%, -50%);
   position: relative;
-  padding: 15px;
+  padding: 4px 15px;
   width: 443px;
   height: initial;
   background-color: #463239;
@@ -560,7 +560,7 @@ body {
   border-radius: 50%;
   background-color: #ffba49;
   z-index: 1;
-  left: 30%;
+  left: 0%;
   transition: 0.3s;
 }
 .music-box .dashboard .player .time-rail .thumb:hover {
