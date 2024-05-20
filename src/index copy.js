@@ -22,94 +22,54 @@ mongoose.connect("mongodb+srv://eartrainin-main-db-09a428d33aa:jCUbmpVNR2UgnSzW6
 // START OF KEYS 
 
 
+// Define schema and model for key statistics
 const keyStatsSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    key: {
-        type: String,
-        required: true
-    },
-    right: {
-        type: Number,
-        default: 0 // Default value if not provided
-    },
-    wrong: {
-        type: Number,
-        default: 0 // Default value if not provided
-    }
+    key: String,
+    right: Number,
+    wrong: Number
 });
 
 const KeyStats = mongoose.model('KeyStats', keyStatsSchema);
 app.post('/updateKeyStats/:userId', async (req, res) => {
     const userId = req.params.userId;
-    const keyStatsData = req.body;
+    const keyStats = req.body;
 
-    console.log('Received keyStats:', keyStatsData);
-    console.log('Received userId:', userId);
+	console.log('Received keyStats:', keyStats);
 
-	try {
-	    // Process each key in keyStatsData
-	    for (const key in keyStatsData) {
-	        if (Object.hasOwnProperty.call(keyStatsData, key)) {
-	            const { right, wrong } = keyStatsData[key];
+    try {
+        console.log("tried");
+        
+        res.sendStatus(200);
+    } catch (error) {
+        console.error('Error updating key stats:', error);
+        res.status(500).send('Internal Server Error');
+    }
+	
+	
+	
+	
 
-	            // Find the existing KeyStats document for the current key and user
-	            let existingKeyStats = await KeyStats.findOne({ userId, key });
-
-	            if (!existingKeyStats) {
-	                // If the document doesn't exist, create a new one
-	                existingKeyStats = new KeyStats({
-	                    userId,
-	                    key,
-	                    right: right || 0,
-	                    wrong: wrong || 0
-	                });
-	            } else {
-	                // If the document exists, update its fields
-	                existingKeyStats.right = right || existingKeyStats.right;
-	                existingKeyStats.wrong = wrong || existingKeyStats.wrong;
-	            }
-
-	            // Save the updated or new KeyStats document to the database
-	            await existingKeyStats.save();
-	        }
-	    }
-
-	    console.log("Key stats updated successfully");
-
-	    res.sendStatus(200); // Send success response
-	} catch (error) {
-	    console.error('Error updating key stats:', error);
-	    res.status(500).send('Internal Server Error');
-	}
 });
 
 // Endpoint to retrieve key statistics report for a specific user
-app.get('/getKeyStatsReport/:userId', async (req, res) => {
-    try {
-        const userId = req.params.userId;
-		console.log("received user ID: ",userId);
+app.get('/getKeyStatsReport/:userId', (req, res) => {
+    const userId = req.params.userId;
 
-        // Use await to wait for the Promise returned by KeyStats.find()
-        const keyStats = await KeyStats.find({ userId: userId });
+    KeyStats.find({ userId: userId }, (err, keyStats) => {
+        if (err) {
+            console.error('Error retrieving key stats:', err);
+            res.status(500).send('Error retrieving key stats');
+        } else {
+            const report = keyStats.reduce((acc, cur) => {
+                acc[cur.key] = { right: cur.right, wrong: cur.wrong };
+                return acc;
+            }, {});
 
-        // Create a report object from the keyStats array
-        const report = keyStats.reduce((acc, cur) => {
-            acc[cur.key] = { right: cur.right, wrong: cur.wrong };
-            return acc;
-        }, {});
-		
-		console.log(report);
-        // Send the report as JSON response
-        res.json(report);
-    } catch (error) {
-        console.error('Error retrieving key stats:', error);
-        res.status(500).send('Error retrieving key stats');
-    }
+            res.json(report);
+        }
+    });
 });
+
 
 // END OF KEYS
 

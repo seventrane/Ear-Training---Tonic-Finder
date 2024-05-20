@@ -1,6 +1,24 @@
+@charset "UTF-8";
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
 body {
-  padding: 20px;
+  padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#score {
+    font-family: 'Press Start 2P', cursive; /* Monospaced font resembling game score */
+}
+
+#levelIndicator {
+    font-family: 'Press Start 2P', cursive; /* Monospaced font resembling game score */
+}
+}
+
+.overflowSwitch {
+	overflow-y: visible!important;
 }
 
 a {
@@ -410,8 +428,12 @@ a {
 
 // CSS FOR MUSIC PLAYER 
 
-@charset "UTF-8";
-@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+#cursor {
+  width: 50px;
+  height: 50px;
+  background: steelblue;
+}
+
 * {
   outline: none;
   user-select: none;
@@ -425,7 +447,9 @@ body, html {
 body {
   font-family: "Open Sans", "Microsoft JhengHei", Arial, sans-serif;
 }
-
+.player {
+	position: relative;
+}
 .music-box {
 //  position: absolute;
  // top: 50%;
@@ -438,7 +462,8 @@ body {
   background-color: #463239;
   box-shadow: 0 0 15px #535353;
   border-radius: 3px;
-  overflow: hidden;
+  overflow-x: clip;
+  transition: overflow 1s ease; /* Transition effect for overflow */
 }
 .music-box .album {
   position: relative;
@@ -479,7 +504,7 @@ body {
   right: 0;
 }
 .music-box .dashboard .list .list-btn {
-  z-index: 2;
+  z-index: 12;
   background-color: #ffba49;
   width: 34px;
   height: 34px;
@@ -637,10 +662,10 @@ body {
   color: #ffba49;
 }
 .music-box .lists {
-  z-index: 1;
+  z-index: 10;
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 350%;
   top: 0;
   left: 0;
   background-color: #463239;

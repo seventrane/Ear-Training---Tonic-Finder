@@ -11,23 +11,6 @@
     <style>
        /*local style*/
 	   
-	   #levelIndicator {
-	       position: absolute;
-	       left: 76%;
-	       top: -39%;
-	       font-size: 0.6em; /* Adjust as needed */
-	       color: #333; /* Text color */
-	       background-color: #fff; /* Background color for the score */
-	       padding: 11px 20px 7px; /* Padding around the score */
-	       border-radius: 10px; /* Rounded corners */
-	       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
-	       text-transform: uppercase;
-	   }
-
-	   .music-box {
-
-	   }
-	   
 	   .topBanner {
 	       display: flex;
 	       margin: 20px auto;
@@ -53,7 +36,7 @@
 				  text-transform: uppercase;
 	   }
 
-	   #loginForms, #registerForm {
+	   #loginForms {
 	   	width: 80%;
 	    display: flex;
 	    align-items: baseline;
@@ -70,7 +53,7 @@
 
 	        #loginForms p, #registerForm p, #loggedInArea p {
 	            margin: 0;
-				display: inline-block;
+				
 	        }
 
 	        input[type="text"], input[type="password"], button {
@@ -98,30 +81,6 @@
 	        a:hover {
 	            text-decoration: underline; /* Underline link on hover */
 	        }
-			
-			
-	      #userManagement {
-	          padding: 2px;
-	          border: 1px solid #ccc;
-	          border-radius: 5px;
-	          background-color: #f9f9f9;
-	          margin-bottom: 20px;
-			  display: none;
-			      width: 41%;
-	      }
-
-	      #userList {
-	          margin-top: 10px;
-	      }
-
-	      .user {
-	          margin-bottom: 5px;
-	      }
-
-	      .delete-btn {
-	          margin-left: 10px;
-	          cursor: pointer;
-	      }
     </style>
 </head>
 
@@ -129,9 +88,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js" ></script>
     <script type="text/javascript" src="/js/client.js" ></script>
-	<script src="js/soundmanager2-nodebug.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+    <script type="text/javascript" src="/js/soundmanager2-jsmin.js" ></script>
 
     <script>
         soundManager.setup({
@@ -300,21 +257,14 @@
 	       <p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
 	   </div>
 
-	 <div id="registerForm" style="display: none;">
-	     <form>
-	         <input type="text" id="regUsername" placeholder="Username"><br>
-	         <input type="password" id="regPassword" placeholder="Password"><br>
-	         <!-- Add input field for role -->
-	         <label for="regRole" class="">Role:</label>
-	         <select id="regRole" class="">
-	             <option value="regular">Regular</option>
-	             <option value="admin">Admin</option>
-	         </select>
-	         <!-- End of role input field -->
-	         <button type="submit">Register</button>
-	     </form>
-	     <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
-	 </div>
+	   <div id="registerForm" style="display: none;">
+	       <form>
+	           <input type="text" id="regUsername" placeholder="Username"><br>
+	           <input type="password" id="regPassword" placeholder="Password"><br>
+	           <button type="submit">Register</button>
+	       </form>
+	       <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+	   </div>
 
 	   <div id="loggedInArea" style="display: none;">
 	       <p>Welcome, <span id="loggedInUser"></span>!</p>
@@ -1372,21 +1322,7 @@
 				
 				<!--  end of music player -->
 				
-				<div id="levelIndicator">
-						Current Level: <span class="levelNumber"></span>
-				</div>
-				
-				<div id="userManagement">
-				    <h2>User Management</h2>
-				    <div id="userList"></div>
-				    <button onclick="deleteSelectedUsers()">Delete Selected Users</button>
-				    <button onclick="modifySelectedRoles()">Save Role Changes</button>
-				</div>
-				
 			</div>
-			
-			
-			
             <div class="songsWrapper">
 
               <div></div>
@@ -1462,149 +1398,13 @@
 				
 				
               </div>
-			  
-		<!-- HTML for the user management interface -->
-		
+
               <script>
-				  
-				  
-				  // Check if the logged-in user is an admin
-				  function isAdminLoggedIn() {
-				      // Implement logic to check if the logged-in user is an admin
-				      // For example, you can check the user's role stored in session or local storage
-				      // Return true if the user is an admin, false otherwise
-					  
-				  // Retrieve user role from session storage
-				      const userId = sessionStorage.getItem('userId');
-					  console.log(userId)
-
-				      // Check if the user role is 'admin'
-				      return userId === '664a717472d3a827a9665919';
-				  }
-
-				  // Function to toggle visibility of user management interface based on admin login status
-				  function toggleUserManagementVisibility() {
-				      const userManagementDiv = document.getElementById('userManagement');
-				      if (isAdminLoggedIn()) {
-				          userManagementDiv.style.display = 'block'; // Show the interface for admin
-				      } else {
-				          userManagementDiv.style.display = 'none'; // Hide the interface for non-admin users
-				      }
-				  }
-
-				  
-				  
-				  // Function to fetch users from the server
-				  async function fetchUsers() {
-				      try {
-				          const response = await fetch('/users');
-				          const users = await response.json();
-				          displayUsers(users);
-				      } catch (error) {
-				          console.error('Error fetching users:', error.message);
-				      }
-				  }
-				
-				
-				  // Function to display users in the interface
-				  function displayUsers(users) {
-				      const userListElement = document.getElementById('userList');
-				      userListElement.innerHTML = ''; // Clear existing user list
-
-				      users.forEach(user => {
-				          const userDiv = document.createElement('div');
-				          userDiv.classList.add('user');
-
-				          // Create a checkbox for user selection
-				          const checkbox = document.createElement('input');
-				          checkbox.type = 'checkbox';
-				          checkbox.value = user._id; // Assuming user ID is stored in the _id field
-				          userDiv.appendChild(checkbox);
-
-				          // Create a dropdown menu for selecting user roles
-				          const roleSelect = document.createElement('select');
-				          roleSelect.classList.add('role-select');
-				          const adminOption = document.createElement('option');
-				          adminOption.value = 'admin';
-				          adminOption.textContent = 'Admin';
-				          const regularOption = document.createElement('option');
-				          regularOption.value = 'regular';
-				          regularOption.textContent = 'Regular';
-				          roleSelect.appendChild(adminOption);
-				          roleSelect.appendChild(regularOption);
-				          roleSelect.value = user.role; // Set the default role based on user's current role
-				          userDiv.appendChild(roleSelect);
-
-				          // Display username
-				          const usernameSpan = document.createElement('span');
-				          usernameSpan.textContent = user.username;
-				          userDiv.appendChild(usernameSpan);
-
-				          userListElement.appendChild(userDiv);
-				      });
-				  }
-
-				  // Function to delete selected users
-				  async function deleteSelectedUsers() {
-				      const checkboxes = document.querySelectorAll('.user input[type="checkbox"]:checked');
-				      const userIds = Array.from(checkboxes).map(checkbox => checkbox.value);
-
-				      try {
-				          const responses = await Promise.all(userIds.map(userId => fetch(`/users/${userId}`, { method: 'DELETE' })));
-				          const success = responses.every(response => response.ok);
-				          if (success) {
-				              // Refresh user list after deletion
-				              fetchUsers();
-				          } else {
-				              throw new Error('Failed to delete some users');
-				          }
-				      } catch (error) {
-				          console.error('Error deleting users:', error.message);
-				      }
-				  }
-
-				  // Function to modify roles of selected users
-				  async function modifySelectedRoles() {
-				      const checkboxes = document.querySelectorAll('.user input[type="checkbox"]:checked');
-				      const updates = Array.from(checkboxes).map(checkbox => {
-				          const userId = checkbox.value;
-				          const userDiv = checkbox.parentElement;
-				          const roleSelect = userDiv.querySelector('.role-select'); // Select the role dropdown within the user div
-				          const role = roleSelect.value; // Get the selected role from the dropdown
-				          return { userId, role };
-				      });
-
-				      try {
-				          const responses = await Promise.all(updates.map(({ userId, role }) => fetch(`/users/${userId}`, { method: 'PATCH', body: JSON.stringify({ role }), headers: { 'Content-Type': 'application/json' } })));
-				          const success = responses.every(response => response.ok);
-				          if (success) {
-				              // Refresh user list after role modification
-				              fetchUsers();
-				          } else {
-				              throw new Error('Failed to modify roles for some users');
-				          }
-				      } catch (error) {
-				          console.error('Error modifying roles:', error.message);
-				      }
-				  }
-
-
-			      // Fetch users when the page loads
-			      fetchUsers();
-				  
-				  
-				  
-				  
                  let globalVol = 0.1;
                  let globalNoteVol = 50;
                  let globalPlayingStyle = 0;
                  let globalSongsPlayed = [];
 				 let globalFirstTry = null;
-				 let userLoggedIn = false;
-				 let userId = '';
-				 let globalLevel = 1;
-				 
-				 
                  const keys = document.querySelectorAll('.key, .black-key');
 
                  const songs = document.querySelectorAll('.song');
@@ -1616,148 +1416,70 @@
                  const startMusicBtn = document.querySelector('.start_music');
 				 
 				 document.getElementById("loginForm").addEventListener("submit", async function(event) {
-				     event.preventDefault();
-				     const username = document.getElementById("username").value;
-				     const password = document.getElementById("password").value;
+				             event.preventDefault();
+				             const username = document.getElementById("username").value;
+				             const password = document.getElementById("password").value;
 
-				     try {
-				         const response = await fetch('/login', {
-				             method: 'POST',
-				             headers: {
-				                 'Content-Type': 'application/json'
-				             },
-				             body: JSON.stringify({ username, password })
+				             const response = await fetch('/login', {
+				                 method: 'POST',
+				                 headers: {
+				                     'Content-Type': 'application/json'
+				                 },
+				                 body: JSON.stringify({ username, password })
+				             });
+
+				             const message = await response.text();
+				             document.getElementById("message").innerText = message;
+				             if (message === "Login successful.") {
+				                 document.getElementById("loggedInUser").innerText = username;
+				                 document.getElementById("loginForms").style.display = "none";
+				                 document.getElementById("loggedInArea").style.display = "block";
+				             }
 				         });
 
-				         if (!response.ok) {
-				             throw new Error('Login failed: ' + response.status);
-				         }
+				         document.getElementById("registerForm").addEventListener("submit", async function(event) {
+				             event.preventDefault();
+				             const username = document.getElementById("regUsername").value;
+				             const password = document.getElementById("regPassword").value;
 
-				         const data = await response.json();
-				         const message = data.message;
+				             const response = await fetch('/register', {
+				                 method: 'POST',
+				                 headers: {
+				                     'Content-Type': 'application/json'
+				                 },
+				                 body: JSON.stringify({ username, password })
+				             });
 
-				         userId = data.userId;
-
-				       //  const role = data.role; // Retrieve user role
-
-				         if (message === "Login successful.") {
-						  // Store user role in session storage
-						     sessionStorage.setItem('userId', userId);
-							 getKeyStatsReportForUser(userId);
-
-						     // Redirect or perform other actions based on user role
-						     if (isAdminLoggedIn()) {
-						         // If the user is an admin, show admin-specific UI elements
-						         document.getElementById("userManagement").style.display = "block";
-						     } else {
-						         // If the user is not an admin, hide admin-specific UI elements
-						         document.getElementById("userManagement").style.display = "none";
-						     }
-							 
-				             document.getElementById("loggedInUser").innerText = username;
-				             document.getElementById("loginForms").style.display = "none";
-				             document.getElementById("loggedInArea").style.display = "flex";
-							 userLoggedIn = true;
-				         } else {
-				             // Handle login failure
-				             throw new Error('Login failed: ' + message);
-				         }
-				     } catch (error) {
-				         console.error('Login error:', error.message);
-				         // Display error message to the user
-				         document.getElementById("message").innerText = error.message;
-				         // Hide the error message after 3 seconds (3000 milliseconds)
-				         setTimeout(() => {
-				             document.getElementById("message").innerText = "";
-				         }, 3000); // Adjust the time as needed
-				     }
-				 });
-				 
-		
-				 document.getElementById("registerForm").addEventListener("submit", async function(event) {
-				     event.preventDefault();
-				     const username = document.getElementById("regUsername").value;
-				     const password = document.getElementById("regPassword").value;
-
-				     // Check if username or password is empty
-				     if (!username.trim() || !password.trim()) {
-				         document.getElementById("message").innerText = "Username and password cannot be empty.";
-				         return; // Stop further execution
-				     }
-
-				     try {
-				         const response = await fetch('/register', {
-				             method: 'POST',
-				             headers: {
-				                 'Content-Type': 'application/json'
-				             },
-				             body: JSON.stringify({ username, password })
+				             const message = await response.text();
+				             document.getElementById("message").innerText = message;
 				         });
+						 
+						 document.getElementById('showRegister').addEventListener('click', function(e) {
+						         e.preventDefault();
+						         document.getElementById('loginForms').style.display = 'none';
+						         document.getElementById('registerForm').style.display = 'block';
+						     });
 
-				         if (!response.ok) {
-				             throw new Error('Registration failed: ' + response.status);
-				         }
+						     document.getElementById('showLogin').addEventListener('click', function(e) {
+						         e.preventDefault();
+						         document.getElementById('registerForm').style.display = 'none';
+						         document.getElementById('loginForms').style.display = 'block';
+						     });
 
-				         
-						 if (response.ok) {
-					         const message = await response.text();
-					         document.getElementById("message").innerText = message;
-							 document.getElementById('registerForm').style.display = 'none';
-							 document.getElementById('loginForms').style.display = 'flex';
-					         setTimeout(() => {
-					             document.getElementById("message").innerText = "";
-					         }, 3000); // Adjust the time as needed
-						 }
-				     } catch (error) {
-				         console.error('Registration error:', error.message);
-				         // Handle error, e.g., display error message to the user
-				     }
-				 });
-
-				 document.getElementById('showRegister').addEventListener('click', function(e) {
-				     e.preventDefault();
-				     console.log("REGISTER PAPA");
-				     document.getElementById('loginForms').style.display = 'none';
-				     document.getElementById('registerForm').style.display = 'flex';
-				 });
-
-				 document.getElementById('showLogin').addEventListener('click', function(e) {
-				     e.preventDefault();
-				     document.getElementById('registerForm').style.display = 'none';
-				     document.getElementById('loginForms').style.display = 'flex';
-				 });
-
-				 document.getElementById("logoutButton").addEventListener("click", async function() {
-				     try {
-				         const response = await fetch('/logout', {
-				             method: 'POST'
+				         document.getElementById("logoutButton").addEventListener("click", async function() {
+				             const response = await fetch('/logout', {
+				                 method: 'POST'
+				             });
+				             const message = await response.text();
+				             if (message === "Logged out successfully.") {
+				                 document.getElementById("loginForms").style.display = "block";
+				                 document.getElementById("loggedInArea").style.display = "none";
+				                 document.getElementById("message").innerText = message;
+				             }
 				         });
-
-				         if (!response.ok) {
-				             throw new Error('Logout failed: ' + response.status);
-				         }
-
-				         const message = await response.text();
-				         if (message === "Logged out successfully.") {
-				             document.getElementById("loginForms").style.display = "flex";
-				             document.getElementById("loggedInArea").style.display = "none";
-							 document.getElementById("userManagement").style.display = "none";
-							 sessionStorage.setItem('userId', '0');
-				             console.log(message);
-				         }
-				     } catch (error) {
-				         console.error('Logout error:', error.message);
-				         // Handle error, e.g., display error message to the user
-				     }
-				 });
 					  
 
                  $("document").ready(function() {
-
-   				  // Call the function initially when the page loads
-   				 // toggleUserManagementVisibility();
-				 sessionStorage.setItem('userId', '0');
-				 
                     console.log(globalVol);
                     volume.value = globalVol;
 					//globalNoteVal = 50;
@@ -1840,22 +1562,23 @@
                 });
 				
 				// Function to send key statistics to server
-				async function sendKeyStatsToServer(userId, keyStats) {
-					// Assuming userId and keyStats are defined somewhere in your client-side code
-					//const userId = 'yourUserId';
-					console.log("calling server",keyStats);
-
-					axios.post(`/updateKeyStats/${userId}`, keyStats)
-					    .then(response => {
-					        console.log('Server response:', response.data);
-					        // Handle successful response from the server here
-					    })
-					    .catch(error => {
-					        console.error('Error updating keyStats:', error);
-					        // Handle errors here
-					    });
+				function sendKeyStatsToServer(userId, keyStats) {
+				    fetch(`/updateKeyStats/${userId}`, {
+				        method: 'POST',
+				        headers: {
+				            'Content-Type': 'application/json'
+				        },
+				        body: JSON.stringify(keyStats)
+				    })
+				    .then(response => {
+				        if (!response.ok) {
+				            throw new Error('Failed to update key stats');
+				        }
+				    })
+				    .catch(error => {
+				        console.error('Error updating key stats:', error);
+				    });
 				}
-			
 				
 				// Function to fetch key stats report for a specific user from server
 				function getKeyStatsReportForUser(userId) {
@@ -1906,7 +1629,6 @@
                 btn2.addEventListener('click', () => {
                   console.log("START GAME NOW");
                   $(".disabledd").removeClass('disabledd');
-				   $('.levelNumber').text(globalLevel);
                   randomSong();
 				  $('.playing').addClass('lastPlayed');
 				  	$('#score').html('Score: ' + 0);
@@ -1972,7 +1694,6 @@
 					 
                      audio.volume = globalVol;
                      audio.play();
-					 
 					 audio.ontimeupdate = function () {
 						 $(".current_musicplayer").text(sToTime(audio.currentTime).slice(3))
 						 
@@ -1994,10 +1715,6 @@
                      const songDisplaying = document.querySelector('div.song_musicplayer > span');
 					 const artistDisplaying = document.querySelector('div.song_musicplayer > small');
 					 const playBtn = document.querySelector('a.play-pause');
-					 let availKeys = $('.keysWrapper div[data-note]').filter(function() {
-					     return $(this).data('note').length <= 2;
-					 });
-					 
 					 globalFirstTry = true;
 					 
                      songs.forEach(song => {
@@ -2016,160 +1733,6 @@
                      btn3.classList.remove('hide');
                      repeatBtn.classList.remove('hide');
                      stopBtn.classList.remove('hide');
-
-					 const currentKey = songPlaying.dataset.note;
-				
-					 console.log("availKeys: ", availKeys);
-					 
-	 				 const $keyWithNote  = availKeys.filter(function() {
-						 console.log("the note: ",this.dataset.note);
-						 console.log("the currentKey: ",currentKey);
-						 
-    				 	return this.dataset.note === currentKey;
-					 });
-					 
-					 console.log($keyWithNote);
-					
-					 availKeys = availKeys.not($keyWithNote);
-
-					 console.log(availKeys);
-					 
-					 // Generate a random index within the length of availKeys array
-					 const randomIndex = Math.floor(Math.random() * availKeys.length);
-
-					 // Select the random div
-					 const randomDiv = availKeys.eq(randomIndex);
-
-					 // Assign $otherKey to the random div
-					 const $otherKey = randomDiv;
-
-					 // Remove the random div from availKeys
-					 availKeys = availKeys.not(randomDiv);
-					 
-					 console.log(availKeys);
-					 
-					 // Select the random div
-					 const randomDiv2 = availKeys.eq(randomIndex);
-
-					 // Assign $otherKey to the random div
-					 const $thirdKey = randomDiv2;
-
-					 // Remove the random div from availKeys
-					 availKeys = availKeys.not(randomDiv2);
-					 
-					
-					 // Select the random div
-					 const randomDiv3 = availKeys.eq(randomIndex);
-
-					 // Assign $otherKey to the random div
-					 const $fourthKey = randomDiv3;
-
-					 // Remove the random div from availKeys
-					 availKeys = availKeys.not(randomDiv3);
-					 
-					
-
-					 // Select the random div
-					 const randomDiv4 = availKeys.eq(randomIndex);
-
-					 // Assign $otherKey to the random div
-					 const $fifthKey = randomDiv4;
-
-					 // Remove the random div from availKeys
-					 availKeys = availKeys.not(randomDiv4);
-					 
-					
-
-					 // Select the random div
-					 const randomDiv5 = availKeys.eq(randomIndex);
-
-					 // Assign $otherKey to the random div
-					 const $sixthKey = randomDiv5;
-
-					 // Remove the random div from availKeys
-					 availKeys = availKeys.not(randomDiv5);
-					 
-				    
-					// console.log($sixthKey);
-					   
-					 $('.keysWrapper div').addClass('disabledd');
-	                 console.log(songPlaying);
-	 		 
-			         switch (globalLevel) {
-						 case 1:
-							 // Conditions for level 1
-							 console.log("Reached level 1!");
-							 console.log(currentKey);
-							 console.log($keyWithNote);
-						     $keyWithNote.removeClass('disabledd');
-							 $otherKey.removeClass('disabledd');
-							 break;
-			             case 2:
-			                 // Conditions for level 2
-			                 console.log("Reached level 2!");
-							 console.log(currentKey);
-							 $('.keysWrapper div').addClass('disabledd');
-							 $keyWithNote.removeClass('disabledd');
-							 $otherKey.removeClass('disabledd');
-							 $thirdKey.removeClass('disabledd');
-							 
-			                 break;
-			             case 3:
-			                 // Conditions for level 3
-			                 console.log("Reached level 3!");
-							 console.log(currentKey);
-							 $('.keysWrapper div').addClass('disabledd');
-							 $keyWithNote.removeClass('disabledd');
-							 $otherKey.removeClass('disabledd');
-							 $thirdKey.removeClass('disabledd');
-							 $fourthKey.removeClass('disabledd');
-							 console.log($fourthKey);
-			                 
-							 break;
-			             case 4:
-			                 // Conditions for level 4
-			                 console.log("Reached level 4!");
-							 console.log(currentKey);
-							 $('.keysWrapper div').addClass('disabledd');
-							 $keyWithNote.removeClass('disabledd');
-							 $otherKey.removeClass('disabledd');
-							 $thirdKey.removeClass('disabledd');
-							 $fourthKey.removeClass('disabledd');
-							 $fifthKey.removeClass('disabledd');
-							 console.log($fifthKey);
-			                 
-							 break;  
-						 case 5:
-			                 // Conditions for level 5
-			                 console.log("Reached level 5!");
-							 console.log(currentKey);
-							 $('.keysWrapper div').addClass('disabledd');
-							 $keyWithNote.removeClass('disabledd');
-							 $otherKey.removeClass('disabledd');
-							 $thirdKey.removeClass('disabledd');
-							 $fourthKey.removeClass('disabledd');
-							 $fifthKey.removeClass('disabledd');
-							 $sixthKey.removeClass('disabledd');
-							 console.log($fifthKey);
-			                 console.log($sixthKey);
-							 console.log($fourthKey);
-							 
-							 break;
-						 case 6:
-					     case 7:
-						 case 8:
-						 case 9:
-			                 // Conditions for level 5
-			                 console.log("Reached level Advanced!");
-							  $('.keysWrapper div').removeClass('disabledd');
-							  
-							  break;
-			             // Add more cases for additional levels
-			             default:
-			                 // Default case
-			                 console.log("Default level reached!");
-			         }
-					
                      setTimeout(function (){
                         audio.pause();
                         songPlaying.classList.remove('playing');
@@ -2199,25 +1762,20 @@
 				 	playBtn.classList.add('active_musicplayer');
 					
                  }
-
 				 
 				 function createGame(onScoreChanged, onLevelChanged) {
 				     let score = 0;
 				     const scoreIncrement = 10;
 				     let level = 1;
-					 
-				
-					 const incrementScore = () => {
-					     score += scoreIncrement;
-					     onScoreChanged(score);
-					     if (score >= (level * 10)) {
-					         onLevelChanged(++level);
-					         globalLevel = level; // Update globalLevel to match the current level
-							 $('.levelNumber').text(level);
-					        // console.log(`Reached level ${level}!`);
-					     }
-					 }
 
+				     const incrementScore = () => {
+				         score += scoreIncrement;
+				         onScoreChanged(score);
+				         if (score >= (level * 100)) {
+				             onLevelChanged(++level);
+				         }
+				     }
+    
 				     return {
 				         incrementScore
 				     }
@@ -2258,9 +1816,9 @@
 				                     stopSong(song);
 				                 }
 
-				                 // Increment right count for the currentKey
-				                 keyStats[currentKey] = keyStats[currentKey] || { right: 0, wrong: 0 };
-				                 keyStats[currentKey].right++;
+				                 // Increment right count for this key
+				                 keyStats[note] = (keyStats[note] || {});
+				                 keyStats[note].right = (keyStats[note].right || 0) + 1;
 
 				                 // Send key statistics data to server
 				                 if (userLoggedIn) {
@@ -2268,7 +1826,7 @@
 				                 }
 
 				                 // If it's the first try and user is logged in, increment score
-				                 if (globalFirstTry && userLoggedIn) {
+				                 if (globalFirstTry == true && userLoggedIn) {
 				                     console.log("true: ", globalFirstTry);
 				                     game.incrementScore();
 				                 }
@@ -2280,16 +1838,13 @@
 				             } else {
 				                 key.classList.add('wrong');
 
-				                 // Increment wrong count for the currentKey
-				                 keyStats[currentKey] = keyStats[currentKey] || { right: 0, wrong: 0 };
-				                 keyStats[currentKey].wrong++;
-
-				                 console.log("user ID: ", userId);
-				                 console.log("keyStats: ", keyStats);
+				                 // Increment wrong count for this key
+				                 keyStats[note] = (keyStats[note] || {});
+				                 keyStats[note].wrong = (keyStats[note].wrong || 0) + 1;
 
 				                 // Send key statistics data to server
 				                 if (userLoggedIn) {
-				                     sendKeyStatsToServer(userId, keyStats);
+				                   //  sendKeyStatsToServer(userId, keyStats);
 				                 }
 
 				                 globalFirstTry = false;
@@ -2297,18 +1852,14 @@
 				             }
 				         }
 				     });
-		
-				
-					 
-	                 key.addEventListener('touchstart', () => {
-	                    /* use if you need something to be only on TOUCH. if nothing here TOUCH uses MOUSEDOWN above*/
-	                    preventDefault();
-	                    stopPropagation();
-	                 });
 				 });
 
-                 
-   
+                 key.addEventListener('touchstart', () => {
+                    /* use if you need something to be only on TOUCH. if nothing here TOUCH uses MOUSEDOWN above*/
+                    preventDefault();
+                    stopPropagation();
+                 });
+                });
 
 
                  keys.forEach(key => {
