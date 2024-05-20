@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const path = require('path'); // Add this line to use the 'path' module
+// 
 
 const app = express();
 
@@ -10,8 +11,10 @@ app.use(express.json());
 
 const http = require('http');
 
+console.log("MongoDB URI:", process.env.MONGODB_URI);
+
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://eartrainin-main-db-09a428d33aa:jCUbmpVNR2UgnSzW6yXVtWMrdg4NcG@prod-us-central1-3.yr9so.mongodb.net/eartrainin-main-db-09a428d33aa", {
+mongoose.connect(process.env.MONGODB_URI, {
   // useNewUrlParser and useUnifiedTopology are no longer needed in version 4.x
 }).then(() => {
   console.log("Connected to MongoDB");
