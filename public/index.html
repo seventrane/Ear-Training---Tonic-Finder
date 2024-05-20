@@ -2210,7 +2210,7 @@
 					 const incrementScore = () => {
 					     score += scoreIncrement;
 					     onScoreChanged(score);
-					     if (score >= (level * 10)) {
+					     if (score >= (level * 100)) {
 					         onLevelChanged(++level);
 					         globalLevel = level; // Update globalLevel to match the current level
 							 $('.levelNumber').text(level);
