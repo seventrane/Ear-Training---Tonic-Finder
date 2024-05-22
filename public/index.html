@@ -6,11 +6,104 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.css" />
+		  <link rel="stylesheet" href="/dist/style1.css">
+		   <link rel="stylesheet" href="/dist/graphiq.css">
+		  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	
+	
 
-    <style>
-       /*local style*/
+  
+   <style>
+	   /* Local style */
+	   /* Toggle Button Style */
+	   .toggle-button {
+	     appearance: none;
+	     background-color: #ccc;
+	     border: none;
+	     border-radius: 20px;
+	     cursor: pointer;
+	     height: 24px;
+	     outline: none;
+	     padding: 2px;
+	     position: relative;
+	     width: 59px;
+	   }
 	   
+	   .toggle-button.on {
+		   background: #ff8533;
+	   }
+
+	   .toggle-button::before {
+	     background-color: #fff;
+	     border-radius: 50%;
+	     content: "";
+	     height: 20px;
+	     left: 2px;
+	     position: absolute;
+	     top: 2px;
+	     transition: transform 0.3s ease-in-out;
+	     width: 20px;
+	   }
+
+	   .toggle-button.on::before {
+	     transform: translateX(35px);
+	   }
+
+	   .toggle-button.off::before {
+	     transform: translateX(0px);
+	   }
+
+	   /* Text Style */
+	   .toggle-button span {
+	     color: #fff;
+	     font-family: Arial, sans-serif;
+	     font-size: 12px;
+	     position: absolute;
+	     top: 50%;
+	     transform: translateY(-50%);
+	     white-space: nowrap;
+	   }
+	   
+	   .toggle-button.on span.off {
+		   display: none;
+	   }
+	   
+	   .toggle-button.on span.on {
+		   display: block;
+	   }
+	   
+	   .toggle-button.off span.off {
+		   display: block;
+	   }
+	   
+	   .toggle-button.off span.on {
+		   display: none;
+	   }
+
+	   /* Positioning */
+	   .toggle-button span.on {
+	     left: 10px;
+	   }
+
+	   .toggle-button span.off {
+	     right: 10px;
+	   }
+	   
+	   
+	   #levelIndicator {
+	       position: absolute;
+	       left: 76%;
+	       top: -39%;
+	       font-size: 0.6em; /* Adjust as needed */
+	       color: #333; /* Text color */
+	       background-color: #fff; /* Background color for the score */
+	       padding: 11px 20px 7px; /* Padding around the score */
+	       border-radius: 10px; /* Rounded corners */
+	       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
+	       text-transform: uppercase;
+	   }
+
 	   .topBanner {
 	       display: flex;
 	       margin: 20px auto;
@@ -20,75 +113,159 @@
 	       color: #fff;
 	       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	       align-items: baseline;
-		   position: relative;
-		       max-width: 1024px;
-			   width: 100%;
-	   }
-	   #score {
-	              position: absolute;
-	              right: 20px; /* Adjust as needed */
-	              font-size: 1em; /* Adjust as needed */
-	              color: #333; /* Text color */
-	              background-color: #fff; /* Background color for the score */
-	              padding: 13px 20px 7px; /* Padding around the score */
-	              border-radius: 10px; /* Rounded corners */
-	              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
-				  text-transform: uppercase;
+	       position: relative;
+	       max-width: 1024px;
+	       width: 100%;
 	   }
 
-	   #loginForms {
-	   	width: 80%;
-	    display: flex;
-	    align-items: baseline;
+	   #score {
+	       position: absolute;
+	       right: 20px; /* Adjust as needed */
+	       font-size: 1em; /* Adjust as needed */
+	       color: #333; /* Text color */
+	       background-color: #fff; /* Background color for the score */
+	       padding: 13px 20px 7px; /* Padding around the score */
+	       border-radius: 10px; /* Rounded corners */
+	       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
+	       text-transform: uppercase;
+	   }
+
+	   #loginForms,
+	   #registerForm {
+	       width: 80%;
+	       display: flex;
+	       align-items: baseline;
+	   }
+
+	   #loginForms form,
+	   #registerForm form {
+	       /* width: 45%; Adjust as needed */
+	       display: flex;
+	       column-gap: 5px;
+	       float: left;
+	       margin-right: 10px;
+	       margin-bottom: 0;
+	   }
+
+	   #loginForms p,
+	   #registerForm p,
+	   #loggedInArea p {
+	       margin: 0;
+	       display: inline-block;
+	   }
+
+	   input[type="text"],
+	   input[type="password"],
+	   button {
+	       /* margin-bottom: 10px; */
+	       padding: 10px;
+	       border: none;
+	       border-radius: 5px;
+	   }
+
+	   button {
+	       background-color: #ff6600; /* Button background color */
+	       color: #fff; /* Button text color */
+	       cursor: pointer;
+	   }
+
+	   button:hover {
+	       background-color: #ff8533; /* Button background color on hover */
+	   }
+
+	   a {
+	       color: #ff6600; /* Link color */
+	       text-decoration: none;
+	   }
+
+	   a:hover {
+	       text-decoration: underline; /* Underline link on hover */
+	   }
+
+	   #userManagement {
+	       padding: 2px;
+	       border: 1px solid #ccc;
+	       border-radius: 5px;
+	       background-color: #f9f9f9;
+	       margin-bottom: 20px;
+	       display: none;
+	       width: 41%;
+	   }
+
+	   #userList {
+	       margin-top: 10px;
+	   }
+
+	   .user {
+	       margin-bottom: 5px;
+	   }
+
+	   .delete-btn {
+	       margin-left: 10px;
+	       cursor: pointer;
 	   }
 	   
-	        #loginForms form, #registerForm form {
-	          //  width: 45%; /* Adjust as needed */
-				display: flex;
-				column-gap: 5px;
-				float: left;
-				margin-right: 10px;
-				margin-bottom: 0;
-	        }
-
-	        #loginForms p, #registerForm p, #loggedInArea p {
-	            margin: 0;
-				
-	        }
-
-	        input[type="text"], input[type="password"], button {
-	            //margin-bottom: 10px;
-	            padding: 10px;
-	            border: none;
-	            border-radius: 5px;
-	        }
-
-	        button {
-	            background-color: #ff6600; /* Button background color */
-	            color: #fff; /* Button text color */
-	            cursor: pointer;
-	        }
-
-	        button:hover {
-	            background-color: #ff8533; /* Button background color on hover */
-	        }
-
-	        a {
-	            color: #ff6600; /* Link color */
-	            text-decoration: none;
-	        }
-
-	        a:hover {
-	            text-decoration: underline; /* Underline link on hover */
-	        }
+	   #message {
+		   line-height: 2.9;
+	   }
+	   
+	   .filterZone {
+		   padding: 2%;
+		   padding-left: 10%;
+	   }
+	   
+	   .tag {
+	      padding: 2px 10px;
+	      border: 1px dashed #3498db;
+	      background-color: transparent;
+	      color: #fff;
+	      font-size: 16px;
+	      cursor: pointer;
+	      border-radius: 5px;
+	      outline: none;
+	      transition: background-color 0.3s;
+	      margin-bottom: 5px;
+		  float: right;
+		  margin-right: 5px;
+		  position: relative;
+	    }
+	    .tag.active {
+	      background-color: #3498db;
+	    }
+		
+		.tag:hover {
+			background-color: #3498db;
+		}
+		
+		.music-box {
+			float: left;
+		}
+		
+		.tagLabel {
+			border: none;
+			background: transparent;
+			    float: left;
+			    color: #3498db;
+			    font-weight: 900;
+			    padding-left: 4%;
+		}
+		
+		.container {
+			display:none;
+		}
     </style>
+	
 </head>
 
   <body>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js" ></script>
     <script type="text/javascript" src="/js/client.js" ></script>
-    <script type="text/javascript" src="/js/soundmanager2-jsmin.js" ></script>
+	<script src="js/soundmanager2-nodebug.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="/js/soundmanager2-nodebug.js" ></script>
+	<script src="/js/graphiq.min.js"></script>
+	
 
     <script>
         soundManager.setup({
@@ -245,17 +422,17 @@
 	    
       </script>
 		
-		<div class="topBanner" >
-	   <div id="message"></div>
+	<div class="topBanner" >
+	   	 	<div id="message"></div>
 
-	   <div id="loginForms">
-	       <form id="loginForm">
-	           <input type="text" id="username" placeholder="Username"><br>
-	           <input type="password" id="password" placeholder="Password"><br>
-	           <button type="submit">Login</button>
-	       </form>
-	       <p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
-	   </div>
+	   	 <div id="loginForms">
+	       	<form id="loginForm">
+	           	<input type="text" id="username" placeholder="Username"><br>
+	           	<input type="password" id="password" placeholder="Password"><br>
+	           	<button type="submit">Login</button>
+	       	</form>
+	       	<p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
+	  	 </div>
 
 	   <div id="registerForm" style="display: none;">
 	       <form>
@@ -271,9 +448,13 @@
 	       <button id="logoutButton">Logout</button>
 	   </div>
 		  
-		   <div id="score">Score: </div>
-	   </div>
-     <div class="piano_zone">
+		<div id="score">
+			   Score: 
+		   </div>
+		   
+	</div>
+	
+    <div class="piano_zone">
          <div class="content clearfix">
             <h2>EAR TRAINING - TONIC FINDER</h2>
             
@@ -308,1021 +489,57 @@
 				        <div class="track"></div>
 				      </div>
 				    </div>
-				    <div class="action-button disabledd"><a class="random"><i class="fa fa-random"></i></a><a class="prev" onclick="prevSong()"><i class="fa fa-step-backward"></i></a><a class="play-pause active_musicplayer"><i class="fa fa-pause" ></i></a><a class="stop hide"><i class="fa fa-stop"></i></a><a class="next" onclick="randomSong()"><i class="fa fa-step-forward"></i></a><a class="repeat"><i class="fa fa-repeat"></i></a><a class="volume hide"><i class="fa fa-volume-up"></i></a></div>
+				    <div class="action-button disabledd">
+						<a class="random"><i class="fa fa-random"></i></a>
+						<a class="prev" onclick="prevSong()"><i class="fa fa-step-backward"></i></a>
+						<a class="play-pause active_musicplayer"><i class="fa fa-pause" ></i></a>
+						<a class="stop hide"><i class="fa fa-stop"></i></a>
+						<a class="next" onclick="randomSong()"><i class="fa fa-step-forward"></i></a>
+						<a class="repeat"><i class="fa fa-repeat"></i></a>
+						<a class="volume hide"><i class="fa fa-volume-up"></i></a>
+						<input type="checkbox" class="hide" id="toggleMarkForEdit">
+						<label for="toggleMarkForEdit" class="hide">Toggle Mark For Edit</label>
+					</div>
 				  </div>
 				  <div class="lists">
 				    <div class="label">SONGS</div>
 				    <div class="box"></div>
-				    <ul>
-				      <li>
-						
-		              	<div class="song" data-song="2" data-note="G">
-		                	Gravity John Mayer
-		                	<i class="fa fa-solid fa-volume-up hide"></i>
-		              	</div>
-		              	<audio data-sound="2" src="pianoSongs/gravityJohnmayer.mp3"></audio>
-					  </li>
-					  
-					  <li>
-		                <div class="song" data-song="3" data-note="Bb">
-		                  Purple Rain Prince
-		                  <i class="fa fa-solid fa-volume-up hide"></i>
-		                </div>
-		                <audio data-sound="3" src="pianoSongs/purpleRainPrince.mp3"></audio>
-					  </li>
-					  
-					  <li>
-		                <div class="song" data-song="4" data-note="A">
-		                  September EWF
-		                  <i class="fa fa-solid fa-volume-up hide"></i>
-		                </div>
-		                <audio data-sound="4" src="pianoSongs/septemberEWF.mp3"></audio>
-					  </li>
-					  
-					  <li>
-		                <div class="song" data-song="5" data-note="A">
-		                  Stairway to Heaven Led Zeppelin
-		                  <i class="fa fa-solid fa-volume-up hide"></i>
-		                </div>
-		                <audio data-sound="5" src="pianoSongs/stairwayToHeavenLed.mp3"></audio>
-					  </li>
-				
-					  <li>
-					          <div class="song" data-song="6" data-note="Gb" data-quality="minor">
-					              Billie Jean Michael Jackson
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="6" src="pianoSongs/billieJeanMJ.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="7" data-note="Gb">
-					              Wonderwall Oasis
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="7" src="pianoSongs/wonderwallOasis.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="8" data-note="F" data-quality="minor">
-					              Happy Pharrell Williams
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="8" src="pianoSongs/happyPharell.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="9" data-note="A">
-					              Someone Like You Adele
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="9" src="pianoSongs/someoneLikeYouAdele.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="10" data-note="B">
-					              Hotel California The Eagles
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="10" src="pianoSongs/hotelCaliforniaEagles.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="11" data-note="C">
-					              All The Small Things Blink 182
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="11" src="pianoSongs/allTheSmallThingsBlink182.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="12" data-note="F" data-quality="minor">
-					              Smells Like Teen Spirit
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="12" src="pianoSongs/smellsLikeTeenSpiritNirvana.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="13" data-note="C" data-quality="major">
-					              Build Me Up Butter Cup
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="13" src="pianoSongs/BuildMeUpButterCup.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="14" data-note="G" data-quality="major">
-					              Creep Radiohead
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="14" src="pianoSongs/creepRadiohead.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="15" data-note="G" data-quality="major">
-					              Blackbird The Beatles
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="15" src="pianoSongs/blackbirdBeatles.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="16" data-note="G" data-quality="major">
-					              Wish You Were Here Floyd
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="16" src="pianoSongs/wishYouWereHereFloyd.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="17" data-note="A" data-quality="minor">
-					              On The Beach Neil Young
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="17" src="pianoSongs/onTheBeachNeilYoung.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="18" data-note="E" data-quality="major">
-					              Satisfaction Rolling Stones
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="18" src="pianoSongs/satisfactionRollingStones.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="19" data-note="E" data-quality="mixo">
-					              Cocaine Eric Clapton
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="19" src="pianoSongs/cocaineClapton.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="20" data-note="D" data-quality="minor">
-					              Layla Eric Clapton
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="20" src="pianoSongs/laylaClapton.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="21" data-note="Ab" data-quality="major">
-					              Viva La Vida ColdPlay
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="21" src="pianoSongs/vivaLaVidaColdplay.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="22" data-note="C" data-quality="major">
-					              Hallelujah Leonard Cohen
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="22" src="pianoSongs/hallelujahLeonardCohen.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="23" data-note="B" data-quality="major">
-					              I'm Yours Jason Mraz
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="23" src="pianoSongs/imYoursJasonMraz.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="24" data-note="E" data-quality="minor">
-					              Lucky Jason Mraz
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="24" src="pianoSongs/luckyJasonMraz.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="25" data-note="D" data-quality="major">
-					              If It Kills Me Jason Mraz
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="25" src="pianoSongs/ifItKillsMeJasonMraz.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="26" data-note="G" data-quality="major">
-					              Brown Eyed Girl Van Morrison
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="26" src="pianoSongs/BrownEyedGirlVanMorrison.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="27" data-note="Bb" data-quality="major">
-					              Walking on Sunshine Katrina
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="27" src="pianoSongs/WalkingOnSunshineKatrina.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="28" data-note="Bb" data-quality="major">
-					              Roar Katy Perry
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="28" src="pianoSongs/roarKatyPerry.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="29" data-note="B" data-quality="major">
-					              The Lazy Song Bruno Mars
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="29" src="pianoSongs/theLazySongBruno Mars.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="30" data-note="Db" data-quality="minor">
-					              Shape of You Ed Sheeran
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="30" src="pianoSongs/shapeOfYouEdSheeran.mp3"></audio>
-					      </li>
-
-					      <li>
-					          <div class="song" data-song="31" data-note="E" data-quality="major">
-					              Hey, Soul Sister Train
-					              <i class="fa fa-solid fa-volume-up hide"></i>
-					          </div>
-					          <audio data-sound="31" src="pianoSongs/heySoulSisterTrain.mp3"></audio>
-					      </li>
-						  
-
-				          <li>
-				            <div class="song" data-song="32" data-note="Eb" data-quality="minor">
-				              Alfredito_Linares_-_Rumbero_Bravo
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="32" src="uploads/Alfredito_Linares_-_Rumbero_Bravo.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="33" data-note="G" data-quality="minor">
-				              Tengo_un_Tumbao_FUEGO_77
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="33" src="uploads/Tengo_un_Tumbao_FUEGO_77.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="34" data-note="C" data-quality="major">
-				              eddy herrera suavemente
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="34" src="uploads/eddy herrera suavemente.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="35" data-note="G" data-quality="minor">
-				              LOS MEJORES MERENGUES DE LOS 80 Y 90
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="35" src="uploads/LOS MEJORES MERENGUES DE LOS 80 Y 90.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="36" data-note="F" data-quality="minor">
-				              ASI ES QUE TE QUIERO GORDITA
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="36" src="uploads/ASI ES QUE TE QUIERO GORDITA.wmv.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="37" data-note="C" data-quality="minor">
-				              Un dia Despues - Grupo Niche Video Oficial @Salsamor
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="37" src="uploads/Un dia Despues - Grupo Niche Video Oficial @Salsamor.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="38" data-note="C" data-quality="major">
-				              Orquesta_Zodiac_-_La_Sinceridad
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="38" src="uploads/Orquesta_Zodiac_-_La_Sinceridad.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="39" data-note="A" data-quality="minor">
-				              Quieta - Paquito Guzman
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="39" src="uploads/Quieta - Paquito Guzman.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="40" data-note="A" data-quality="major">
-				              grupo niche coco, Tito Gomez
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="40" src="uploads/grupo niche coco, Tito Gomez.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="41" data-note="C" data-quality="major">
-				              Monguito_El_Unico_-_Ave_Maria_Morena_HD_QUALITY
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="41" src="uploads/Monguito_El_Unico_-_Ave_Maria_Morena_HD_QUALITY.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="42" data-note="F" data-quality="major">
-				              Oscar_D'_Leon-La_Negra_Margot
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="42" src="uploads/Oscar_D'_Leon-La_Negra_Margot.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="43" data-note="D" data-quality="major">
-				              Saoco - Yo No Como Camaron HQ Audio
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="43" src="uploads/Saoco - Yo No Como Camaron HQ Audio.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="44" data-note="C" data-quality="minor">
-				              SUN_SUN_BABAE_-_LOS_BLANCO
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="44" src="uploads/SUN_SUN_BABAE_-_LOS_BLANCO.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="45" data-note="G" data-quality="minor">
-				              MIGUEL MIGUEL Y LA INTERNACIONAL - CURAME (1989) L
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="45" src="uploads/MIGUEL MIGUEL Y LA INTERNACIONAL - CURAME (1989) L.R.E..mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="46" data-note="G" data-quality="minor">
-				              ISMAEL_MIRANDA_Y_LARRY_HARLOW_
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="46" src="uploads/ISMAEL_MIRANDA_Y_LARRY_HARLOW_...VENCERE.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="47" data-note="Bb" data-quality="minor">
-				              SE NOS ROMPIO EL AMOR - PAQUITO GUZMAN  (- La Mquina del Sabor-  2007 Lima - Per ) 
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="47" src="uploads/SE NOS ROMPIO EL AMOR - PAQUITO GUZMAN  (- La Mquina del Sabor-  2007 Lima - Per ) .mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="48" data-note="D" data-quality="minor">
-				              FERNANDO VILLALONA - ROMANTICISMO (1996) L
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="48" src="uploads/FERNANDO VILLALONA - ROMANTICISMO (1996) L.R.E..mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="49" data-note="A" data-quality="minor">
-				              Raulin Rosendo (Su mirada)2013
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="49" src="uploads/Raulin Rosendo (Su mirada)2013.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="50" data-note="F" data-quality="minor">
-				              EL_COMBO_DEL_AYER
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="50" src="uploads/EL_COMBO_DEL_AYER.....VERDADERO_ANIVERSARIO.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="51" data-note="F" data-quality="minor">
-				              DONSALSERISIMO_REY_REYES_LA_MORENA
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="51" src="uploads/DONSALSERISIMO_REY_REYES_LA_MORENA.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="52" data-note="Db" data-quality="minor">
-				              Bobby Rodriguez La Compañia Veneno
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="52" src="uploads/Bobby Rodriguez La Compañia Veneno.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="53" data-note="Eb" data-quality="minor">
-				              Rey_Reyes_A_Borojol
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="53" src="uploads/Rey_Reyes_A_Borojol.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="54" data-note="Eb" data-quality="major">
-				              Sonora_Matancera_Celia_Cruz_-_Caramelo_a_Kilo
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="54" src="uploads/Sonora_Matancera_Celia_Cruz_-_Caramelo_a_Kilo.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="55" data-note="C" data-quality="major">
-								Laba Sosseh - Yamulema (DiamouleMawo).mp3
-								<i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="55" src="uploads/Laba Sosseh - Yamulema (DiamouleMawo).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="56" data-note="G" data-quality="minor">
-				              Ray de la Paz - no renunciare
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="56" src="uploads/Ray de la Paz - no renunciare.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="57" data-note="F" data-quality="minor">
-				              ASI_ES_QUE_TE_QUIERO_GORDITA
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="57" src="uploads/ASI_ES_QUE_TE_QUIERO_GORDITA.wmv.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="58" data-note="Db" data-quality="major">
-				              somos_seres
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="58" src="uploads/somos_seres._Joe_Arroyo.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="59" data-note="A" data-quality="minor">
-				              DIOMEDES Y LA INTERNACIONAL - NOCHE Y RUMBA (1992) L
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="59" src="uploads/DIOMEDES Y LA INTERNACIONAL - NOCHE Y RUMBA (1992) L.R.E..mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="60" data-note="F" data-quality="major">
-				              Tu y Las Nubes   Willie Colon Y Celia Cruz
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="60" src="uploads/Tu y Las Nubes   Willie Colon Y Celia Cruz.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="61" data-note="E" data-quality="minor">
-				              Banda Real La difunta 2012
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="61" src="uploads/Banda Real La difunta 2012.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="62" data-note="F" data-quality="minor">
-				              JOSE_MANGUAL_JR_SIETE_POTENCIAS
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="62" src="uploads/JOSE_MANGUAL_JR_SIETE_POTENCIAS.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="63" data-note="A" data-quality="minor">
-				              Mala_pata_Sonora_Matancera_con_Justo_Betancourt
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="63" src="uploads/Mala_pata_Sonora_Matancera_con_Justo_Betancourt.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="64" data-note="D" data-quality="minor">
-				              Mujer De Cabaret - Papaito
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="64" src="uploads/Mujer De Cabaret - Papaito.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="65" data-note="A" data-quality="minor">
-				              No Aguanto Mas - Eddy Herrera
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="65" src="uploads/No Aguanto Mas - Eddy Herrera.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="66" data-note="C" data-quality="major">
-				              Mario Munoz Papaito El gallo canelo.mp3
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="66" src="uploads/Mario Munoz Papaito El gallo canelo.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="67" data-note="Db" data-quality="minor">
-				              RAPHY LEAVITT Y LA SELECTA-COMO EL MORIVIVI (2)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="67" src="uploads/RAPHY LEAVITT Y LA SELECTA-COMO EL MORIVIVI (2).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="68" data-note="G" data-quality="minor">
-				              ni siquiera - Antonio cartagena
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="68" src="uploads/ni siquiera - Antonio cartagena.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="69" data-note="Bb" data-quality="minor">
-				              Meneame_la_Cuna_Pete_Conde_Rodriguez___Fania_All_Stars
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="69" src="uploads/Meneame_la_Cuna_Pete_Conde_Rodriguez___Fania_All_Stars.O.X.M.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="70" data-note="Bb" data-quality="minor">
-				              PABLO MARTINEZ Y PARADA JOVEN - EL ECO DE TU ADIOS (2001) L
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="70" src="uploads/PABLO MARTINEZ Y PARADA JOVEN - EL ECO DE TU ADIOS (2001) L.R.E..mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="71" data-note="A" data-quality="minor">
-				              Los Toros Band - Popurri Merengues Viejos
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="71" src="uploads/Los Toros Band - Popurri Merengues Viejos.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="72" data-note="Eb" data-quality="minor">
-				              El Prodigio - Raquel (2012)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="72" src="uploads/El Prodigio - Raquel (2012).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="73" data-note="E" data-quality="minor">
-				              Johnny_Pacheco_y_Celia_Cruz_-_Dime_Si_Llegue_A_Tiempo
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="73" src="uploads/Johnny_Pacheco_y_Celia_Cruz_-_Dime_Si_Llegue_A_Tiempo.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="74" data-note="Bb" data-quality="minor">
-				              El_Frutero_-_Sabotaje
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="74" src="uploads/El_Frutero_-_Sabotaje.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="75" data-note="D" data-quality="minor">
-				              Tu Precio
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="75" src="uploads/Tu Precio.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="76" data-note="C" data-quality="minor">
-				              que te vaya bien TITO GOMEZ
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="76" src="uploads/que te vaya bien TITO GOMEZ.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="77" data-note="Bb" data-quality="major">
-				              El Prodigio - El Mangrino (A Cuarteto) (2014) - www
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="77" src="uploads/El Prodigio - El Mangrino (A Cuarteto) (2014) - www.ilovetipico.com.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="78" data-note="F" data-quality="minor">
-				              Jorge Cabrera Cuando Yo Tenia 15anos.mp3
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="78" src="uploads/Jorge Cabrera Cuando Yo Tenia 15anos.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="79" data-note="E" data-quality="minor">
-				              Paquetes - Fuego 77 10
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="79" src="uploads/Paquetes - Fuego 77 10.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="80" data-note="D" data-quality="major">
-				              Timana_Cuco_Valoy_y_Su_Tribu_www
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="80" src="uploads/Timana_Cuco_Valoy_y_Su_Tribu_www.lacapicuasalsera.com.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="81" data-note="E" data-quality="minor">
-				              Sergio Vargas Ay Mujer
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="81" src="uploads/Sergio Vargas Ay Mujer.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="82" data-note="C" data-quality="minor">
-				              Tabaco Y Sus Metales - Sinceridad
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="82" src="uploads/Tabaco Y Sus Metales - Sinceridad.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="83" data-note="Eb" data-quality="major">
-				              La_mujer_de_Antonio
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="83" src="uploads/La_mujer_de_Antonio.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="84" data-note="A" data-quality="minor">
-				              Tito Gomez - Llegastes Tarde (HQ Audio)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="84" src="uploads/Tito Gomez - Llegastes Tarde (HQ Audio).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="85" data-note="A" data-quality="major">
-				              Oscar DLeon Con La Salsa Mayor - El Que Siembra Su Maiz  70s (1)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="85" src="uploads/Oscar DLeon Con La Salsa Mayor - El Que Siembra Su Maiz  70s (1).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="86" data-note="D" data-quality="minor">
-				             Bobby Valentin - El muneco de la ciudad (1)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="86" src="uploads/Bobby Valentin - El muneco de la ciudad (1).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="87" data-note="G" data-quality="major">
-				              AMOR Y CONTROL RUBEN BLADES
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="87" src="uploads/AMOR Y CONTROL RUBEN BLADES.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="88" data-note="C" data-quality="major">
-				              CONJUNTO_CANDELA_-_GALLETANA
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="88" src="uploads/CONJUNTO_CANDELA_-_GALLETANA.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="89" data-note="Bb" data-quality="minor">
-				              Orlando Pabellon - Ocairi (1)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="89" src="uploads/Orlando Pabellon - Ocairi (1).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="90" data-note="A" data-quality="minor">
-				              Sin Rumbo Alguno - Conjunto Clasico con Tito Nieves
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="90" src="uploads/Sin Rumbo Alguno - Conjunto Clasico con Tito Nieves.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="91" data-note="G" data-quality="minor">
-				              SOMBRA_QUE_PASO-PETE_EL_CONDE_RODRIGUEZ
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="91" src="uploads/SOMBRA_QUE_PASO-PETE_EL_CONDE_RODRIGUEZ.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="92" data-note="A" data-quality="minor">
-				              LLEGASTE_TARDE-YOHNY_PACHECO_Y_EL_CONDE
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="92" src="uploads/LLEGASTE_TARDE-YOHNY_PACHECO_Y_EL_CONDE.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="93" data-note="G" data-quality="minor">
-				              Antonio Cartagena   Ni Siquiera Dejaste
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="93" src="uploads/Antonio Cartagena   Ni Siquiera Dejaste.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="94" data-note="D" data-quality="minor">
-				              Ismael Miranda  Madre (1)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="94" src="uploads/Ismael Miranda  Madre (1).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="95" data-note="C" data-quality="minor">
-				              Karloz - SER AMANTES - PAQUITO GUZMAN Y SU ORQUESTA
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="95" src="uploads/Karloz - SER AMANTES - PAQUITO GUZMAN Y SU ORQUESTA.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="96" data-note="D" data-quality="major">
-				              MADRE-_DIMENSION_LATINA
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="96" src="uploads/MADRE-_DIMENSION_LATINA.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="97" data-note="A" data-quality="major">
-				              yiyo sarante - pirata
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="97" src="uploads/yiyo sarante - pirata.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="98" data-note="E" data-quality="minor">
-				              EDDY HERRERA - DEMASIADO NIA (2000) L
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="98" src="uploads/EDDY HERRERA - DEMASIADO NIA (2000) L.R.E..mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="99" data-note="G" data-quality="minor">
-				              Rey_Reyes_-_madre
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="99" src="uploads/Rey_Reyes_-_madre.wmv.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="100" data-note="E" data-quality="minor">
-				              Julio_Castro_y_La_Masacre_El_pregonero
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="100" src="uploads/Julio_Castro_y_La_Masacre_El_pregonero.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="101" data-note="A" data-quality="minor">
-				              Digo yo - Tito Gmez
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="101" src="uploads/Digo yo - Tito Gmez.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="102" data-note="E" data-quality="minor">
-				              JOHNNY_COLON_-_CUERO_ESTIRAO
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="102" src="uploads/JOHNNY_COLON_-_CUERO_ESTIRAO.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="103" data-note="C" data-quality="major">
-				              The Lebron Brothers - En Las Nubes Trepao (Distinto Y Diferente) 1976
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="103" src="uploads/The Lebron Brothers - En Las Nubes Trepao (Distinto Y Diferente) 1976.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="104" data-note="A" data-quality="minor">
-				              Tormenta de amor - Tito Rojas
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="104" src="uploads/Tormenta de amor - Tito Rojas.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="105" data-note="Db" data-quality="minor">
-				              Grupo_Niche_-_Consejo_de_Madre_(canta_Tito_Gomez)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="105" src="uploads/Grupo_Niche_-_Consejo_de_Madre_(canta_Tito_Gomez).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="106" data-note="Bb" data-quality="major">
-				              QUE_NO_MUERA_EL_SON
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="106" src="uploads/QUE_NO_MUERA_EL_SON.....PAPAITO.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="107" data-note="F" data-quality="major">
-				              Tu_y_Las_Nubes_Willie_Colon_Y_Celia_Cruz
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="107" src="uploads/Tu_y_Las_Nubes_Willie_Colon_Y_Celia_Cruz.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="108" data-note="G" data-quality="minor">
-				              El Prodigio - Limpiate El Bozo (2012)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="108" src="uploads/El Prodigio - Limpiate El Bozo (2012).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="109" data-note="C" data-quality="minor">
-				              EL LAGO DE MATRULLA-CONJUNTO CLASICOCANTA-RAULIN ROSENDO (3)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="109" src="uploads/EL LAGO DE MATRULLA-CONJUNTO CLASICOCANTA-RAULIN ROSENDO (3).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="110" data-note="A" data-quality="minor">
-				              Anthony Santos Creiste (2012) Original
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="110" src="uploads/Anthony Santos Creiste (2012) Original.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="111" data-note="C" data-quality="major">
-				              Ruben Blades - El Arca de Noe
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="111" src="uploads/Ruben Blades - El Arca de Noe.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="112" data-note="D" data-quality="minor">
-				              Alabanciosa_-_Manny_Oquendo_y_su_Conjunto_Libre
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="112" src="uploads/Alabanciosa_-_Manny_Oquendo_y_su_Conjunto_Libre.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="113" data-note="Bb" data-quality="minor">
-				              Entre Tu Amor Y Mi Amor
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="113" src="uploads/Entre Tu Amor Y Mi Amor.-Feny Ortiz-By Jason Mena-NYC.mp4.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="114" data-note="C" data-quality="minor">
-				              Con_los_pobres_estoy
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="114" src="uploads/Con_los_pobres_estoy.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="115" data-note="G" data-quality="minor">
-				              Vuela muy alto - Jerry Rivera (letra)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="115" src="uploads/Vuela muy alto - Jerry Rivera (letra).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="116" data-note="A" data-quality="major">
-				              Papaito_-_A_Mi_Veracruz_(HQ_Audio)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="116" src="uploads/Papaito_-_A_Mi_Veracruz_(HQ_Audio).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="117" data-note="C" data-quality="minor">
-				              El Pinero - Estereo Salsa 98.mp3
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="117" src="uploads/El Pinero - Estereo Salsa 98.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="118" data-note="F" data-quality="minor">
-				              El Callejero - Willie Rosario (2)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="118" src="uploads/El Callejero - Willie Rosario (2).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="119" data-note="C" data-quality="major">
-				              Luis Perico Ortiz - De Patitas HQ Audio (1)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="119" src="uploads/Luis Perico Ortiz - De Patitas HQ Audio (1).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="120" data-note="Unknown" data-quality="undefined">
-				              Oscar_de_Leon_-_Tu_Orgullo_(HQ)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="120" src="uploads/Oscar_de_Leon_-_Tu_Orgullo_(HQ).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="121" data-note="C" data-quality="major">
-				              ismael_miranda_-_la_oportunidad
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="121" src="uploads/ismael_miranda_-_la_oportunidad.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="122" data-note="E" data-quality="minor">
-				              WAYNE GORBEA - LO QUE DICE JUSTY
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="122" src="uploads/WAYNE GORBEA - LO QUE DICE JUSTY.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="123" data-note="Db" data-quality="major">
-				              The New York Band - Nadie Como Tu 
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="123" src="uploads/The New York Band - Nadie Como Tu .mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="124" data-note="Gb" data-quality="minor">
-				              Clasicom - La Tipa Le Dio Pa Mi (Salsa Nueva 2012)
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="124" src="uploads/Clasicom - La Tipa Le Dio Pa Mi (Salsa Nueva 2012).mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="125" data-note="A" data-quality="minor">
-				              Corazon embustero - La grande de madrid
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="125" src="uploads/Corazon embustero - La grande de madrid.mp3"></audio>
-				          </li>
-        
-				          <li>
-				            <div class="song" data-song="126" data-note="C" data-quality="minor">
-				              No eres tu – Montuno EL Rey De La Cimarronada.mp3
-				              <i class="fa fa-solid fa-volume-up hide"></i>
-				            </div>
-				            <audio data-sound="126" src="uploads/No eres tu – Montuno EL Rey De La Cimarronada.mp3"></audio>
-				          </li>
-
-				    </ul>
 				  </div>
 				</div>
 				
 				<!--  end of music player -->
 				
+				<div id="levelIndicator">
+									Current Level: <span class="levelNumber"></span>
+							</div>
+							
+							
+							<div class="tags filterZone">
+							  <label class="tag tagLabel">Filter Songs :::</label>
+							  <button  class="tag langEn">English</button>
+							  <button  class="tag langEs">Spanish</button>
+							  <button class="tag noteQuality minorF hide">F minor</button>
+							  <button class="tag noteQuality majorC hide">C major</button>
+							  <button class="tag noteQuality unknownUnknown hide">Unknown</button>
+							  <button class="tag noteQuality majorC hide">C major</button>
+							  <button class="tag noteQuality minorE hide">E minor</button>
+							  <button class="tag noteQuality majorDb hide">Db major</button>
+							  <button class="tag noteQuality minorGb hide">Gb minor</button>
+							  <button class="tag noteQuality minorA hide">A minor</button>
+							  <button class="tag noteQuality minorC hide">C minor</button>
+							</div>
+							
+				
+							<div id="userManagement">
+							    <h2>User Management</h2>
+							    <div id="userList"></div>
+							    <button onclick="deleteSelectedUsers()">Delete Selected Users</button>
+							    <button onclick="modifySelectedRoles()">Save Role Changes</button>
+							</div>
+				
+				
 			</div>
+			
             <div class="songsWrapper">
 
               <div></div>
@@ -1344,35 +561,36 @@
               <div data-note="B">B</div>
             </div>
 
-            <div class="piano disabledd">
-                <div class="key" data-note="C3"></div>
-                <div class="black-key" data-note="Db3"></div>
-                <div class="key" data-note="D3"></div>
-                <div class="black-key" data-note="Eb3"></div>
-                <div class="key" data-note="E3"></div>
-                <div class="key half" data-note="F3"></div>
-                <div class="black-key" data-note="Gb3"></div>
-                <div class="key" data-note="G3"></div>
-                <div class="black-key" data-note="Ab3"></div>
-                <div class="key" data-note="A3"></div>
-                <div class="black-key" data-note="Bb3"></div>
-                <div class="key" data-note="B3"></div>
+			<div class="piano disabledd">
+			    <div class="key" data-note="C3"><span>C3</span></div>
+			    <div class="black-key" data-note="Db3"><span>Db3</span></div>
+			    <div class="key" data-note="D3"><span>D3</span></div>
+			    <div class="black-key" data-note="Eb3"><span>Eb3</span></div>
+			    <div class="key" data-note="E3"><span>E3</span></div>
+			    <div class="key half" data-note="F3"><span>F3</span></div>
+			    <div class="black-key" data-note="Gb3"><span>Gb3</span></div>
+			    <div class="key" data-note="G3"><span>G3</span></div>
+			    <div class="black-key" data-note="Ab3"><span>Ab3</span></div>
+			    <div class="key" data-note="A3"><span>A3</span></div>
+			    <div class="black-key" data-note="Bb3"><span>Bb3</span></div>
+			    <div class="key" data-note="B3"><span>B3</span></div>
 
-                <div class="key half" data-note="C4"></div>
-                <div class="black-key" data-note="Db4"></div>
-                <div class="key" data-note="D4"></div>
-                <div class="black-key" data-note="Eb4"></div>
-                <div class="key" data-note="E4"></div>
-                <div class="key half" data-note="F4"></div>
-                <div class="black-key" data-note="Gb4"></div>
-                <div class="key" data-note="G4"></div>
-                <div class="black-key" data-note="Ab4"></div>
-                <div class="key" data-note="A4"></div>
-                <div class="black-key" data-note="Bb4"></div>
-                <div class="key" data-note="B4"></div>
-              </div>
-
-              <div class="settings">
+			    <div class="key half" data-note="C4"><span>C4</span></div>
+			    <div class="black-key" data-note="Db4"><span>Db4</span></div>
+			    <div class="key" data-note="D4"><span>D4</span></div>
+			    <div class="black-key" data-note="Eb4"><span>Eb4</span></div>
+			    <div class="key" data-note="E4"><span>E4</span></div>
+			    <div class="key half" data-note="F4"><span>F4</span></div>
+			    <div class="black-key" data-note="Gb4"><span>Gb4</span></div>
+			    <div class="key" data-note="G4"><span>G4</span></div>
+			    <div class="black-key" data-note="Ab4"><span>Ab4</span></div>
+			    <div class="key" data-note="A4"><span>A4</span></div>
+			    <div class="black-key" data-note="Bb4"><span>Bb4</span></div>
+			    <div class="key" data-note="B4"><span>B4</span></div>
+			</div>
+            
+		   
+           <div class="settings">
                 <div class="announcement">
                   <h3>1. Click Start Game</h3>
                   <h3>2. Use the keyboard to assist you identifying the tonic</h3>
@@ -1396,18 +614,271 @@
                   <input class="pianoVolInput" type="range" id="volume2" value="100">
                 </div>
 				
-				
-              </div>
+				<div class="disabledd" style="display:flex;align-items: flex-end;column-gap: 10px;">
+					<label style="font-weight: bold;">Hide Key Names:</label> <button id="toggleKeyNames" class="toggle-button off"><span class="on">YES</span><span class="off">NO</span></button>
+				</div>
+           </div>
+		   
+		   <div class="container">
+		     <div class="row">
+		       <div class="col">
+		         <h1>Graph Report</h1>
+		  
+		       </div>
+		     </div>
+		       <div class="row">
+		           <div class="col s-12">
+		               <p>Keys you get right the most</p>
+		               <div class="graph-songs"></div>
+		           </div>
+			   </div>
+			   <div class="row">
+		           <div class="col s-12">
+		                   <p>Keys you get wrong the most</p>
+		               <div class="graph-coffees"></div>
+		           </div>
+		       </div>
+		       
+		     </div>
 
-              <script>
+
+           <script>
+			   var songsData = {
+			       "Mon" : 80,
+			       "Tues": 40,
+			       "Wed" : 60,
+			       "Thu" : 80,
+			       "Fri": 40,
+			       "Sat" : 60,
+			   };
+			   
+
+
+			
+			   // JavaScript to toggle button state
+			   document.addEventListener("DOMContentLoaded", function() {
+			       var toggleButton = document.getElementById("toggleKeyNames");
+			       toggleButton.addEventListener("click", function() {
+			           toggleButton.classList.toggle("on");
+			           toggleButton.classList.toggle("off");
+					   $(".piano span").each(function() {
+					       $(this).toggleClass("hide");					  
+					   });
+					   
+					   // Call the function with your data object
+					   var data1 = {
+					       "A": {right: 1, wrong: 1},
+					       "Ab": {right: 1, wrong: 1},
+					       "B": {right: 1, wrong: 0},
+					       "Bb": {right: 1, wrong: 1},
+					       "C": {right: 1, wrong: 1},
+					       "D": {right: 3, wrong: 1},
+					       "Db": {right: 1, wrong: 2},
+					       "E": {right: 2, wrong: 1},
+					       "Eb": {right: 1, wrong: 1},
+					       "F": {right: 2, wrong: 2},
+					       "G": {right: 2, wrong: 1},
+					       "Gb": {right: 1, wrong: 1}
+					   };
+					 console.log("YALA");
+					//  createGraph(data);
+
+					//  const audioElement = $('audio[data-sound="2"]')[0];
+
+					//  guessGenreOfAudio(audioElement);
+					
+					function convertData(data) {
+					    var right = {};
+					    var wrong = {};
+
+					    $.each(data, function(key, value) {
+					        right[key] = parseInt(value.right, 10);
+					        wrong[key] = parseInt(value.wrong, 10);
+					    });
+
+					    var result = {
+					        right: {},
+					        wrong: {}
+					    };
+
+					    for (var key in right) {
+					        result.right['"' + key + '"'] = right[key];
+					    }
+
+					    for (var key in wrong) {
+					        result.wrong['"' + key + '"'] = wrong[key];
+					    }
+
+					    return result;
+					}
+
+					// Example usage:
+					const data = {
+					    A: { right: 4, wrong: 1 },
+					    B: { right: 3, wrong: 2 },
+					    C: { right: 5, wrong: 0 },
+					    D: { right: 2, wrong: 3 }
+					};
+
+					var result = convertData(data);
+
+					console.log(result.right); // {"A":4,"B":3,"C":5,"D":2}
+					console.log(result.wrong); // {"A":1,"B":2,"C":0,"D":3}
+					
+			       });
+			   });
+				  
+				  // Check if the logged-in user is an admin
+				  function isAdminLoggedIn() {
+				      // Implement logic to check if the logged-in user is an admin
+				      // For example, you can check the user's role stored in session or local storage
+				      // Return true if the user is an admin, false otherwise
+					  
+				  // Retrieve user role from session storage
+				      const userId = sessionStorage.getItem('userId');
+					  console.log(userId);
+
+				      // Check if the user role is 'admin'
+				      return userId === '664a717472d3a827a9665919';
+				  }
+
+				  // Function to toggle visibility of user management interface based on admin login status
+				  function toggleUserManagementVisibility() {
+				      const userManagementDiv = document.getElementById('userManagement');
+				      if (isAdminLoggedIn()) {
+				          userManagementDiv.style.display = 'block'; // Show the interface for admin
+				      } else {
+				          userManagementDiv.style.display = 'none'; // Hide the interface for non-admin users
+				      }
+				  }
+
+				  
+				  
+				  // Function to fetch users from the server
+				  async function fetchUsers() {
+				      try {
+				          const response = await fetch('/users');
+				          const users = await response.json();
+				          displayUsers(users);
+				      } catch (error) {
+				          console.error('Error fetching users:', error.message);
+				      }
+				  }
+				
+				
+				  // Function to display users in the interface
+				  function displayUsers(users) {
+				      const userListElement = document.getElementById('userList');
+				      userListElement.innerHTML = ''; // Clear existing user list
+
+				      users.forEach(user => {
+				          const userDiv = document.createElement('div');
+				          userDiv.classList.add('user');
+
+				          // Create a checkbox for user selection
+				          const checkbox = document.createElement('input');
+				          checkbox.type = 'checkbox';
+				          checkbox.value = user._id; // Assuming user ID is stored in the _id field
+				          userDiv.appendChild(checkbox);
+
+				          // Create a dropdown menu for selecting user roles
+				          const roleSelect = document.createElement('select');
+				          roleSelect.classList.add('role-select');
+				          const adminOption = document.createElement('option');
+				          adminOption.value = 'admin';
+				          adminOption.textContent = 'Admin';
+				          const regularOption = document.createElement('option');
+				          regularOption.value = 'regular';
+				          regularOption.textContent = 'Regular';
+				          roleSelect.appendChild(adminOption);
+				          roleSelect.appendChild(regularOption);
+				          roleSelect.value = user.role; // Set the default role based on user's current role
+				          userDiv.appendChild(roleSelect);
+
+				          // Display username
+				          const usernameSpan = document.createElement('span');
+				          usernameSpan.textContent = user.username;
+				          userDiv.appendChild(usernameSpan);
+
+				          userListElement.appendChild(userDiv);
+				      });
+				  }
+
+				  // Function to delete selected users
+				  async function deleteSelectedUsers() {
+				      const checkboxes = document.querySelectorAll('.user input[type="checkbox"]:checked');
+				      const userIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+				      try {
+				          const responses = await Promise.all(userIds.map(userId => fetch(`/users/${userId}`, { method: 'DELETE' })));
+				          const success = responses.every(response => response.ok);
+				          if (success) {
+				              // Refresh user list after deletion
+				              fetchUsers();
+				          } else {
+				              throw new Error('Failed to delete some users');
+				          }
+				      } catch (error) {
+				          console.error('Error deleting users:', error.message);
+				      }
+				  }
+
+				  // Function to modify roles of selected users
+				  async function modifySelectedRoles() {
+				      const checkboxes = document.querySelectorAll('.user input[type="checkbox"]:checked');
+				      const updates = Array.from(checkboxes).map(checkbox => {
+				          const userId = checkbox.value;
+				          const userDiv = checkbox.parentElement;
+				          const roleSelect = userDiv.querySelector('.role-select'); // Select the role dropdown within the user div
+				          const role = roleSelect.value; // Get the selected role from the dropdown
+				          return { userId, role };
+				      });
+
+				      try {
+				          const responses = await Promise.all(updates.map(({ userId, role }) => fetch(`/users/${userId}`, { method: 'PATCH', body: JSON.stringify({ role }), headers: { 'Content-Type': 'application/json' } })));
+				          const success = responses.every(response => response.ok);
+				          if (success) {
+				              // Refresh user list after role modification
+				              fetchUsers();
+				          } else {
+				              throw new Error('Failed to modify roles for some users');
+				          }
+				      } catch (error) {
+				          console.error('Error modifying roles:', error.message);
+				      }
+				  }
+				  
+				  function toggleMarkForEdit() {
+				      // Select all elements with class "song" and "playing"
+				      const songsPlaying = document.querySelectorAll('.song.playing');
+    
+				      // Loop through each element
+				      songsPlaying.forEach(song => {
+				          // Get the parent <li> element
+				          const parentLi = song.closest('li');
+        
+				          // Toggle class "markForEdit" on the parent <li>
+				          parentLi.classList.toggle('markForEdit');
+				      });
+				  }
+				
+				  document.getElementById('toggleMarkForEdit').addEventListener('change', function() {
+				          toggleMarkForEdit();
+				  }); 
+
+				  
                  let globalVol = 0.1;
                  let globalNoteVol = 50;
                  let globalPlayingStyle = 0;
                  let globalSongsPlayed = [];
 				 let globalFirstTry = null;
-                 const keys = document.querySelectorAll('.key, .black-key');
-
+				 let userLoggedIn = false;
+				 let userId = '';
+				 let globalLevel = 1;
+				 
+				 const keys = document.querySelectorAll('.key, .black-key');
                  const songs = document.querySelectorAll('.song');
+				 
                  const songKeys = document.querySelectorAll('.keysWrapper > div');
                  const stopBtn = document.querySelector('.stop_music');
                  const btn2 = document.querySelector('.start_game');
@@ -1428,13 +899,29 @@
 				                 body: JSON.stringify({ username, password })
 				             });
 
-				             const message = await response.text();
-				             document.getElementById("message").innerText = message;
-				             if (message === "Login successful.") {
-				                 document.getElementById("loggedInUser").innerText = username;
-				                 document.getElementById("loginForms").style.display = "none";
-				                 document.getElementById("loggedInArea").style.display = "block";
-				             }
+						
+							 const message = await response.text();
+							 const parsedMessage = JSON.parse(message); // Parse the JSON string into an object
+							 const messageElement = document.getElementById("message");
+							 messageElement.innerText = parsedMessage.message;
+							 userId = parsedMessage.userId;
+							 
+							 
+							 // Hide the message after 3 seconds
+							 setTimeout(() => {
+							     messageElement.innerText = ""; // Clear the message
+							 }, 3000); // 3000 milliseconds = 3 seconds
+							 // 
+							 
+							 if (parsedMessage.message === "Login successful.") {
+							     document.getElementById("loggedInUser").innerText = username;
+							     document.getElementById("loginForms").style.display = "none";
+							     const loggedInArea = document.getElementById("loggedInArea");
+								 $(loggedInArea).css("display","block");
+								 $(loggedInArea).children("p").css("display", "inline-block");
+								  userLoggedIn = true;
+								  getKeyStatsReportForUser(userId);
+							 }
 				         });
 
 				         document.getElementById("registerForm").addEventListener("submit", async function(event) {
@@ -1452,18 +939,28 @@
 
 				             const message = await response.text();
 				             document.getElementById("message").innerText = message;
+					         document.getElementById('registerForm').style.display = 'none';
+					         
+							 const messageElement = document.getElementById("message");
+							 messageElement.innerText = message
+							 // Hide the message after 3 seconds
+							 setTimeout(() => {
+							     messageElement.innerText = ""; // Clear the message
+								 document.getElementById('loginForms').style.display = 'flex';
+							 }, 3000); // 3000 milliseconds = 3 seconds
+							 // 
 				         });
 						 
 						 document.getElementById('showRegister').addEventListener('click', function(e) {
 						         e.preventDefault();
 						         document.getElementById('loginForms').style.display = 'none';
-						         document.getElementById('registerForm').style.display = 'block';
+						         document.getElementById('registerForm').style.display = 'flex';
 						     });
 
 						     document.getElementById('showLogin').addEventListener('click', function(e) {
 						         e.preventDefault();
 						         document.getElementById('registerForm').style.display = 'none';
-						         document.getElementById('loginForms').style.display = 'block';
+						         document.getElementById('loginForms').style.display = 'flex';
 						     });
 
 				         document.getElementById("logoutButton").addEventListener("click", async function() {
@@ -1471,15 +968,169 @@
 				                 method: 'POST'
 				             });
 				             const message = await response.text();
+							 
 				             if (message === "Logged out successfully.") {
-				                 document.getElementById("loginForms").style.display = "block";
+				                 
 				                 document.getElementById("loggedInArea").style.display = "none";
-				                 document.getElementById("message").innerText = message;
-				             }
+								 const messageElement = document.getElementById("message");
+								 messageElement.innerText = message;
+								 
+								 // Hide the message after 3 seconds
+								 setTimeout(() => {
+								     messageElement.innerText = ""; // Clear the message
+									 document.getElementById("loginForms").style.display = "flex";
+								 }, 3000); // 3000 milliseconds = 3 seconds
+								 // 
+							 
+								 if ($(".playing").length > 0) {
+								 	stopGame();
+								 }
+							 }
 				         });
 					  
 
+						 function populateSongs() {
+		 					$.getJSON('songList.json', function(data) {
+		 					        var htmlContent = '';
+		 					        data.forEach(function(item) {
+		 					            htmlContent += '<li>';
+		 					            htmlContent += '<div class="song" data-song="' + item['data-song'] + '" data-note="' + item['data-note'] + '" data-quality="' + item['data-quality'] + '"data-lang="' + item['lang'] + '">' + item['song'] + '  <i class="fa fa-solid fa-volume-up hide"></i>' + '</div>';
+		 					            htmlContent += '<audio data-sound="' + item['data-song'] + '" src="' + item['audio_src'] + '"></audio>';
+		 					            htmlContent += '</li>';
+		 					        });
+		 					        $('.lists').append('<ul>' + htmlContent + '</ul>');
+									
+				                    const songs = document.querySelectorAll('.song');
+				                    const songKeys = document.querySelectorAll('.keysWrapper > div');
+									
+				                    songs.forEach(song => {
+				                       song.addEventListener('mousedown', () => {
+				                         const note = song.dataset.song;
+				                         playSong(note);
+				   					  $(".list-btn").click();
+				                       });
+				                    });
+									
+									
+
+				   				 songKeys.forEach(key => {
+				   				     key.addEventListener('mousedown', () => {
+				   				         const currentSong = document.querySelector('div.activa');
+				   				         const songPlaying = document.querySelector('div.playing');
+				   				         const note = key.dataset.note;
+
+				   				         if (currentSong != null) {
+				   				             $(".announcement").hide();
+				   				             $(".settings").addClass("noBanner");
+				   				             const currentKey = currentSong.dataset.note;
+				   				             const song = currentSong.dataset.song;
+				   				             console.log(note);
+				   				             console.log(currentKey);
+
+				   				             if (note == currentKey) {
+				   				                 key.classList.add('right');
+				   				                 songKeys.forEach(key1 => {
+				   				                     if (key != key1) { key1.classList.remove('wrong'); }
+				   				                 });
+				   				                 if (songPlaying != null) {
+				   				                     stopSong(song);
+				   				                 }
+
+				      							  	 // Increment wrong count for the currentKey
+				   				                 keyStats[currentKey] = keyStats[currentKey] || { right: 0, wrong: 0 };
+				   				                 keyStats[currentKey].wrong++;
+
+				   				                 console.log("user ID: ", userId);
+				   				                 console.log("keyStats: ", keyStats);
+								 
+				   				                 // Send key statistics data to server
+				   				                 if (userLoggedIn) {
+				   				                     sendKeyStatsToServer(userId, keyStats);
+				   				                 }
+
+				   				                 // If it's the first try and user is logged in, increment score
+				   				                 if (globalFirstTry && userLoggedIn) {
+				   				                     console.log("true: ", globalFirstTry);
+				   				                     game.incrementScore();
+				   				                 }
+
+				   				                 setTimeout(function () {
+				   				                     key.classList.remove('right');
+				   				                     randomSong();
+				   				                 }, 600);
+				   				             } else {
+				   				                 key.classList.add('wrong');
+
+				   				                 // Increment wrong count for this key
+				   				                 keyStats[note] = (keyStats[note] || {});
+				   				                 keyStats[note].wrong = (keyStats[note].wrong || 0) + 1;
+
+				   				                 // Send key statistics data to server
+				   				                 if (userLoggedIn) {
+				   				                    sendKeyStatsToServer(userId, keyStats);
+				   				                 }
+
+				   				                 globalFirstTry = false;
+				   				                 console.log(globalFirstTry);
+				   				             }
+				   				         }
+
+				   				 });
+
+				                    key.addEventListener('touchstart', () => {
+				                       /* use if you need something to be only on TOUCH. if nothing here TOUCH uses MOUSEDOWN above*/
+				                       preventDefault();
+				                       stopPropagation();
+				                    });
+				                   });
+									
+									
+		 					    });
+						 }
+						 
+						 const buttons = document.querySelectorAll('.tag');
+
+						 buttons.forEach(button => {
+						   button.addEventListener('click', () => {
+						     const isActive = button.classList.toggle('active');
+						     const buttonText = button.textContent;
+						     console.log(`Button state: ${buttonText} is ${isActive ? 'On' : 'Off'}`);
+							 
+						//	 const buttonText = button.textContent;
+							 const divsWithMatchingLang = $('div.song[data-lang="' + buttonText + '"]');
+							 if (isActive) {
+							 	console.log(divsWithMatchingLang);
+								divsWithMatchingLang.addClass("filteredIn");
+								divsWithMatchingLang.removeClass("filteredOut");
+							 } else {
+ 								divsWithMatchingLang.removeClass("filteredIn");
+ 								divsWithMatchingLang.addClass("filteredOut");
+							 }
+							 
+						   });
+						 });
+						 
                  $("document").ready(function() {
+					//  sessionStorage.setItem('userId', '0');
+					populateSongs();  
+					
+                    let globalVol = 0.1;
+                    let globalNoteVol = 50;
+                    let globalPlayingStyle = 0;
+                    let globalSongsPlayed = [];
+   				 let globalFirstTry = null;
+   				 let userLoggedIn = false;
+   				 let userId = '';
+   				 let globalLevel = 1;
+				 
+   				 const keys = document.querySelectorAll('.key, .black-key');
+                    
+                    const stopBtn = document.querySelector('.stop_music');
+                    const btn2 = document.querySelector('.start_game');
+                    const btn3 = document.querySelector('.next_music');
+                    const repeatBtn = document.querySelector('.repeat_music');
+                    const startMusicBtn = document.querySelector('.start_music');
+						
                     console.log(globalVol);
                     volume.value = globalVol;
 					//globalNoteVal = 50;
@@ -1500,6 +1151,8 @@
 			 		    }
 			 		  });
 					  
+				      // Fetch users when the page loads
+				      fetchUsers();
 					
                  });
 				 
@@ -1563,23 +1216,23 @@
 				
 				// Function to send key statistics to server
 				function sendKeyStatsToServer(userId, keyStats) {
-				    fetch(`/updateKeyStats/${userId}`, {
-				        method: 'POST',
-				        headers: {
-				            'Content-Type': 'application/json'
-				        },
-				        body: JSON.stringify(keyStats)
-				    })
-				    .then(response => {
-				        if (!response.ok) {
-				            throw new Error('Failed to update key stats');
-				        }
-				    })
-				    .catch(error => {
-				        console.error('Error updating key stats:', error);
-				    });
-				}
-				
+								    fetch(`/updateKeyStats/${userId}`, {
+								        method: 'POST',
+								        headers: {
+								            'Content-Type': 'application/json'
+								        },
+								        body: JSON.stringify(keyStats)
+								    })
+								    .then(response => {
+								        if (!response.ok) {
+								            throw new Error('Failed to update key stats');
+								        }
+								    })
+								    .catch(error => {
+								        console.error('Error updating key stats:', error);
+								    });
+			     }
+									
 				// Function to fetch key stats report for a specific user from server
 				function getKeyStatsReportForUser(userId) {
 				    fetch(`/getKeyStatsReport/${userId}`)
@@ -1598,13 +1251,74 @@
 				    });
 				}
 				
+				function guessGenreOfAudio(audioElement) {
+					console.log(audioElement);
+	            
+				    // Send the audio element to the server
+				    fetch('http://localhost:3000/guess-genre', {
+				        method: 'POST',
+				        headers: {
+				            'Content-Type': 'application/json'
+				        },
+				        body: JSON.stringify({ audioElement: audioElement })
+				    })
+				    .then(response => {
+				        if (!response.ok) {
+				            throw new Error(`Failed to fetch: ${response.statusText}`);
+				        }
+				        return response.json();
+				    })
+				    .then(data => {
+				        // Process the response, which should contain the predicted genre
+				        console.log('Predicted genre:', data.genre);
+				    })
+				    .catch(error => {
+				        // Handle errors
+				        console.error('Error:', error);
+				    });
+				}
 
                 function randomSong() {
                   if(globalSongsPlayed.length < $(".song").length) {
                      // console.log("CHECKED");
                      btn2.style.display = 'none';
                      btn3.style.display = 'block';
-                      var randSong = Math. floor(Math. random()*$(".song").length) + 1;
+                      // var randSong = Math. floor(Math. random()*$(".song").length) + 1;
+					  
+					  // Initialize an empty array to store the numbers
+					  let numbersArray = [];
+
+					  // Iterate over each div element with the class "song"
+					  if ($('.lists .filteredIn').length === 0) {
+					      $('.lists .song').each(function() {
+					          // Your code here
+						      // Get the value of the "data-song" attribute and convert it to a number
+						      const number = parseInt($(this).attr('data-song'));
+    
+						      // Push the number to the array if it's a valid number
+						      if (!isNaN(number)) {
+						          numbersArray.push(number);
+						      }
+					      });
+					  } else {
+					      $('.lists .filteredIn').each(function() {
+					          // Your code here
+						      // Get the value of the "data-song" attribute and convert it to a number
+						      const number = parseInt($(this).attr('data-song'));
+    
+						      // Push the number to the array if it's a valid number
+						      if (!isNaN(number)) {
+						          numbersArray.push(number);
+						      }
+					      });
+					  }
+					
+					  // Generate a random index within the range of the array length
+					  const randomIndex = Math.floor(Math.random() * numbersArray.length);
+
+					  // Get the random number from the array using the random index
+					  var randSong = numbersArray[randomIndex];
+					  
                       if(globalSongsPlayed.includes(randSong)) {
                         console.log("LENGTH: "+globalSongsPlayed.length);
                         randomSong();
@@ -1629,6 +1343,7 @@
                 btn2.addEventListener('click', () => {
                   console.log("START GAME NOW");
                   $(".disabledd").removeClass('disabledd');
+				     $('.levelNumber').text(globalLevel);
                   randomSong();
 				  $('.playing').addClass('lastPlayed');
 				  	$('#score').html('Score: ' + 0);
@@ -1668,14 +1383,7 @@
                      audio.play();
                  }
 
-                 function stopSound(note) {
-                  
-                  /*
-                     const audio = document.querySelector(`audio[data-sound="${note}"]`);
-                     if (!audio) return;
-                     audio.pause();
-                 */
-                    }
+                 function stopSound(note) {}
 				 
 				 function prevSong() {
 					 console.log("PREV SONG");
@@ -1715,6 +1423,9 @@
                      const songDisplaying = document.querySelector('div.song_musicplayer > span');
 					 const artistDisplaying = document.querySelector('div.song_musicplayer > small');
 					 const playBtn = document.querySelector('a.play-pause');
+					 let availKeys = $('.keysWrapper div[data-note]').filter(function() {
+										     return $(this).data('note').length <= 2;
+										 });
 					 globalFirstTry = true;
 					 
                      songs.forEach(song => {
@@ -1733,6 +1444,161 @@
                      btn3.classList.remove('hide');
                      repeatBtn.classList.remove('hide');
                      stopBtn.classList.remove('hide');
+					 
+					 
+					 const currentKey = songPlaying.dataset.note;
+				
+										 console.log("availKeys: ", availKeys);
+					 
+						 				 const $keyWithNote  = availKeys.filter(function() {
+											 console.log("the note: ",this.dataset.note);
+											 console.log("the currentKey: ",currentKey);
+						 
+					    				 	return this.dataset.note === currentKey;
+										 });
+					 
+										 console.log($keyWithNote);
+					
+										 availKeys = availKeys.not($keyWithNote);
+
+										 console.log(availKeys);
+					 
+										 // Generate a random index within the length of availKeys array
+										 const randomIndex = Math.floor(Math.random() * availKeys.length);
+
+										 // Select the random div
+										 const randomDiv = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $otherKey = randomDiv;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv);
+					 
+										 console.log(availKeys);
+					 
+										 // Select the random div
+										 const randomDiv2 = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $thirdKey = randomDiv2;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv2);
+					 
+					
+										 // Select the random div
+										 const randomDiv3 = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $fourthKey = randomDiv3;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv3);
+					 
+					
+
+										 // Select the random div
+										 const randomDiv4 = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $fifthKey = randomDiv4;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv4);
+					 
+					
+
+										 // Select the random div
+										 const randomDiv5 = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $sixthKey = randomDiv5;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv5);
+					 
+				    
+										// console.log($sixthKey);
+					   
+										 $('.keysWrapper div').addClass('disabledd');
+						                 console.log(songPlaying);
+	 		 
+								         switch (globalLevel) {
+											 case 1:
+												 // Conditions for level 1
+												 console.log("Reached level 1!");
+												 console.log(currentKey);
+												 console.log($keyWithNote);
+											     $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 break;
+								             case 2:
+								                 // Conditions for level 2
+								                 console.log("Reached level 2!");
+												 console.log(currentKey);
+												 $('.keysWrapper div').addClass('disabledd');
+												 $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 $thirdKey.removeClass('disabledd');
+							 
+								                 break;
+								             case 3:
+								                 // Conditions for level 3
+								                 console.log("Reached level 3!");
+												 console.log(currentKey);
+												 $('.keysWrapper div').addClass('disabledd');
+												 $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 $thirdKey.removeClass('disabledd');
+												 $fourthKey.removeClass('disabledd');
+												 console.log($fourthKey);
+			                 
+												 break;
+								             case 4:
+								                 // Conditions for level 4
+								                 console.log("Reached level 4!");
+												 console.log(currentKey);
+												 $('.keysWrapper div').addClass('disabledd');
+												 $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 $thirdKey.removeClass('disabledd');
+												 $fourthKey.removeClass('disabledd');
+												 $fifthKey.removeClass('disabledd');
+												 console.log($fifthKey);
+			                 
+												 break;  
+											 case 5:
+								                 // Conditions for level 5
+								                 console.log("Reached level 5!");
+												 console.log(currentKey);
+												 $('.keysWrapper div').addClass('disabledd');
+												 $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 $thirdKey.removeClass('disabledd');
+												 $fourthKey.removeClass('disabledd');
+												 $fifthKey.removeClass('disabledd');
+												 $sixthKey.removeClass('disabledd');
+												 console.log($fifthKey);
+								                 console.log($sixthKey);
+												 console.log($fourthKey);
+							 
+												 break;
+											 case 6:
+										     case 7:
+											 case 8:
+											 case 9:
+								                 // Conditions for level 5
+								                 console.log("Reached level Advanced!");
+												  $('.keysWrapper div').removeClass('disabledd');
+							  
+												  break;
+								             // Add more cases for additional levels
+								             default:
+								                 // Default case
+								                 console.log("Default level reached!");
+								         }
+					 
                      setTimeout(function (){
                         audio.pause();
                         songPlaying.classList.remove('playing');
@@ -1763,103 +1629,36 @@
 					
                  }
 				 
+				 function stopGame() {
+					 console.log("STOPPING GAME");
+					 stopBtn.click();
+				 }
+				 
 				 function createGame(onScoreChanged, onLevelChanged) {
 				     let score = 0;
 				     const scoreIncrement = 10;
 				     let level = 1;
 
-				     const incrementScore = () => {
-				         score += scoreIncrement;
-				         onScoreChanged(score);
-				         if (score >= (level * 100)) {
-				             onLevelChanged(++level);
-				         }
-				     }
+					 const incrementScore = () => {
+									     score += scoreIncrement;
+									     onScoreChanged(score);
+									     if (score >= (level * 100)) {
+									         onLevelChanged(++level);
+									         globalLevel = level; // Update globalLevel to match the current level
+											 $('.levelNumber').text(level);
+									        // console.log(`Reached level ${level}!`);
+									     }
+									 }
     
 				     return {
 				         incrementScore
 				     }
 				 }
-
-                 songs.forEach(song => {
-                    song.addEventListener('mousedown', () => {
-                      const note = song.dataset.song;
-                      playSong(note);
-					  $(".list-btn").click();
-                    });
-                 });
+                
 				 
 				
 				 // Initialize counters in local storage if they don't exist
-				 const keyStats = JSON.parse(localStorage.getItem('keyStats')) || {};
-
-				 songKeys.forEach(key => {
-				     key.addEventListener('mousedown', () => {
-				         const currentSong = document.querySelector('div.activa');
-				         const songPlaying = document.querySelector('div.playing');
-				         const note = key.dataset.note;
-
-				         if (currentSong != null) {
-				             $(".announcement").hide();
-				             $(".settings").addClass("noBanner");
-				             const currentKey = currentSong.dataset.note;
-				             const song = currentSong.dataset.song;
-				             console.log(note);
-				             console.log(currentKey);
-
-				             if (note == currentKey) {
-				                 key.classList.add('right');
-				                 songKeys.forEach(key1 => {
-				                     if (key != key1) { key1.classList.remove('wrong'); }
-				                 });
-				                 if (songPlaying != null) {
-				                     stopSong(song);
-				                 }
-
-				                 // Increment right count for this key
-				                 keyStats[note] = (keyStats[note] || {});
-				                 keyStats[note].right = (keyStats[note].right || 0) + 1;
-
-				                 // Send key statistics data to server
-				                 if (userLoggedIn) {
-				                     sendKeyStatsToServer(userId, keyStats);
-				                 }
-
-				                 // If it's the first try and user is logged in, increment score
-				                 if (globalFirstTry == true && userLoggedIn) {
-				                     console.log("true: ", globalFirstTry);
-				                     game.incrementScore();
-				                 }
-
-				                 setTimeout(function () {
-				                     key.classList.remove('right');
-				                     randomSong();
-				                 }, 600);
-				             } else {
-				                 key.classList.add('wrong');
-
-				                 // Increment wrong count for this key
-				                 keyStats[note] = (keyStats[note] || {});
-				                 keyStats[note].wrong = (keyStats[note].wrong || 0) + 1;
-
-				                 // Send key statistics data to server
-				                 if (userLoggedIn) {
-				                   //  sendKeyStatsToServer(userId, keyStats);
-				                 }
-
-				                 globalFirstTry = false;
-				                 console.log(globalFirstTry);
-				             }
-				         }
-
-				 });
-
-                 key.addEventListener('touchstart', () => {
-                    /* use if you need something to be only on TOUCH. if nothing here TOUCH uses MOUSEDOWN above*/
-                    preventDefault();
-                    stopPropagation();
-                 });
-                });
+				 keyStats = JSON.parse(localStorage.getItem('keyStats')) || {};
 
 
                  keys.forEach(key => {
@@ -1919,5 +1718,7 @@
          </div>
 		
      </div>
+	 <script src='/dist/graphiq.js'></script>
+	   <script  src="/dist/script.js"></script>
   </body>
 </html>

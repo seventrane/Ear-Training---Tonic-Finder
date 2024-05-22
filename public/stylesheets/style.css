@@ -44,7 +44,7 @@ a {
   width: 101%;
 }
 
-.key {
+.piano .key {
   float: left;
   width: 60px;
   height: 225px;
@@ -59,7 +59,7 @@ a {
   user-select: none;
 }
 
-.black-key {
+.piano .black-key {
   float: left;
   width: 45px;
   height: 120px;
@@ -73,10 +73,26 @@ a {
   z-index: 3;
 }
 
-.key.half {
+.piano .key span {
+    color: black; /* Text color for white keys */
+    position: absolute;
+    bottom: 3;
+    left: 35%;
+    font-size: 70%;
+}
+
+.piano .black-key span {
+    color: white; /* Text color for black keys */
+    position: absolute;
+    top: 3;
+    left: 25%;
+    font-size: 70%;
+}
+
+.piano .key.half {
   margin-left: -1px !important;
 }
-.key:after, .black-key:after {
+.piano .key:after, .black-key:after {
   content: '';
   height: 0.5em;
   width: 100%;
@@ -87,13 +103,13 @@ a {
   margin: 0 auto;
 }
 
-.black-key::after {
+.piano .black-key::after {
   content: '';
   background: white;
   opacity: 0.165;
 }
 
-.active {
+.piano .active {
   //background: lightseagreen;
   border: 2px solid black;
   border-top: 1px solid black;
@@ -101,7 +117,7 @@ a {
   z-index: 2;
 }
 
-.black-key.active {
+.piano .black-key.active {
   //background: lightseagreen;
   border: 1px solid white;
   border-top: 1px solid black;
@@ -109,11 +125,11 @@ a {
   z-index: 2;
 }
 
-.active:after {
+.piano .active:after {
   background: white;
 }
 
-.black-key.active:after {
+.piano .black-key.active:after {
   background: black;
   opacity: 1;
 }
@@ -736,4 +752,8 @@ body {
 }
 
 // End of CSS for music player //
+
+
+
+
 

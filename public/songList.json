@@ -1,0 +1,890 @@
+[{
+  "song": "Gravity John Mayer",
+  "data-song": "2",
+  "data-note": "G",
+  "data-quality": null,
+  "audio_src": "pianoSongs/gravityJohnmayer.mp3",
+  "lang": "English"
+},{
+  "song": "Purple Rain Prince",
+  "data-song": "3",
+  "data-note": "Bb",
+  "data-quality": null,
+  "audio_src": "pianoSongs/purpleRainPrince.mp3",
+  "lang": "English"
+},{
+  "song": "September EWF",
+  "data-song": "4",
+  "data-note": "A",
+  "data-quality": null,
+  "audio_src": "pianoSongs/septemberEWF.mp3",
+  "lang": "English"
+},{
+  "song": "Stairway to Heaven Led Zeppelin",
+  "data-song": "5",
+  "data-note": "A",
+  "data-quality": null,
+  "audio_src": "pianoSongs/stairwayToHeavenLed.mp3",
+  "lang": "English"
+},{
+  "song": "Billie Jean Michael Jackson",
+  "data-song": "6",
+  "data-note": "Gb",
+  "data-quality": "minor",
+  "audio_src": "pianoSongs/billieJeanMJ.mp3",
+  "lang": "English"
+},{
+  "song": "Wonderwall Oasis",
+  "data-song": "7",
+  "data-note": "Gb",
+  "data-quality": null,
+  "audio_src": "pianoSongs/wonderwallOasis.mp3",
+  "lang": "English"
+},{
+  "song": "Happy Pharrell Williams",
+  "data-song": "8",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "pianoSongs/happyPharell.mp3",
+  "lang": "English"
+},{
+  "song": "Someone Like You Adele",
+  "data-song": "9",
+  "data-note": "A",
+  "data-quality": null,
+  "audio_src": "pianoSongs/someoneLikeYouAdele.mp3",
+  "lang": "English"
+},{
+  "song": "Hotel California The Eagles",
+  "data-song": "10",
+  "data-note": "B",
+  "data-quality": null,
+  "audio_src": "pianoSongs/hotelCaliforniaEagles.mp3",
+  "lang": "English"
+},{
+  "song": "All The Small Things Blink 182",
+  "data-song": "11",
+  "data-note": "C",
+  "data-quality": null,
+  "audio_src": "pianoSongs/allTheSmallThingsBlink182.mp3",
+  "lang": "English"
+},{
+  "song": "Smells Like Teen Spirit",
+  "data-song": "12",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "pianoSongs/smellsLikeTeenSpiritNirvana.mp3",
+  "lang": "English"
+},{
+  "song": "Build Me Up Butter Cup",
+  "data-song": "13",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/BuildMeUpButterCup.mp3",
+  "lang": "English"
+},{
+  "song": "Creep Radiohead",
+  "data-song": "14",
+  "data-note": "G",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/creepRadiohead.mp3",
+  "lang": "English"
+},{
+  "song": "Blackbird The Beatles",
+  "data-song": "15",
+  "data-note": "G",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/blackbirdBeatles.mp3",
+  "lang": "English"
+},{
+  "song": "Wish You Were Here Floyd",
+  "data-song": "16",
+  "data-note": "G",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/wishYouWereHereFloyd.mp3",
+  "lang": "English"
+},{
+  "song": "On The Beach Neil Young",
+  "data-song": "17",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "pianoSongs/onTheBeachNeilYoung.mp3",
+  "lang": "English"
+},{
+  "song": "Satisfaction Rolling Stones",
+  "data-song": "18",
+  "data-note": "E",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/satisfactionRollingStones.mp3",
+  "lang": "English"
+},{
+  "song": "Cocaine Eric Clapton",
+  "data-song": "19",
+  "data-note": "E",
+  "data-quality": "mixo",
+  "audio_src": "pianoSongs/cocaineClapton.mp3",
+  "lang": "English"
+},{
+  "song": "Layla Eric Clapton",
+  "data-song": "20",
+  "data-note": "D",
+  "data-quality": "minor",
+  "audio_src": "pianoSongs/laylaClapton.mp3",
+  "lang": "English"
+},{
+  "song": "Viva La Vida ColdPlay",
+  "data-song": "21",
+  "data-note": "Ab",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/vivaLaVidaColdplay.mp3",
+  "lang": "English"
+},{
+  "song": "Hallelujah Leonard Cohen",
+  "data-song": "22",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/hallelujahLeonardCohen.mp3",
+  "lang": "English"
+},{
+  "song": "I'm Yours Jason Mraz",
+  "data-song": "23",
+  "data-note": "B",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/imYoursJasonMraz.mp3",
+  "lang": "English"
+},{
+  "song": "Lucky Jason Mraz",
+  "data-song": "24",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "pianoSongs/luckyJasonMraz.mp3",
+  "lang": "English"
+},{
+  "song": "If It Kills Me Jason Mraz",
+  "data-song": "25",
+  "data-note": "D",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/ifItKillsMeJasonMraz.mp3",
+  "lang": "English"
+},{
+  "song": "Brown Eyed Girl Van Morrison",
+  "data-song": "26",
+  "data-note": "G",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/BrownEyedGirlVanMorrison.mp3",
+  "lang": "English"
+},{
+  "song": "Walking on Sunshine Katrina",
+  "data-song": "27",
+  "data-note": "Bb",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/WalkingOnSunshineKatrina.mp3",
+  "lang": "English"
+},{
+  "song": "Roar Katy Perry",
+  "data-song": "28",
+  "data-note": "Bb",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/roarKatyPerry.mp3",
+  "lang": "English"
+},{
+  "song": "The Lazy Song Bruno Mars",
+  "data-song": "29",
+  "data-note": "B",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/theLazySongBruno Mars.mp3",
+  "lang": "English"
+},{
+  "song": "Shape of You Ed Sheeran",
+  "data-song": "30",
+  "data-note": "Db",
+  "data-quality": "minor",
+  "audio_src": "pianoSongs/shapeOfYouEdSheeran.mp3",
+  "lang": "English"
+},{
+  "song": "Hey, Soul Sister Train",
+  "data-song": "31",
+  "data-note": "E",
+  "data-quality": "major",
+  "audio_src": "pianoSongs/heySoulSisterTrain.mp3",
+  "lang": "English"
+},{
+  "song": "Alfredito_Linares_-_Rumbero_Bravo",
+  "data-song": "32",
+  "data-note": "Eb",
+  "data-quality": "minor",
+  "audio_src": "uploads/Alfredito_Linares_-_Rumbero_Bravo.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Tengo_un_Tumbao_FUEGO_77",
+  "data-song": "33",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/Tengo_un_Tumbao_FUEGO_77.mp3",
+  "lang": "Spanish"
+},{
+  "song": "eddy herrera suavemente",
+  "data-song": "34",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/eddy herrera suavemente.mp3",
+  "lang": "Spanish"
+},{
+  "song": "LOS MEJORES MERENGUES DE LOS 80 Y 90",
+  "data-song": "35",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/LOS MEJORES MERENGUES DE LOS 80 Y 90.mp3",
+  "lang": "Spanish"
+},{
+  "song": "ASI ES QUE TE QUIERO GORDITA",
+  "data-song": "36",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "uploads/ASI ES QUE TE QUIERO GORDITA.wmv.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Un dia Despues - Grupo Niche Video Oficial @Salsamor",
+  "data-song": "37",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/Un dia Despues - Grupo Niche Video Oficial @Salsamor.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Orquesta_Zodiac_-_La_Sinceridad",
+  "data-song": "38",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/Orquesta_Zodiac_-_La_Sinceridad.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Quieta - Paquito Guzman",
+  "data-song": "39",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Quieta - Paquito Guzman.mp3",
+  "lang": "Spanish"
+},{
+  "song": "grupo niche coco, Tito Gomez",
+  "data-song": "40",
+  "data-note": "A",
+  "data-quality": "major",
+  "audio_src": "uploads/grupo niche coco, Tito Gomez.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Monguito_El_Unico_-_Ave_Maria_Morena_HD_QUALITY",
+  "data-song": "41",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/Monguito_El_Unico_-_Ave_Maria_Morena_HD_QUALITY.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Oscar_D'_Leon-La_Negra_Margot",
+  "data-song": "42",
+  "data-note": "F",
+  "data-quality": "major",
+  "audio_src": "uploads/Oscar_D'_Leon-La_Negra_Margot.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Saoco - Yo No Como Camaron HQ Audio",
+  "data-song": "43",
+  "data-note": "D",
+  "data-quality": "major",
+  "audio_src": "uploads/Saoco - Yo No Como Camaron HQ Audio.mp3",
+  "lang": "Spanish"
+},{
+  "song": "SUN_SUN_BABAE_-_LOS_BLANCO",
+  "data-song": "44",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/SUN_SUN_BABAE_-_LOS_BLANCO.mp3",
+  "lang": "Spanish"
+},{
+  "song": "MIGUEL MIGUEL Y LA INTERNACIONAL - CURAME (1989) L",
+  "data-song": "45",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/MIGUEL MIGUEL Y LA INTERNACIONAL - CURAME (1989) L.R.E..mp3",
+  "lang": "Spanish"
+},{
+  "song": "ISMAEL_MIRANDA_Y_LARRY_HARLOW_",
+  "data-song": "46",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/ISMAEL_MIRANDA_Y_LARRY_HARLOW_...VENCERE.mp3",
+  "lang": "Spanish"
+},{
+  "song": "SE NOS ROMPIO EL AMOR - PAQUITO GUZMAN  (- La Mquina del Sabor-  2007 Lima - Per )",
+  "data-song": "47",
+  "data-note": "Bb",
+  "data-quality": "minor",
+  "audio_src": "uploads/SE NOS ROMPIO EL AMOR - PAQUITO GUZMAN  (- La Mquina del Sabor-  2007 Lima - Per ) .mp3",
+  "lang": "Spanish"
+},{
+  "song": "FERNANDO VILLALONA - ROMANTICISMO (1996) L",
+  "data-song": "48",
+  "data-note": "D",
+  "data-quality": "minor",
+  "audio_src": "uploads/FERNANDO VILLALONA - ROMANTICISMO (1996) L.R.E..mp3",
+  "lang": "Spanish"
+},{
+  "song": "Raulin Rosendo (Su mirada)2013",
+  "data-song": "49",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Raulin Rosendo (Su mirada)2013.mp3",
+  "lang": "Spanish"
+},{
+  "song": "EL_COMBO_DEL_AYER",
+  "data-song": "50",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "uploads/EL_COMBO_DEL_AYER.....VERDADERO_ANIVERSARIO.mp3",
+  "lang": "Spanish"
+},{
+  "song": "DONSALSERISIMO_REY_REYES_LA_MORENA",
+  "data-song": "51",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "uploads/DONSALSERISIMO_REY_REYES_LA_MORENA.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Bobby Rodriguez La Compañia Veneno",
+  "data-song": "52",
+  "data-note": "Db",
+  "data-quality": "minor",
+  "audio_src": "uploads/Bobby Rodriguez La Compañia Veneno.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Rey_Reyes_A_Borojol",
+  "data-song": "53",
+  "data-note": "Eb",
+  "data-quality": "minor",
+  "audio_src": "uploads/Rey_Reyes_A_Borojol.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Sonora_Matancera_Celia_Cruz_-_Caramelo_a_Kilo",
+  "data-song": "54",
+  "data-note": "Eb",
+  "data-quality": "major",
+  "audio_src": "uploads/Sonora_Matancera_Celia_Cruz_-_Caramelo_a_Kilo.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Laba Sosseh - Yamulema (DiamouleMawo).mp3",
+  "data-song": "55",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/Laba Sosseh - Yamulema (DiamouleMawo).mp3",
+  "lang": "Spanish"
+},{
+  "song": "Ray de la Paz - no renunciare",
+  "data-song": "56",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/Ray de la Paz - no renunciare.mp3",
+  "lang": "Spanish"
+},{
+  "song": "ASI_ES_QUE_TE_QUIERO_GORDITA",
+  "data-song": "57",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "uploads/ASI_ES_QUE_TE_QUIERO_GORDITA.wmv.mp3",
+  "lang": "Spanish"
+},{
+  "song": "somos_seres",
+  "data-song": "58",
+  "data-note": "Db",
+  "data-quality": "major",
+  "audio_src": "uploads/somos_seres._Joe_Arroyo.mp3",
+  "lang": "Spanish"
+},{
+  "song": "DIOMEDES Y LA INTERNACIONAL - NOCHE Y RUMBA (1992) L",
+  "data-song": "59",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/DIOMEDES Y LA INTERNACIONAL - NOCHE Y RUMBA (1992) L.R.E..mp3",
+  "lang": "Spanish"
+},{
+  "song": "Tu y Las Nubes   Willie Colon Y Celia Cruz",
+  "data-song": "60",
+  "data-note": "F",
+  "data-quality": "major",
+  "audio_src": "uploads/Tu y Las Nubes   Willie Colon Y Celia Cruz.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Banda Real La difunta 2012",
+  "data-song": "61",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "uploads/Banda Real La difunta 2012.mp3",
+  "lang": "Spanish"
+},{
+  "song": "JOSE_MANGUAL_JR_SIETE_POTENCIAS",
+  "data-song": "62",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "uploads/JOSE_MANGUAL_JR_SIETE_POTENCIAS.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Mala_pata_Sonora_Matancera_con_Justo_Betancourt",
+  "data-song": "63",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Mala_pata_Sonora_Matancera_con_Justo_Betancourt.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Mujer De Cabaret - Papaito",
+  "data-song": "64",
+  "data-note": "D",
+  "data-quality": "minor",
+  "audio_src": "uploads/Mujer De Cabaret - Papaito.mp3",
+  "lang": "Spanish"
+},{
+  "song": "No Aguanto Mas - Eddy Herrera",
+  "data-song": "65",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/No Aguanto Mas - Eddy Herrera.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Mario Munoz Papaito El gallo canelo.mp3",
+  "data-song": "66",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/Mario Munoz Papaito El gallo canelo.mp3",
+  "lang": "Spanish"
+},{
+  "song": "RAPHY LEAVITT Y LA SELECTA-COMO EL MORIVIVI (2)",
+  "data-song": "67",
+  "data-note": "Db",
+  "data-quality": "minor",
+  "audio_src": "uploads/RAPHY LEAVITT Y LA SELECTA-COMO EL MORIVIVI (2).mp3",
+  "lang": "Spanish"
+},{
+  "song": "ni siquiera - Antonio cartagena",
+  "data-song": "68",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/ni siquiera - Antonio cartagena.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Meneame_la_Cuna_Pete_Conde_Rodriguez___Fania_All_Stars",
+  "data-song": "69",
+  "data-note": "Bb",
+  "data-quality": "minor",
+  "audio_src": "uploads/Meneame_la_Cuna_Pete_Conde_Rodriguez___Fania_All_Stars.O.X.M.mp3",
+  "lang": "Spanish"
+},{
+  "song": "PABLO MARTINEZ Y PARADA JOVEN - EL ECO DE TU ADIOS (2001) L",
+  "data-song": "70",
+  "data-note": "Bb",
+  "data-quality": "minor",
+  "audio_src": "uploads/PABLO MARTINEZ Y PARADA JOVEN - EL ECO DE TU ADIOS (2001) L.R.E..mp3",
+  "lang": "Spanish"
+},{
+  "song": "Los Toros Band - Popurri Merengues Viejos",
+  "data-song": "71",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Los Toros Band - Popurri Merengues Viejos.mp3",
+  "lang": "Spanish"
+},{
+  "song": "El Prodigio - Raquel (2012)",
+  "data-song": "72",
+  "data-note": "Eb",
+  "data-quality": "minor",
+  "audio_src": "uploads/El Prodigio - Raquel (2012).mp3",
+  "lang": "Spanish"
+},{
+  "song": "Johnny_Pacheco_y_Celia_Cruz_-_Dime_Si_Llegue_A_Tiempo",
+  "data-song": "73",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "uploads/Johnny_Pacheco_y_Celia_Cruz_-_Dime_Si_Llegue_A_Tiempo.mp3",
+  "lang": "Spanish"
+},{
+  "song": "El_Frutero_-_Sabotaje",
+  "data-song": "74",
+  "data-note": "Bb",
+  "data-quality": "minor",
+  "audio_src": "uploads/El_Frutero_-_Sabotaje.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Tu Precio",
+  "data-song": "75",
+  "data-note": "D",
+  "data-quality": "minor",
+  "audio_src": "uploads/Tu Precio.mp3",
+  "lang": "Spanish"
+},{
+  "song": "que te vaya bien TITO GOMEZ",
+  "data-song": "76",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/que te vaya bien TITO GOMEZ.mp3",
+  "lang": "Spanish"
+},{
+  "song": "El Prodigio - El Mangrino (A Cuarteto) (2014) - www",
+  "data-song": "77",
+  "data-note": "Bb",
+  "data-quality": "major",
+  "audio_src": "uploads/El Prodigio - El Mangrino (A Cuarteto) (2014) - www.ilovetipico.com.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Jorge Cabrera Cuando Yo Tenia 15anos.mp3",
+  "data-song": "78",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "uploads/Jorge Cabrera Cuando Yo Tenia 15anos.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Paquetes - Fuego 77 10",
+  "data-song": "79",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "uploads/Paquetes - Fuego 77 10.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Timana_Cuco_Valoy_y_Su_Tribu_www",
+  "data-song": "80",
+  "data-note": "D",
+  "data-quality": "major",
+  "audio_src": "uploads/Timana_Cuco_Valoy_y_Su_Tribu_www.lacapicuasalsera.com.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Sergio Vargas Ay Mujer",
+  "data-song": "81",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "uploads/Sergio Vargas Ay Mujer.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Tabaco Y Sus Metales - Sinceridad",
+  "data-song": "82",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/Tabaco Y Sus Metales - Sinceridad.mp3",
+  "lang": "Spanish"
+},{
+  "song": "La_mujer_de_Antonio",
+  "data-song": "83",
+  "data-note": "Eb",
+  "data-quality": "major",
+  "audio_src": "uploads/La_mujer_de_Antonio.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Tito Gomez - Llegastes Tarde (HQ Audio)",
+  "data-song": "84",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Tito Gomez - Llegastes Tarde (HQ Audio).mp3",
+  "lang": "Spanish"
+},{
+  "song": "Oscar DLeon Con La Salsa Mayor - El Que Siembra Su Maiz  70s (1)",
+  "data-song": "85",
+  "data-note": "A",
+  "data-quality": "major",
+  "audio_src": "uploads/Oscar DLeon Con La Salsa Mayor - El Que Siembra Su Maiz  70s (1).mp3",
+  "lang": "Spanish"
+},{
+  "song": "Bobby Valentin - El muneco de la ciudad (1)",
+  "data-song": "86",
+  "data-note": "D",
+  "data-quality": "minor",
+  "audio_src": "uploads/Bobby Valentin - El muneco de la ciudad (1).mp3",
+  "lang": "Spanish"
+},{
+  "song": "AMOR Y CONTROL RUBEN BLADES",
+  "data-song": "87",
+  "data-note": "G",
+  "data-quality": "major",
+  "audio_src": "uploads/AMOR Y CONTROL RUBEN BLADES.mp3",
+  "lang": "Spanish"
+},{
+  "song": "CONJUNTO_CANDELA_-_GALLETANA",
+  "data-song": "88",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/CONJUNTO_CANDELA_-_GALLETANA.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Orlando Pabellon - Ocairi (1)",
+  "data-song": "89",
+  "data-note": "Bb",
+  "data-quality": "minor",
+  "audio_src": "uploads/Orlando Pabellon - Ocairi (1).mp3",
+  "lang": "Spanish"
+},{
+  "song": "Sin Rumbo Alguno - Conjunto Clasico con Tito Nieves",
+  "data-song": "90",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Sin Rumbo Alguno - Conjunto Clasico con Tito Nieves.mp3",
+  "lang": "Spanish"
+},{
+  "song": "SOMBRA_QUE_PASO-PETE_EL_CONDE_RODRIGUEZ",
+  "data-song": "91",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/SOMBRA_QUE_PASO-PETE_EL_CONDE_RODRIGUEZ.mp3",
+  "lang": "Spanish"
+},{
+  "song": "LLEGASTE_TARDE-YOHNY_PACHECO_Y_EL_CONDE",
+  "data-song": "92",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/LLEGASTE_TARDE-YOHNY_PACHECO_Y_EL_CONDE.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Antonio Cartagena   Ni Siquiera Dejaste",
+  "data-song": "93",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/Antonio Cartagena   Ni Siquiera Dejaste.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Ismael Miranda  Madre (1)",
+  "data-song": "94",
+  "data-note": "D",
+  "data-quality": "minor",
+  "audio_src": "uploads/Ismael Miranda  Madre (1).mp3",
+  "lang": "Spanish"
+},{
+  "song": "Karloz - SER AMANTES - PAQUITO GUZMAN Y SU ORQUESTA",
+  "data-song": "95",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/Karloz - SER AMANTES - PAQUITO GUZMAN Y SU ORQUESTA.mp3",
+  "lang": "Spanish"
+},{
+  "song": "MADRE-_DIMENSION_LATINA",
+  "data-song": "96",
+  "data-note": "D",
+  "data-quality": "major",
+  "audio_src": "uploads/MADRE-_DIMENSION_LATINA.mp3",
+  "lang": "Spanish"
+},{
+  "song": "yiyo sarante - pirata",
+  "data-song": "97",
+  "data-note": "A",
+  "data-quality": "major",
+  "audio_src": "uploads/yiyo sarante - pirata.mp3",
+  "lang": "Spanish"
+},{
+  "song": "EDDY HERRERA - DEMASIADO NIA (2000) L",
+  "data-song": "98",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "uploads/EDDY HERRERA - DEMASIADO NIA (2000) L.R.E..mp3",
+  "lang": "Spanish"
+},{
+  "song": "Rey_Reyes_-_madre",
+  "data-song": "99",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/Rey_Reyes_-_madre.wmv.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Julio_Castro_y_La_Masacre_El_pregonero",
+  "data-song": "100",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "uploads/Julio_Castro_y_La_Masacre_El_pregonero.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Digo yo - Tito Gmez",
+  "data-song": "101",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Digo yo - Tito Gmez.mp3",
+  "lang": "Spanish"
+},{
+  "song": "JOHNNY_COLON_-_CUERO_ESTIRAO",
+  "data-song": "102",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "uploads/JOHNNY_COLON_-_CUERO_ESTIRAO.mp3",
+  "lang": "Spanish"
+},{
+  "song": "The Lebron Brothers - En Las Nubes Trepao (Distinto Y Diferente) 1976",
+  "data-song": "103",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/The Lebron Brothers - En Las Nubes Trepao (Distinto Y Diferente) 1976.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Tormenta de amor - Tito Rojas",
+  "data-song": "104",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Tormenta de amor - Tito Rojas.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Grupo_Niche_-_Consejo_de_Madre_(canta_Tito_Gomez)",
+  "data-song": "105",
+  "data-note": "Db",
+  "data-quality": "minor",
+  "audio_src": "uploads/Grupo_Niche_-_Consejo_de_Madre_(canta_Tito_Gomez).mp3",
+  "lang": "Spanish"
+},{
+  "song": "QUE_NO_MUERA_EL_SON",
+  "data-song": "106",
+  "data-note": "Bb",
+  "data-quality": "major",
+  "audio_src": "uploads/QUE_NO_MUERA_EL_SON.....PAPAITO.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Tu_y_Las_Nubes_Willie_Colon_Y_Celia_Cruz",
+  "data-song": "107",
+  "data-note": "F",
+  "data-quality": "major",
+  "audio_src": "uploads/Tu_y_Las_Nubes_Willie_Colon_Y_Celia_Cruz.mp3",
+  "lang": "Spanish"
+},{
+  "song": "El Prodigio - Limpiate El Bozo (2012)",
+  "data-song": "108",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/El Prodigio - Limpiate El Bozo (2012).mp3",
+  "lang": "Spanish"
+},{
+  "song": "EL LAGO DE MATRULLA-CONJUNTO CLASICOCANTA-RAULIN ROSENDO (3)",
+  "data-song": "109",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/EL LAGO DE MATRULLA-CONJUNTO CLASICOCANTA-RAULIN ROSENDO (3).mp3",
+  "lang": "Spanish"
+},{
+  "song": "Anthony Santos Creiste (2012) Original",
+  "data-song": "110",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Anthony Santos Creiste (2012) Original.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Ruben Blades - El Arca de Noe",
+  "data-song": "111",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/Ruben Blades - El Arca de Noe.mp3",
+  "lang": "Spanish"
+},{
+  "song": "Alabanciosa_-_Manny_Oquendo_y_su_Conjunto_Libre",
+  "data-song": "112",
+  "data-note": "D",
+  "data-quality": "minor",
+  "audio_src": "uploads/Alabanciosa_-_Manny_Oquendo_y_su_Conjunto_Libre.mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "Entre Tu Amor Y Mi Amor",
+  "data-song": "113",
+  "data-note": "Bb",
+  "data-quality": "minor",
+  "audio_src": "uploads/Entre Tu Amor Y Mi Amor.-Feny Ortiz-By Jason Mena-NYC.mp4.mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "Con_los_pobres_estoy",
+  "data-song": "114",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/Con_los_pobres_estoy.mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "Vuela muy alto - Jerry Rivera (letra)",
+  "data-song": "115",
+  "data-note": "G",
+  "data-quality": "minor",
+  "audio_src": "uploads/Vuela muy alto - Jerry Rivera (letra).mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "Papaito_-_A_Mi_Veracruz_(HQ_Audio)",
+  "data-song": "116",
+  "data-note": "A",
+  "data-quality": "major",
+  "audio_src": "uploads/Papaito_-_A_Mi_Veracruz_(HQ_Audio).mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "El Pinero - Estereo Salsa 98.mp3",
+  "data-song": "117",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/El Pinero - Estereo Salsa 98.mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "El Callejero - Willie Rosario (2)",
+  "data-song": "118",
+  "data-note": "F",
+  "data-quality": "minor",
+  "audio_src": "uploads/El Callejero - Willie Rosario (2).mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "Luis Perico Ortiz - De Patitas HQ Audio (1)",
+  "data-song": "119",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/Luis Perico Ortiz - De Patitas HQ Audio (1).mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "Oscar_de_Leon_-_Tu_Orgullo_(HQ)",
+  "data-song": "120",
+  "data-note": "Unknown",
+  "data-quality": "undefined",
+  "audio_src": "uploads/Oscar_de_Leon_-_Tu_Orgullo_(HQ).mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "ismael_miranda_-_la_oportunidad",
+  "data-song": "121",
+  "data-note": "C",
+  "data-quality": "major",
+  "audio_src": "uploads/ismael_miranda_-_la_oportunidad.mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "WAYNE GORBEA - LO QUE DICE JUSTY",
+  "data-song": "122",
+  "data-note": "E",
+  "data-quality": "minor",
+  "audio_src": "uploads/WAYNE GORBEA - LO QUE DICE JUSTY.mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "The New York Band - Nadie Como Tu",
+  "data-song": "123",
+  "data-note": "Db",
+  "data-quality": "major",
+  "audio_src": "uploads/The New York Band - Nadie Como Tu .mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "Clasicom - La Tipa Le Dio Pa Mi (Salsa Nueva 2012)",
+  "data-song": "124",
+  "data-note": "Gb",
+  "data-quality": "minor",
+  "audio_src": "uploads/Clasicom - La Tipa Le Dio Pa Mi (Salsa Nueva 2012).mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "Corazon embustero - La grande de madrid",
+  "data-song": "125",
+  "data-note": "A",
+  "data-quality": "minor",
+  "audio_src": "uploads/Corazon embustero - La grande de madrid.mp3",
+  "lang": "Spanish"
+},
+{
+  "song": "No eres tu – Montuno EL Rey De La Cimarronada.mp3",
+  "data-song": "126",
+  "data-note": "C",
+  "data-quality": "minor",
+  "audio_src": "uploads/No eres tu – Montuno EL Rey De La Cimarronada.mp3",
+  "lang": "Spanish"
+}]

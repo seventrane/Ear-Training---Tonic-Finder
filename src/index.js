@@ -3,9 +3,19 @@ const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const path = require('path'); // Add this line to use the 'path' module
+const OpenAI = require('openai');
+const bodyParser = require('body-parser');
+
+const cors = require('cors');
+
 // 
 
 const app = express();
+
+
+// Enable CORS for all routes
+app.use(cors());
+
 
 app.use(express.json());
 
@@ -22,6 +32,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   console.error("Error connecting to MongoDB:", err);
   process.exit(1);
 });
+
 // START OF KEYS 
 
 
