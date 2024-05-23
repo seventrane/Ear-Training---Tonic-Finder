@@ -106,8 +106,8 @@
 
 	   .topBanner {
 	       display: flex;
-	       margin: 20px auto;
-	       padding: 20px;
+	       margin: 0px auto 10px;
+	       padding: 16px;
 	       border-radius: 10px;
 	       background-color: #333;
 	       color: #fff;
@@ -251,7 +251,14 @@
 		}
 		
 		.container {
-			display:none;
+			visibility: hidden;
+			width: 100%!important;
+			//margin-top: -73%;
+		}
+		
+		.visible {
+			visibility: visible;
+			margin-top: 20px!important;
 		}
     </style>
 	
@@ -614,9 +621,18 @@
                   <input class="pianoVolInput" type="range" id="volume2" value="100">
                 </div>
 				
-				<div class="disabledd" style="display:flex;align-items: flex-end;column-gap: 10px;">
-					<label style="font-weight: bold;">Hide Key Names:</label> <button id="toggleKeyNames" class="toggle-button off"><span class="on">YES</span><span class="off">NO</span></button>
+				<div class="disabledd" style="display:flex;align-items: center;column-gap: 10px;justify-content:space-between;">
+					<div style="display: flex;align-items: center;justify-content: space-evenly;column-gap: 10px;">
+						<label style="font-weight: bold;">Hide Key Names:</label> 
+						<button id="toggleKeyNames" class="toggle-button off">
+							<span class="on">YES</span>
+							<span class="off">NO</span>
+						</button>
+					</div>
+					<button id="reportBtn">Show Report</button>
 				</div>
+				
+				
            </div>
 		   
 		   <div class="container">
@@ -643,21 +659,17 @@
 
 
            <script>
-			   var songsData = {
-			       "Mon" : 80,
-			       "Tues": 40,
-			       "Wed" : 60,
-			       "Thu" : 80,
-			       "Fri": 40,
-			       "Sat" : 60,
-			   };
-			   
+			  
+			 
 
-
-			
+			/*
 			   // JavaScript to toggle button state
 			   document.addEventListener("DOMContentLoaded", function() {
+				   
+	 			   
+				   
 			       var toggleButton = document.getElementById("toggleKeyNames");
+				   
 			       toggleButton.addEventListener("click", function() {
 			           toggleButton.classList.toggle("on");
 			           toggleButton.classList.toggle("off");
@@ -725,9 +737,9 @@
 					console.log(result.right); // {"A":4,"B":3,"C":5,"D":2}
 					console.log(result.wrong); // {"A":1,"B":2,"C":0,"D":3}
 					
-			       });
+	 			
 			   });
-				  
+			*/	  
 				  // Check if the logged-in user is an admin
 				  function isAdminLoggedIn() {
 				      // Implement logic to check if the logged-in user is an admin
@@ -875,6 +887,7 @@
 				 let userLoggedIn = false;
 				 let userId = '';
 				 let globalLevel = 1;
+				 let globalKeyStats = [{}];
 				 
 				 const keys = document.querySelectorAll('.key, .black-key');
                  const songs = document.querySelectorAll('.song');
@@ -905,6 +918,7 @@
 							 const messageElement = document.getElementById("message");
 							 messageElement.innerText = parsedMessage.message;
 							 userId = parsedMessage.userId;
+							 console.log(userId);
 							 
 							 
 							 // Hide the message after 3 seconds
@@ -920,7 +934,8 @@
 								 $(loggedInArea).css("display","block");
 								 $(loggedInArea).children("p").css("display", "inline-block");
 								  userLoggedIn = true;
-								  getKeyStatsReportForUser(userId);
+								  console.log(userId);
+								  getKeyStatsReportForUser(userId); 
 							 }
 				         });
 
@@ -974,6 +989,8 @@
 				                 document.getElementById("loggedInArea").style.display = "none";
 								 const messageElement = document.getElementById("message");
 								 messageElement.innerText = message;
+								//clearGraphs(); $(".container").empty();
+								clearGraphs();
 								 
 								 // Hide the message after 3 seconds
 								 setTimeout(() => {
@@ -1245,6 +1262,9 @@
 				    .then(report => {
 				        // Process the key stats report
 				        console.log('Key stats report for user:', report);
+						generateGraph(report);
+						globalKeyStats = report;
+						
 				    })
 				    .catch(error => {
 				        console.error('Error fetching key stats report:', error);

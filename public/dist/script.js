@@ -1,3 +1,4 @@
+
 // Initiate graphs
 
 function convertData(datass) {
@@ -25,6 +26,126 @@ function convertData(datass) {
     return result;
 }
 
+function generateGraph(datass) {
+   var result = convertData(datass);
+   var songsData78 = result.right;
+   var coffees = result.wrong;
+
+   $('.graph-songs').graphiq({
+       data: songsData78,
+       fluidParent: ".col",
+       height: 100,
+       xLineCount: 10,
+       dotRadius: 4,
+       yLines: true,
+       xLines: true,
+       dots: true,
+       fillOpacity: 0.5,
+       fill: true,
+       colorUnits: "#c3ecf7"
+     });
+
+     $('.graph-coffees').graphiq({
+       data: coffees,
+       fluidParent: ".col",
+       height: 100,
+       xLineCount: 3,
+       dotRadius: 5,
+       yLines: true,
+       xLines: true,
+       dots: true,
+       colorLine: "#d3d1b1",
+       colorDot: "#726d60",
+       colorXGrid: "#634e1b",
+       colorUnits: "#d3d1b1",
+       colorFill: "#3a2f23",
+       dotStrokeWeight: 3,
+
+     });
+}
+
+
+// Function to clear the graphs
+function clearGraphs() {
+    // If the graphiq plugin provides a destroy method
+    if ($('.graph-songs').data('graphiq')) {
+        $('.graph-songs').graphiq('destroy');
+    }
+
+    if ($('.graph-coffees').data('graphiq')) {
+        $('.graph-coffees').graphiq('destroy');
+    }
+
+    // If no destroy method is provided, empty the containers
+    $('.graph-songs').empty();
+    $('.graph-coffees').empty();
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+           var toggleButton = document.getElementById("toggleKeyNames");
+		//  $(".container").css("margin-top", "-73%");
+		  
+		//console.log("LOADED: ", globalKeyStats);
+	   // Example usage:
+	   const datass = {
+	   	A: {right: 1, wrong: 1},
+	   	Ab: {right: 1, wrong: 1},
+	   	B: { right: 1, wrong: 8 },
+	       Bb: { right: 4, wrong: 1 },
+	       C: { right: 1, wrong: 1 },
+	       D: { right: 7, wrong: 1 },
+	       Db: { right: 1, wrong: 9 },
+	       E: { right: 2, wrong: 7 },
+	       Eb: { right: 1, wrong: 1 },
+	       F: { right: 2, wrong: 2 },
+	       G: { right: 2, wrong: 1 },
+	       Gb: { right: 1, wrong: 1 }
+	   };
+
+	 
+		 
+		 $(".graphiq__graph").attr("width", "100%!important");
+		 $(".container").css("margin-top", "-73%");
+		 
+	   $('#reportBtn').click(function() {
+		   
+
+		 
+		   
+		    
+	//		$(".container").css("width", "100%!important");
+	                  
+	                  if ($('.container').hasClass('visible')) {
+						  $('.container').toggleClass('visible');
+	                      $('#reportBtn').text('Show Report');
+						
+	                  } else {
+	                     
+						   
+						  $('.container').toggleClass('visible');
+	                      $('#reportBtn').text('Hide Report');
+						  $('html, body').animate({
+						     scrollTop: $('.container').offset().top
+						  }, 150); // Adjust the duration as needed
+	                  }
+	              });
+
+           toggleButton.addEventListener("click", function() {
+               toggleButton.classList.toggle("on");
+               toggleButton.classList.toggle("off");
+
+               $(".piano span").each(function() {
+                   $(this).toggleClass("hide");
+               });
+
+          
+			  
+			  
+           });
+       });
+
+/*
 // Example usage:
 const datass = {
 	A: {right: 1, wrong: 1},
@@ -65,7 +186,7 @@ var coffees = {
   "Sat" : 1,
   "Sun" : 2
    };
-*/
+
 var cats = {
     "10/12" : 1,
     "10/13" : 4,
@@ -133,7 +254,7 @@ $('.graph-songs').graphiq({
     dotStrokeWeight: 3,
 
   });
-
+/*
     $('.graph-cats').graphiq({
     data: cats,
     fluidParent: ".col",
@@ -180,3 +301,4 @@ $('.graph-feature').graphiq({
     colorXGrid: "#eeeeee",
     height: 180
 })
+*/

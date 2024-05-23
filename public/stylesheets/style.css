@@ -199,7 +199,7 @@ a {
 
 .keysWrapper {
   display: flex;
-  margin: 20px 0;
+  margin-bottom: 7px;
   flex-direction: row;
   align-items: flex-start;
 }
@@ -330,6 +330,7 @@ a {
   margin: 0 auto;
   width: 92%;
   max-width: 860px;
+  min-height: 87%;
   background: cadetblue;
   border: 11px solid black;
 }
@@ -368,7 +369,7 @@ a {
 
 .announcement > h3 {
   color: floralwhite;
-  font-size: 1.4em;
+  font-size: 1.1em;
   font-family: monospace;
   margin: 0;
 }
