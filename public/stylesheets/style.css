@@ -330,7 +330,7 @@ a {
   margin: 0 auto;
   width: 92%;
   max-width: 860px;
-  min-height: 87%;
+  min-height: 91%;
   background: cadetblue;
   border: 11px solid black;
 }
@@ -338,11 +338,12 @@ a {
 .content {
     display: flex;
     flex-direction: column;
+	position: relative;
 }
 
 .settings {
   bottom: 5px;
-  margin-top: 2em;
+  margin-top: -1em;
   float: left;
 }
 
@@ -466,6 +467,8 @@ body {
 }
 .player {
 	position: relative;
+	margin-top: 4%;
+	margin-bottom: 2%;
 }
 .music-box {
 //  position: absolute;
@@ -754,7 +757,54 @@ body {
 
 // End of CSS for music player //
 
+// UPLOAD POPUP
 
+.progressMessage {
+  font-family: monospace;
+  color: #333;
+  white-space: pre-wrap;
+}
+.step {
+  color: #4caf50; /* green */
+}
+.info {
+  color: #03a9f4; /* blue */
+}
+.success {
+  color: #4caf50; /* green */
+}
+.warning {
+  color: #ffc107; /* amber */
+}
+.error {
+  color: #f44336; /* red */
+}
+
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
 
 
 

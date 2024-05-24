@@ -90,11 +90,18 @@
 	     right: 10px;
 	   }
 	   
+	   .btnsWrapper {
+	       z-index: 20;
+	       position: absolute;
+	       right: 1.7%;
+	       width: 60%;
+	       top: 12%;
+	   }
 	   
 	   #levelIndicator {
 	       position: absolute;
-	       left: 76%;
-	       top: -39%;
+	       left: 78%;
+	       top: -97%;
 	       font-size: 0.6em; /* Adjust as needed */
 	       color: #333; /* Text color */
 	       background-color: #fff; /* Background color for the score */
@@ -472,6 +479,43 @@
               <div class="next_music hide">Next Song</div>
               <div class="repeat_music hide">Repeat Song</div>
             </div>
+			
+             <div class="settings">
+                 <div class="announcement hide">
+                   <h3>1. Click Start Game</h3>
+                   <h3>2. Use the keyboard to assist you identifying the tonic</h3>
+                   <h3>3. Then select the tonic from the letters above the keyboard</h3>
+                 </div>
+                 <h4 class="">Music To Use:</h4>
+                 <div class="behavior_controls ">
+                   <span>App Songs</span>
+                   <label class="switch">
+                     <input class="switch_check" type="checkbox">
+                     <span class="slider round"></span>
+                   </label>
+                   <span>Your Own Songs</span>
+                 </div>
+
+                 <div class="volume_controls disabledd">
+                   <label class="songVolText">Song Volume: </label>
+                   <input class="songVolInput" type="range" id="volume" value="100">
+                  
+                   <label class="pianoVolText">Piano Volume: </label>
+                   <input class="pianoVolInput" type="range" id="volume2" value="100">
+                 </div>
+				
+ 				<div class="disabledd" style="display:flex;align-items: center;column-gap: 10px;justify-content:space-between;">
+ 					<div style="display: flex;align-items: center;justify-content: space-evenly;column-gap: 10px;">
+ 						<label style="font-weight: bold;">Hide Key Names:</label> 
+ 						<button id="toggleKeyNames" class="toggle-button off">
+ 							<span class="on">YES</span>
+ 							<span class="off">NO</span>
+ 						</button>
+ 					</div>
+ 					<button id="reportBtn">Show Report</button>
+ 				</div>
+								
+            </div>
 
 			<div class="player">
 				<!--  Music Player -->
@@ -511,6 +555,7 @@
 				  <div class="lists">
 				    <div class="label">SONGS</div>
 				    <div class="box"></div>
+					<ul></ul>
 				  </div>
 				</div>
 				
@@ -534,6 +579,9 @@
 							  <button class="tag noteQuality minorGb hide">Gb minor</button>
 							  <button class="tag noteQuality minorA hide">A minor</button>
 							  <button class="tag noteQuality minorC hide">C minor</button>
+							  
+							  <button id="openPopup" style="visibility:hidden;">Open Popup</button>
+							  
 							</div>
 							
 				
@@ -594,49 +642,12 @@
 			    <div class="key" data-note="A4"><span>A4</span></div>
 			    <div class="black-key" data-note="Bb4"><span>Bb4</span></div>
 			    <div class="key" data-note="B4"><span>B4</span></div>
-			</div>
-            
+			</div>   
 		   
-           <div class="settings">
-                <div class="announcement">
-                  <h3>1. Click Start Game</h3>
-                  <h3>2. Use the keyboard to assist you identifying the tonic</h3>
-                  <h3>3. Then select the tonic from the letters above the keyboard</h3>
-                </div>
-                <h4 class="hide">Songs Will Play:</h4>
-                <div class="behavior_controls hide">
-                  <span>Manual</span>
-                  <label class="switch">
-                    <input class="switch_check" type="checkbox">
-                    <span class="slider round"></span>
-                  </label>
-                  <span>Auto</span>
-                </div>
-
-                <div class="volume_controls disabledd">
-                  <label class="songVolText">Song Volume: </label>
-                  <input class="songVolInput" type="range" id="volume" value="100">
-                  
-                  <label class="pianoVolText">Piano Volume: </label>
-                  <input class="pianoVolInput" type="range" id="volume2" value="100">
-                </div>
-				
-				<div class="disabledd" style="display:flex;align-items: center;column-gap: 10px;justify-content:space-between;">
-					<div style="display: flex;align-items: center;justify-content: space-evenly;column-gap: 10px;">
-						<label style="font-weight: bold;">Hide Key Names:</label> 
-						<button id="toggleKeyNames" class="toggle-button off">
-							<span class="on">YES</span>
-							<span class="off">NO</span>
-						</button>
-					</div>
-					<button id="reportBtn">Show Report</button>
-				</div>
-				
-				
-           </div>
+        
 		   
-		   <div class="container">
-		     <div class="row">
+		    <div class="container">
+		      <div class="row">
 		       <div class="col">
 		         <h1>Graph Report</h1>
 		  
@@ -656,90 +667,315 @@
 		       </div>
 		       
 		     </div>
+			</div> 
+			
+			<div class="popup" id="popup">
+			   <div class="popup-content">
+			     <span class="close" id="closePopup">&times;</span>
+ 
+			     <h1 class="text-center" id="todo">Use Your Own Audio Files:</h1>
+				 
+			     <section style="background-color:rgb(4 0 255 / 6%);">
+			       <div class="container-lg p-3">
+			         <div class="row d-flex justify-content-center align-items-center">
+			           <div class="col col-xl-10">
+			             <div class="card">
+			               <div class="card-body p-3 flex-colx">
+			   			  	 	<form id="uploadForm" action="/api/uploadFolder" method="POST" enctype="multipart/form-data">
+			   		    	  <input type="file" name="folderPath" id="folderPath" webkitdirectory directory multiple>
+			   		    	  <button type="submit" style="margin-top: 10%;">Upload Folder</button>
+			   		  	  </form>
+			               </div>
+			             </div>
+			           </div>
+			         </div>
+			       </div>
+			     </section>
+				 
+				  <div id="audioPlayer"></div>
+				 
+			     <section style="background-color:rgb(4 0 255 / 6%);">
+			       <div class="container-lg p-2">
+			         <div class="row d-flex justify-content-center align-items-center">
+			           <div class="col col-xl-10">
+			             <div class="card">
+			               <div class="card-body p-4 flex-colx">
+			                 <input type="file" class="hide UPLOADSINGLEFILE" id="audioFileInput" accept="audio/*">
+			                 <button class="hide upload_btn" onclick="uploadAudio()">Upload</button>
+							 <p>Activity:</p>
+			                 <div id="progressMessage" class="progressMessage"></div> <!-- Add a div to display progress messages -->
+			               </div>
+			             </div>
+			           </div>
+			         </div>
+			       </div>
+			     </section>
+				 
+			    
+			   </div>
+			 </div>
 
 
            <script>
 			  
-			 
+		   	  const folderPath = "./uploads";
+		   	        const urlIP= "98.113.67.183";
+		   	        const urlPort = "3000";
 
-			/*
-			   // JavaScript to toggle button state
-			   document.addEventListener("DOMContentLoaded", function() {
-				   
-	 			   
-				   
-			       var toggleButton = document.getElementById("toggleKeyNames");
-				   
-			       toggleButton.addEventListener("click", function() {
-			           toggleButton.classList.toggle("on");
-			           toggleButton.classList.toggle("off");
-					   $(".piano span").each(function() {
-					       $(this).toggleClass("hide");					  
-					   });
-					   
-					   // Call the function with your data object
-					   var data1 = {
-					       "A": {right: 1, wrong: 1},
-					       "Ab": {right: 1, wrong: 1},
-					       "B": {right: 1, wrong: 0},
-					       "Bb": {right: 1, wrong: 1},
-					       "C": {right: 1, wrong: 1},
-					       "D": {right: 3, wrong: 1},
-					       "Db": {right: 1, wrong: 2},
-					       "E": {right: 2, wrong: 1},
-					       "Eb": {right: 1, wrong: 1},
-					       "F": {right: 2, wrong: 2},
-					       "G": {right: 2, wrong: 1},
-					       "Gb": {right: 1, wrong: 1}
-					   };
-					 console.log("YALA");
-					//  createGraph(data);
+		 			async function uploadAudio() {
+		 			  const fileInput = document.getElementById('audioFileInput');
+		 			  const file = fileInput.files[0];
 
-					//  const audioElement = $('audio[data-sound="2"]')[0];
+		 			  if (!file) {
+		 			    console.error('No file selected');
+		 			    return;
+		 			  }
 
-					//  guessGenreOfAudio(audioElement);
-					
-					function convertData(data) {
-					    var right = {};
-					    var wrong = {};
+		 			  const formData = new FormData();
+		 			  formData.append('audioFile', file);
+					  
+		 			  document.getElementById('progressMessage').innerHTML = '<span class="step">Starting key signature detection...</span><br>'; // Display progress message
 
-					    $.each(data, function(key, value) {
-					        right[key] = parseInt(value.right, 10);
-					        wrong[key] = parseInt(value.wrong, 10);
-					    });
+		
 
-					    var result = {
-					        right: {},
-					        wrong: {}
-					    };
+		 			  // Modify fetch request options to use custom agent
+		 			  const requestOptions = {
+		 			    method: 'POST',
+		 			    body: formData
+		 			  };
 
-					    for (var key in right) {
-					        result.right['"' + key + '"'] = right[key];
-					    }
+		 			  console.log('Sending request:', requestOptions);
 
-					    for (var key in wrong) {
-					        result.wrong['"' + key + '"'] = wrong[key];
-					    }
+		 			  fetch(`http://${encodeURIComponent(urlIP)}:${encodeURIComponent(urlPort)}/api/uploadFile`, requestOptions)
+		 			    .then(response => {
+		 			      console.log('Response received:', response);
+		 			      if (!response.ok) {
+		 			        throw new Error('Failed to upload file');
+		 			      }
+		 			      return response.json();
+		 			    })
+		 			    .then(data => {
+		 			      console.log('Upload success:', data.result);
+		 			      document.getElementById('progressMessage').innerHTML += '<span class="step">Uploaded successfully...</span> <br>'; // Display progress message
+		 			      document.getElementById('progressMessage').innerHTML += '<span class="step">Preparing audio data...</span><br>'; // Display progress message
+		 			      fetchKeys();  
+		 			    })
+		 			    .catch(error => {
+		 			      console.error('Upload failed:', error);
+		 			      // Log the response if available
+		 			      if (error.response) {
+		 			        console.error('Response:', error.response);
+		 			      }
+		 			      document.getElementById('progressMessage').innerHTML = '<span class="error">Upload failed. Please try again.</span>'; // Display error message
+		 			    });
+		 			}
+			
+		  
+		   // Get the form element
+		   const form = document.getElementById('uploadForm');
 
-					    return result;
-					}
+		   // Add a submit event listener to the form
+		   form.addEventListener('submit', async (event) => {
+		       event.preventDefault(); // Prevent the default form submission
 
-					// Example usage:
-					const data = {
-					    A: { right: 4, wrong: 1 },
-					    B: { right: 3, wrong: 2 },
-					    C: { right: 5, wrong: 0 },
-					    D: { right: 2, wrong: 3 }
-					};
+		       // Get the selected folder path
+		       const folderPath = document.getElementById('folderPath').files;
 
-					var result = convertData(data);
+		       // Create a FormData object to send data in multipart/form-data format
+		       const formData = new FormData();
 
-					console.log(result.right); // {"A":4,"B":3,"C":5,"D":2}
-					console.log(result.wrong); // {"A":1,"B":2,"C":0,"D":3}
-					
-	 			
-			   });
-			*/	  
+		       // Iterate over each file in the selected folder
+		       for (let i = 0; i < folderPath.length; i++) {
+		           // Append each file to the FormData object with the same key
+		           formData.append('audioFiles', folderPath[i]);
+		       }
+
+		       // Log the FormData object to the console
+		       console.log($(formData));
+			   console.log(folderPath);
+
+		       // Display progress message
+		       document.getElementById('progressMessage').innerHTML = '<span class="step">Starting key signature detection...</span><br>';
+
+		       // Send the POST request using fetch
+		       try {
+		           const response = await fetch(`http://${encodeURIComponent(urlIP)}:${encodeURIComponent(urlPort)}/api/upload`, {
+		               method: 'POST',
+		               body: formData
+		           });
+
+		           // Check if the request was successful
+		           if (!response.ok) {
+		               throw new Error('Failed to upload folder');
+		           }
+
+		           // Parse the JSON response
+		           const data = await response.json();
+		           console.log(data); // Do something with the response data
+
+		           // Display progress messages based on the response data
+		           data.results.forEach(result => {
+		               if (Array.isArray(result) && result.length >= 2) {
+		 				  result.forEach(inResult => {
+		 	                  const filePath = inResult[0];
+		 	                  const key = inResult[1];
+		 	                  document.getElementById('progressMessage').innerHTML += `<span class="success">Key signature detected for ${filePath}:</span> ${key}<br>`;
+		 	              });
+		 				  }
+				  
+                 
+		           });
+		  
+		 		  // Example usage:
+		 		  const startIndex = 0; // Starting index for data-song
+
+		 		  const html = generateSongListHTML(data.results, startIndex);
+		 		  console.log(html);
+				  uploadHTML = html;
+				  populateSongs();
+
+		           // Display success message
+		           document.getElementById('progressMessage').innerHTML += '<span class="success">Folder uploaded successfully.</span><br>';
+		       } catch (error) {
+		           console.error(error);
+		           // Display error message
+		           document.getElementById('progressMessage').innerHTML += `<span class="error">Error: ${error.message}</span><br>`;
+		       }
+		   });
+  
+		   function fetchKeys() {
+		       const folderPath = "./uploads";
+		       const urlIP= "98.113.67.183";
+		       const urlPort = "3000";
+	  
+		       document.getElementById('progressMessage').innerHTML += '<span class="success">Audio data prepared successfully.</span><br>'; // Display progress message
+		       document.getElementById('progressMessage').innerHTML += '<span class="step">Running key signature detection...</span><br>'; // Display progress message
+
+		       fetch(`http://${encodeURIComponent(urlIP)}:${encodeURIComponent(urlPort)}/api/myFunction?folderPath=${encodeURIComponent(folderPath)}`)
+		           .then(response => {
+		               if (!response.ok) {
+		                   throw new Error('Network response was not ok');
+		               }
+		               return response.json();
+		           })
+		 		  .then(response => {
+		 		      // Check if 'result' property exists and is an array
+		 		      if (!response.result || !Array.isArray(response.result)) {
+		 		          console.error('Result is not an array:', response.result);
+		 		          return; // Exit early if 'result' is not an array
+		 		      }
+
+		 		      // Access the 'result' array
+		 		      const data = response.result;
+			  	
+		 		      // Assuming data is an array of arrays with [path, key] structure
+		 		      data.forEach(innerArray => {
+		 		          if (!Array.isArray(innerArray)) {
+		 		              console.error('Inner array is not iterable:', innerArray);
+		 		              return; // Exit early if 'innerArray' is not an array
+		 		          }
+
+		 		          const [path, key] = innerArray; // Destructuring assignment to extract path and key
+		 		          document.getElementById('progressMessage').innerHTML += `<span class="success">Key signature detected.</span><br><span class="info">Key signature:</span> ${key}<br>`; // Display progress message
+		 		      });
+
+		 		      document.getElementById('progressMessage').innerHTML += '<span class="success">Key signatures fetched successfully.</span>'; // Display success message
+		 		  })
+		           .catch(error => {
+		               console.error('Failed to fetch key signatures:', error);
+		               document.getElementById('progressMessage').innerHTML = '<span class="error">Failed to fetch key signatures. Please try again.</span>'; // Display error message
+		           });
+		   }
+  
+  
+		   function generateSongListHTML(results, startIndex) {
+		     let songIndex = startIndex;
+
+		     return results.map(result => {
+		       return result.map(song => {
+		         const [filePath, key] = song;
+		         const fileName = filePath.split('/').pop().split('.')[0];
+		         const [note, quality] = key.split(' ');
+
+		 		songIndex++;
+		
+		         return `
+		           <li>
+		             <div class="song" data-song="${songIndex}" data-note="${note}" data-quality="${quality}">
+		               ${fileName}
+		               <i class="fa fa-solid fa-volume-up hide"></i>
+		             </div>
+		             <audio data-sound="${songIndex}" src="${filePath}"></audio>
+		           </li>
+		         `;
+		       }).join('');
+		     }).join('');
+		   }
+		   
+		   
+		   
+		   /// TEST MULTIPLE FILES ADDED TO PLAYER 
+		   
+		   
+		   const filePicker = document.getElementById('folderPath');
+		   const audioPlayer = document.getElementById('audioPlayer');
+
+		   filePicker.addEventListener('change', async (event) => {
+		       const files = event.target.files;
+		       if (!files || files.length === 0) return;
+
+		       try {
+		           // Clear existing audio player
+		           audioPlayer.innerHTML = '';
+				   var fileNumber = 0;
+		           for (const file of files) {
+					   fileNumber++;
+		               // Use FileReader to read the file content as an ArrayBuffer
+		               const fileContents = await readFileAsArrayBuffer(file);
+		               // Create a Blob from the ArrayBuffer
+		               const blob = new Blob([fileContents], { type: file.type });
+		               // Create an object URL from the Blob
+		               const audioURL = URL.createObjectURL(blob);
+		               // Create an audio element for each file
+		               const audio = document.createElement('audio');
+					   audio.setAttribute('data-song', fileNumber);
+		               audio.src = audioURL;
+		               // Add controls to the audio element
+		               audio.controls = false;
+		               // Create a list item to hold the audio element
+					   // Create a <ul> element
+					 //  var ul = document.createElement('ul');
+
+					   // Create a <li> element
+					   var listItem = document.createElement('li');
+
+					   // Now you can append the <li> element to the <ul>
+					//   ul.appendChild(listItem);
+		               listItem.appendChild(audio);
+		               // Add the list item to the player
+		               audioPlayer.appendChild(listItem);
+		           }
+		       } catch (error) {
+		           console.error('Error creating object URL:', error);
+		       }
+		   });
+
+		   // Function to read file content as ArrayBuffer
+		   function readFileAsArrayBuffer(file) {
+		       return new Promise((resolve, reject) => {
+		           const reader = new FileReader();
+		           reader.onload = () => resolve(reader.result);
+		           reader.onerror = reject;
+		           reader.readAsArrayBuffer(file);
+		       });
+		   }
+		   
+		   
+		   ////
+		   
+		   
+
+		 
 				  // Check if the logged-in user is an admin
 				  function isAdminLoggedIn() {
 				      // Implement logic to check if the logged-in user is an admin
@@ -888,6 +1124,7 @@
 				 let userId = '';
 				 let globalLevel = 1;
 				 let globalKeyStats = [{}];
+				 let uploadHTML = '';
 				 
 				 const keys = document.querySelectorAll('.key, .black-key');
                  const songs = document.querySelectorAll('.song');
@@ -1007,27 +1244,56 @@
 					  
 
 						 function populateSongs() {
-		 					$.getJSON('songList.json', function(data) {
-		 					        var htmlContent = '';
-		 					        data.forEach(function(item) {
-		 					            htmlContent += '<li>';
-		 					            htmlContent += '<div class="song" data-song="' + item['data-song'] + '" data-note="' + item['data-note'] + '" data-quality="' + item['data-quality'] + '"data-lang="' + item['lang'] + '">' + item['song'] + '  <i class="fa fa-solid fa-volume-up hide"></i>' + '</div>';
-		 					            htmlContent += '<audio data-sound="' + item['data-song'] + '" src="' + item['audio_src'] + '"></audio>';
-		 					            htmlContent += '</li>';
-		 					        });
-		 					        $('.lists').append('<ul>' + htmlContent + '</ul>');
+							 console.log(globalPlayingStyle);
+							 if (globalPlayingStyle) {
+								 console.log("local Files");
+								 $(".lists ul").append(uploadHTML);
+								 
+								 $("#audioPlayer li").each(function() {
+								     var dI = parseInt($(this).index() + 1, 10);
+									 
+									 $(".lists ul li").eq(0).find("audio").attr('src')
+									 
+									 console.log(dI);
+								     var aFile = $(this).find('audio');
+									 var newSrc = aFile.attr('src');
+									 console.log(newSrc);
+									 var naFile = $(".lists ul li").eq(dI-1);
+									// naFile = naFile.find("audio");
+									 console.log(naFile);
+									 naFile.find("audio").attr('src', newSrc);
+									 console.log(naFile);
+									 
+								 });						 
+							 } else {
+								 console.log("using SongList");
+								 
+	 		 					$.getJSON('songList.json', function(data) {
+	 		 					        var htmlContent = '';
+	 		 					        data.forEach(function(item) {
+	 		 					            htmlContent += '<li>';
+	 		 					            htmlContent += '<div class="song" data-song="' + item['data-song'] + '" data-note="' + item['data-note'] + '" data-quality="' + item['data-quality'] + '"data-lang="' + item['lang'] + '">' + item['song'] + '  <i class="fa fa-solid fa-volume-up hide"></i>' + '</div>';
+	 		 					            htmlContent += '<audio data-sound="' + item['data-song'] + '" src="' + item['audio_src'] + '"></audio>';
+	 		 					            htmlContent += '</li>';
+	 		 					        });
+	 		 					        $('.lists').append('<ul>' + htmlContent + '</ul>');
 									
-				                    const songs = document.querySelectorAll('.song');
-				                    const songKeys = document.querySelectorAll('.keysWrapper > div');
-									
-				                    songs.forEach(song => {
-				                       song.addEventListener('mousedown', () => {
-				                         const note = song.dataset.song;
-				                         playSong(note);
-				   					  $(".list-btn").click();
-				                       });
-				                    });
-									
+	 				                    	
+							  });	
+							 }
+							 
+		 					
+		                    const songs = document.querySelectorAll('.song');
+		                    const songKeys = document.querySelectorAll('.keysWrapper > div');
+						
+		                    songs.forEach(song => {
+		                       song.addEventListener('mousedown', () => {
+		                         const note = song.dataset.song;
+		                         playSong(note);
+		   					  $(".list-btn").click();
+		              });
+			  
+		          });	
 									
 
 				   				 songKeys.forEach(key => {
@@ -1099,7 +1365,7 @@
 				                       preventDefault();
 				                       stopPropagation();
 				                    });
-				                   });
+				                 
 									
 									
 		 					    });
@@ -1129,7 +1395,7 @@
 						 
                  $("document").ready(function() {
 					//  sessionStorage.setItem('userId', '0');
-					populateSongs();  
+					//populateSongs();  
 					
                     let globalVol = 0.1;
                     let globalNoteVol = 50;
@@ -1153,8 +1419,16 @@
 					//globalNoteVal = 50;
 					$("#volume2").val(50);
 				   // soundManager.setVolume(90);
+				   
+				   //POPUP
+				   $("#openPopup").click(function() {
+				     $("#popup").show();
+				   });
 
-					
+				   $("#closePopup").click(function() {
+				     $("#popup").hide();
+				   });
+
 			 		/* MUSIC PLAYER JS */
 
 			 		  $(".list-btn").click(function() {
@@ -1275,7 +1549,7 @@
 					console.log(audioElement);
 	            
 				    // Send the audio element to the server
-				    fetch('http://localhost:3000/guess-genre', {
+				    fetch('http://localhost:3001/guess-genre', {
 				        method: 'POST',
 				        headers: {
 				            'Content-Type': 'application/json'
@@ -1720,17 +1994,35 @@
                      });
                  });
 
-                
-
                 const checkBox = document.querySelector("input.switch_check");
-                checkBox.addEventListener('click', ()=> {
-                    if(checkBox.checked) {
-                      globalPlayingStyle = 1;
-                    } else {
-                      globalPlayingStyle = 0
-                    }
-                    console.log(globalPlayingStyle);
-                });
+				const songsOff = $(".behavior_controls label").prev();
+				const songsOn = $(".behavior_controls label").next();
+				
+				songsOff.on('click', ()=> {
+					console.log("TEST");
+					//$(checkBox).click();
+					$(checkBox).prop("checked", false);
+					globalPlayingStyle = 0;
+				});
+				
+				songsOn.on('click', ()=> {
+					console.log("your songs");
+					$(checkBox).prop("checked", true);
+			        globalPlayingStyle = 1;
+			        $("#openPopup").click();
+					
+				});
+				
+				$(checkBox).on('change', function() {
+				    if ($(this).is(':checked')) {
+				        globalPlayingStyle = 1;
+				        $("#openPopup").click();
+				    } else {
+				        globalPlayingStyle = 0;
+				    }
+				    console.log(globalPlayingStyle);
+				    populateSongs();
+				});
 
 
              </script>
