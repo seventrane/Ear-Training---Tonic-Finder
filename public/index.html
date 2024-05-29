@@ -1560,12 +1560,13 @@
 						}
 
 				        // Example: Accessing keyVol
-				        globalNoteVol = userSettings.keyVol;
+				        globalNoteVol = (typeof userSettings !== 'undefined' && typeof userSettings.keyVol !== 'undefined') ? userSettings.keyVol : 50;
 				        console.log('Key volume:', globalNoteVol);
 						$("#volume2").val(globalNoteVol);
 
 				        // Example: Accessing songVol
-				        globalVol = userSettings.songVol;
+						globalVol = (typeof userSettings !== 'undefined' && typeof userSettings.songVol !== 'undefined') ? userSettings.songVol : 20;
+				         = ;
 				        console.log('Song volume:', globalVol);
 						$("#volume").val(globalVol);
 				    })
