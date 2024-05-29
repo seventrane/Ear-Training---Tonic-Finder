@@ -83,7 +83,7 @@ function clearGraphs() {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-           var toggleButton = document.getElementById("toggleKeyNames");
+           
 		//  $(".container").css("margin-top", "-73%");
 		  
 		//console.log("LOADED: ", globalKeyStats);
@@ -106,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	 
 		 
 		 $(".graphiq__graph").attr("width", "100%!important");
-		 $(".container").css("margin-top", "-73%");
+		// $(".container").css("margin-top", "-73%");
+		
 		 
 	   $('#reportBtn').click(function() {
 		   
@@ -119,30 +120,17 @@ document.addEventListener("DOMContentLoaded", function() {
 	                  if ($('.container').hasClass('visible')) {
 						  $('.container').toggleClass('visible');
 	                      $('#reportBtn').text('Show Report');
-						
+						  $(".settings").css("top", "16%");
+						  console.log("NINE");
 	                  } else {
 	                     
 						   
 						  $('.container').toggleClass('visible');
 	                      $('#reportBtn').text('Hide Report');
-						  $('html, body').animate({
-						     scrollTop: $('.container').offset().top
-						  }, 150); // Adjust the duration as needed
+						  $(".settings").css("top", "9%");
 	                  }
 	              });
 
-           toggleButton.addEventListener("click", function() {
-               toggleButton.classList.toggle("on");
-               toggleButton.classList.toggle("off");
-
-               $(".piano span").each(function() {
-                   $(this).toggleClass("hide");
-               });
-
-          
-			  
-			  
-           });
        });
 
 /*

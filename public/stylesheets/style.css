@@ -38,7 +38,7 @@ a {
 }
 
 .piano {
-  height: 208px;
+ // height: 208px;
   margin: 0 auto;
   margin-left: 1.26em;
   width: 101%;
@@ -301,20 +301,26 @@ a {
 
 .songVolText {
   font-weight: bold;
+  float: left;
 }
 
 .songVolInput {
   vertical-align: middle;
-  margin-right: 80px;
+  margin-right: 40px;
+  margin-left: 5px;
+  float: left;
 }
 
 .pianoVolText {
   font-weight: bold;
+  float: left;
 }
 
 .pianoVolInput {
   vertical-align: middle;
   display: inline-block;
+  margin-left: 5px;
+  float: left;
 }
 
 .behavior_controls {
@@ -330,9 +336,10 @@ a {
   margin: 0 auto;
   width: 92%;
   max-width: 860px;
-  min-height: 91%;
+ // min-height: 91%;
   background: cadetblue;
   border: 11px solid black;
+  overflow-x: hidden;
 }
 
 .content {
@@ -342,9 +349,18 @@ a {
 }
 
 .settings {
-  bottom: 5px;
-  margin-top: -1em;
-  float: left;
+	position: absolute;
+	border: 1px solid gray;
+	background: lightgray;
+	z-index: 99;
+	padding: 2%;
+	border-radius: 7px;
+	top: 25%;
+}
+
+.volume_controls {
+	margin-bottom: 3%;
+	display: flex;
 }
 
 .clearfix::after {

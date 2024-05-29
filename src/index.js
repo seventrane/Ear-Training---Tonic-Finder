@@ -232,6 +232,192 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
+// Create a schema for your data
+const dataSchema = new mongoose.Schema({
+  myVariable: String
+});
+
+// Create a model based on the schema
+const Data = mongoose.model('Data', dataSchema);
+
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
+
+// Route to save the variable to the database
+app.post('/saveVariable', async (req, res) => {
+  try {
+    const newData = new Data({ myVariable: req.body.myVariable });
+    await newData.save();
+    res.send('Variable saved successfully.');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error saving variable.');
+  }
+});
+
+app.get('/getVariable', async (req, res) => {
+  try {
+    const data = await Data.findOne();
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error getting variable.');
+  }
+});
+
+const userSettingsSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    magicNumber: {
+        type: Number
+    },
+    showKeyNames: {
+        type: Boolean
+    },
+    keyVol: {
+        type: Number
+    },
+    songVol: {
+        type: Number
+    }
+});
+
+const UserSettings = mongoose.model('UserSettings', userSettingsSchema);
+
+module.exports = UserSettings;
+
+// Endpoint to update user settings for a specific user
+app.post('/updateUserSettings/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const { userSettings } = req.body;
+	console.log("Settings coming in: ", userSettings);
+
+    try {
+        // Update user settings in the database
+        // Find the user settings document for the given userId
+        let existingUserSettings = await UserSettings.findOne({ userId });
+		console.log("EXISTING SETTINGS: ",existingUserSettings);
+        if (!existingUserSettings) {
+            // If user settings document doesn't exist, create a new one
+            existingUserSettings = new UserSettings({
+                userId,
+                ...userSettings
+            });
+        } else {
+            // If user settings document exists, update its fields with values from userSettings
+            existingUserSettings = {
+                ...existingUserSettings.toObject(), // Convert existingUserSettings to plain object
+                ...userSettings // Update with userSettings
+            };
+        }
+
+        // Save the updated or new UserSettings document to the database
+        await UserSettings.findOneAndUpdate({ userId }, existingUserSettings, { upsert: true });
+
+        console.log("User settings updated successfully");
+
+        res.sendStatus(200); // Send success response
+    } catch (error) {
+        console.error('Error updating user settings:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Endpoint to get user settings for a specific user
+app.get('/getUserSettings/:userId', async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        // Retrieve user settings from the database for the specified user
+        let userSettings = await UserSettings.findOneAndUpdate(
+            { userId }, // Find by userId
+            {}, // Empty update - no changes needed, only fetching
+            { upsert: true, new: true } // Upsert option to create if not found, new option to return the modified document
+        );
+
+        console.log("User settings:", userSettings);
+
+        res.json({ userSettings }); // Send user settings as JSON response
+    } catch (error) {
+        console.error('Error fetching user settings:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+/*
+
+const magicNumberSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    magicNumber: {
+        type: Number,
+        default: 0 // Default value if not provided
+    }
+});
+
+const MagicNumber = mongoose.model('MagicNumber', magicNumberSchema);
+
+// Endpoint to update magic number for a specific user
+app.post('/updateMagicNumber/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const { magicNumber } = req.body;
+
+    try {
+		console.log("magicNumber in js: ", magicNumber);
+        let existingMagicNumber = await MagicNumber.findOne({ userId });
+
+        if (!existingMagicNumber) {
+            // If the document doesn't exist, create a new one
+            existingMagicNumber = new MagicNumber({
+                userId,
+                magicNumber: magicNumber || 0
+            });
+        } else {
+			console.log("ELO AQUI: ",existingMagicNumber);
+            // If the document exists, update its magicNumber field
+            existingMagicNumber.magicNumber = magicNumber;
+			console.log("after modification: ", existingMagicNumber.magicNumber);
+        }
+
+        // Save the updated or new MagicNumber document to the database
+        await existingMagicNumber.save();
+
+        console.log("Magic number updated successfully");
+
+        res.sendStatus(200); // Send success response
+    } catch (error) {
+        console.error('Error updating magic number:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Endpoint to retrieve magic number for a specific user
+app.get('/getMagicNumber/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        // Use await to wait for the Promise returned by MagicNumber.findOne()
+        const magicNumberDoc = await MagicNumber.findOne({ userId });
+
+        if (magicNumberDoc) {
+            res.json({ magicNumber: magicNumberDoc.magicNumber });
+        } else {
+            // Return magicNumber as 0 if not found
+            res.json({ magicNumber: 0 });
+        }
+    } catch (error) {
+        console.error('Error retrieving magic number:', error);
+        res.status(500).send('Error retrieving magic number');
+    }
+});
+
+*/
+
 // Get port from environment and store in Express.
 const port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);

@@ -16,6 +16,17 @@
   
    <style>
 	   /* Local style */
+	   .reports {
+		   position: absolute;
+		   background: pink;
+		   z-index: 30;
+		   top: 97px;
+		   padding: 0!important;
+		   margin-left: -28px;
+		   height: 84%;
+		   width: 102%!important;
+	   }
+	   
 	   /* Toggle Button Style */
 	   .toggle-button {
 	     appearance: none;
@@ -92,20 +103,21 @@
 	   
 	   .btnsWrapper {
 	       z-index: 20;
-	       position: absolute;
-	       right: 1.7%;
-	       width: 60%;
-	       top: 12%;
+	       position: relative;
+	       //right: 1.7%;
+	       width: 100%;
+	       //top: 6%;
+		   margin-bottom: 2%;
 	   }
 	   
 	   #levelIndicator {
 	       position: absolute;
-	       left: 78%;
-	       top: -97%;
+	       right: 0%;
+	       top: 1%;
 	       font-size: 0.6em; /* Adjust as needed */
 	       color: #333; /* Text color */
 	       background-color: #fff; /* Background color for the score */
-	       padding: 11px 20px 7px; /* Padding around the score */
+	       padding: 11px 11px 7px; /* Padding around the score */
 	       border-radius: 10px; /* Rounded corners */
 	       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
 	       text-transform: uppercase;
@@ -259,19 +271,19 @@
 		
 		.container {
 			visibility: hidden;
-			width: 100%!important;
+			//width: 100%!important;
 			//margin-top: -73%;
 		}
 		
 		.visible {
 			visibility: visible;
-			margin-top: 20px!important;
+			//margin-top: 20px!important;
 		}
     </style>
 	
 </head>
 
-  <body>
+  <body style="overflow:hidden;">
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js" ></script>
     <script type="text/javascript" src="/js/client.js" ></script>
@@ -470,17 +482,20 @@
 	
     <div class="piano_zone">
          <div class="content clearfix">
-            <h2>EAR TRAINING - TONIC FINDER</h2>
-            
+            <h2 style="margin-bottom:2%;">EAR TRAINING - TONIC FINDER</h2>
+			<div id="levelIndicator">Current Level: <span class="levelNumber"></span></div>
             <div class="btnsWrapper">
               <div class="stop_music hide">Stop Music</div>
               <div class="start_music hide">Start Music</div>
               <div class="start_game">Start Game</div>
               <div class="next_music hide">Next Song</div>
               <div class="repeat_music hide">Repeat Song</div>
+			  
+			  <button id="reportBtn">Show Report</button>
+			  <button class="settingsBtn">Settings</button>
             </div>
 			
-             <div class="settings">
+             <div class="settings hide">
                  <div class="announcement hide">
                    <h3>1. Click Start Game</h3>
                    <h3>2. Use the keyboard to assist you identifying the tonic</h3>
@@ -504,7 +519,7 @@
                    <input class="pianoVolInput" type="range" id="volume2" value="100">
                  </div>
 				
- 				<div class="disabledd" style="display:flex;align-items: center;column-gap: 10px;justify-content:space-between;">
+ 				<div class="disabledd" style=" float:left; display:flex;align-items: center;column-gap: 10px;justify-content:space-between;">
  					<div style="display: flex;align-items: center;justify-content: space-evenly;column-gap: 10px;">
  						<label style="font-weight: bold;">Hide Key Names:</label> 
  						<button id="toggleKeyNames" class="toggle-button off">
@@ -512,7 +527,7 @@
  							<span class="off">NO</span>
  						</button>
  					</div>
- 					<button id="reportBtn">Show Report</button>
+ 					
  				</div>
 								
             </div>
@@ -561,9 +576,7 @@
 				
 				<!--  end of music player -->
 				
-				<div id="levelIndicator">
-									Current Level: <span class="levelNumber"></span>
-							</div>
+				
 							
 							
 							<div class="tags filterZone">
@@ -646,7 +659,7 @@
 		   
         
 		   
-		    <div class="container">
+		    <div class="container reports">
 		      <div class="row">
 		       <div class="col">
 		         <h1>Graph Report</h1>
@@ -659,7 +672,7 @@
 		               <div class="graph-songs"></div>
 		           </div>
 			   </div>
-			   <div class="row">
+			   <div class="row" style="margin-top:0!important;">
 		           <div class="col s-12">
 		                   <p>Keys you get wrong the most</p>
 		               <div class="graph-coffees"></div>
@@ -713,7 +726,7 @@
 				 
 			    
 			   </div>
-			 </div>
+			</div>
 
 
            <script>
@@ -832,6 +845,21 @@
 		 		  const html = generateSongListHTML(data.results, startIndex);
 		 		  console.log(html);
 				  uploadHTML = html;
+				  if (userLoggedIn) {
+					  $.ajax({
+					     url: '/saveVariable',
+					     method: 'POST',
+					     contentType: 'application/json',
+					     data: JSON.stringify({ myVariable: uploadHTML }),
+					     success: function(response) {
+					       console.log('Variable saved successfully.');
+					     },
+					     error: function(xhr, status, error) {
+					       console.error('Error saving variable:', error);
+					     }
+					   });
+				  } else { console.log("You are not logged in. Not saving playlisst.");}
+						
 				  populateSongs();
 
 		           // Display success message
@@ -973,9 +1001,6 @@
 		   
 		   ////
 		   
-		   
-
-		 
 				  // Check if the logged-in user is an admin
 				  function isAdminLoggedIn() {
 				      // Implement logic to check if the logged-in user is an admin
@@ -1115,9 +1140,8 @@
 				  }); 
 
 				  
-                 let globalVol = 0.1;
-                 let globalNoteVol = 50;
-                 let globalPlayingStyle = 0;
+                 let globalVol;
+                 let globalNoteVol;
                  let globalSongsPlayed = [];
 				 let globalFirstTry = null;
 				 let userLoggedIn = false;
@@ -1125,6 +1149,12 @@
 				 let globalLevel = 1;
 				 let globalKeyStats = [{}];
 				 let uploadHTML = '';
+				 let globalHideKeys = false;
+				/// (async () => {
+				     let globalPlayingStyle;//await fetchGlobalPlayingStyleFromServer();
+				 //    globalPlayingStyle = globalPlayingStyle ?? 0;
+				  ///   console.log('Initial global playing style:', globalPlayingStyle);
+				/// })();
 				 
 				 const keys = document.querySelectorAll('.key, .black-key');
                  const songs = document.querySelectorAll('.song');
@@ -1156,8 +1186,7 @@
 							 messageElement.innerText = parsedMessage.message;
 							 userId = parsedMessage.userId;
 							 console.log(userId);
-							 
-							 
+
 							 // Hide the message after 3 seconds
 							 setTimeout(() => {
 							     messageElement.innerText = ""; // Clear the message
@@ -1172,9 +1201,20 @@
 								 $(loggedInArea).children("p").css("display", "inline-block");
 								  userLoggedIn = true;
 								  console.log(userId);
+								  getUserSettingsForUser(userId);
 								  getKeyStatsReportForUser(userId); 
+			  				      $.get('/getVariable', function(data) {
+									  if (data.myVariable) {
+									  	$(".lists ul").append(data.myVariable);
+										uploadHTML = data.myVariable;
+									  }
+									
+			  				        console.log('SongList loaded successfuly.');
+									$(".settings").css("top", "16%");
+			  				        // Use the variable as needed
+			  				      });
 							 }
-				         });
+				 });
 
 				         document.getElementById("registerForm").addEventListener("submit", async function(event) {
 				             event.preventDefault();
@@ -1242,133 +1282,50 @@
 							 }
 				         });
 					  
-
+						 // Modify populateSongs to return a Promise
 						 function populateSongs() {
-							 console.log(globalPlayingStyle);
-							 if (globalPlayingStyle) {
-								 console.log("local Files");
-								 $(".lists ul").append(uploadHTML);
-								 
-								 $("#audioPlayer li").each(function() {
-								     var dI = parseInt($(this).index() + 1, 10);
+						     return new Promise((resolve, reject) => {
+						         if (globalPlayingStyle) {
+									 console.log("local Files");
+									 if (uploadHTML) {
+									 	 $(".lists ul").append(uploadHTML);
+									 } else {
+				 				        	$("#openPopup").click();
+										
+		   								 $("#audioPlayer li").each(function() {
+		   								     var dI = parseInt($(this).index() + 1, 10);
 									 
-									 $(".lists ul li").eq(0).find("audio").attr('src')
+		   									 $(".lists ul li").eq(0).find("audio").attr('src')
 									 
-									 console.log(dI);
-								     var aFile = $(this).find('audio');
-									 var newSrc = aFile.attr('src');
-									 console.log(newSrc);
-									 var naFile = $(".lists ul li").eq(dI-1);
-									// naFile = naFile.find("audio");
-									 console.log(naFile);
-									 naFile.find("audio").attr('src', newSrc);
-									 console.log(naFile);
-									 
-								 });						 
-							 } else {
-								 console.log("using SongList");
-								 
-	 		 					$.getJSON('songList.json', function(data) {
-	 		 					        var htmlContent = '';
-	 		 					        data.forEach(function(item) {
-	 		 					            htmlContent += '<li>';
-	 		 					            htmlContent += '<div class="song" data-song="' + item['data-song'] + '" data-note="' + item['data-note'] + '" data-quality="' + item['data-quality'] + '"data-lang="' + item['lang'] + '">' + item['song'] + '  <i class="fa fa-solid fa-volume-up hide"></i>' + '</div>';
-	 		 					            htmlContent += '<audio data-sound="' + item['data-song'] + '" src="' + item['audio_src'] + '"></audio>';
-	 		 					            htmlContent += '</li>';
-	 		 					        });
-	 		 					        $('.lists').append('<ul>' + htmlContent + '</ul>');
+		   									 console.log(dI);
+		   								     var aFile = $(this).find('audio');
+		   									 var newSrc = aFile.attr('src');
+		   									 console.log(newSrc);
+		   									 var naFile = $(".lists ul li").eq(dI-1);
+		   									// naFile = naFile.find("audio");
+		   									 console.log(naFile);
+		   									 naFile.find("audio").attr('src', newSrc);
+		   									 console.log(naFile);
+									 	});
+								 	}
 									
-	 				                    	
-							  });	
-							 }
-							 
-		 					
-		                    const songs = document.querySelectorAll('.song');
-		                    const songKeys = document.querySelectorAll('.keysWrapper > div');
-						
-		                    songs.forEach(song => {
-		                       song.addEventListener('mousedown', () => {
-		                         const note = song.dataset.song;
-		                         playSong(note);
-		   					  $(".list-btn").click();
-		              });
-			  
-		          });	
-									
-
-				   				 songKeys.forEach(key => {
-				   				     key.addEventListener('mousedown', () => {
-				   				         const currentSong = document.querySelector('div.activa');
-				   				         const songPlaying = document.querySelector('div.playing');
-				   				         const note = key.dataset.note;
-
-				   				         if (currentSong != null) {
-				   				             $(".announcement").hide();
-				   				             $(".settings").addClass("noBanner");
-				   				             const currentKey = currentSong.dataset.note;
-				   				             const song = currentSong.dataset.song;
-				   				             console.log(note);
-				   				             console.log(currentKey);
-
-				   				             if (note == currentKey) {
-				   				                 key.classList.add('right');
-				   				                 songKeys.forEach(key1 => {
-				   				                     if (key != key1) { key1.classList.remove('wrong'); }
-				   				                 });
-				   				                 if (songPlaying != null) {
-				   				                     stopSong(song);
-				   				                 }
-
-				      							  	 // Increment wrong count for the currentKey
-				   				                 keyStats[currentKey] = keyStats[currentKey] || { right: 0, wrong: 0 };
-				   				                 keyStats[currentKey].wrong++;
-
-				   				                 console.log("user ID: ", userId);
-				   				                 console.log("keyStats: ", keyStats);
-								 
-				   				                 // Send key statistics data to server
-				   				                 if (userLoggedIn) {
-				   				                     sendKeyStatsToServer(userId, keyStats);
-				   				                 }
-
-				   				                 // If it's the first try and user is logged in, increment score
-				   				                 if (globalFirstTry && userLoggedIn) {
-				   				                     console.log("true: ", globalFirstTry);
-				   				                     game.incrementScore();
-				   				                 }
-
-				   				                 setTimeout(function () {
-				   				                     key.classList.remove('right');
-				   				                     randomSong();
-				   				                 }, 600);
-				   				             } else {
-				   				                 key.classList.add('wrong');
-
-				   				                 // Increment wrong count for this key
-				   				                 keyStats[note] = (keyStats[note] || {});
-				   				                 keyStats[note].wrong = (keyStats[note].wrong || 0) + 1;
-
-				   				                 // Send key statistics data to server
-				   				                 if (userLoggedIn) {
-				   				                    sendKeyStatsToServer(userId, keyStats);
-				   				                 }
-
-				   				                 globalFirstTry = false;
-				   				                 console.log(globalFirstTry);
-				   				             }
-				   				         }
-
-				   				 });
-
-				                    key.addEventListener('touchstart', () => {
-				                       /* use if you need something to be only on TOUCH. if nothing here TOUCH uses MOUSEDOWN above*/
-				                       preventDefault();
-				                       stopPropagation();
-				                    });
-				                 
-									
-									
-		 					    });
+						             resolve($(".lists ul .song").toArray());
+						         } else {
+						             $.getJSON('songList.json', function(data) {
+						                 var htmlContent = '';
+						                 data.forEach(function(item) {
+ 	 		 					            htmlContent += '<li>';
+ 	 		 					            htmlContent += '<div class="song" data-song="' + item['data-song'] + '" data-note="' + item['data-note'] + '" data-quality="' + item['data-quality'] + '"data-lang="' + item['lang'] + '">' + item['song'] + '  <i class="fa fa-solid fa-volume-up hide"></i>' + '</div>';
+ 	 		 					            htmlContent += '<audio data-sound="' + item['data-song'] + '" src="' + item['audio_src'] + '"></audio>';
+ 	 		 					            htmlContent += '</li>';
+ 	 		 					        });
+ 	 		 					        $('.lists ul').append(htmlContent);
+						                 resolve($(".lists ul .song").toArray());
+						             }).fail(function(jqXHR, textStatus, errorThrown) {
+						                 reject(new Error(textStatus));
+						             });
+						         }
+						     });
 						 }
 						 
 						 const buttons = document.querySelectorAll('.tag');
@@ -1393,57 +1350,80 @@
 						   });
 						 });
 						 
-                 $("document").ready(function() {
-					//  sessionStorage.setItem('userId', '0');
-					//populateSongs();  
-					
-                    let globalVol = 0.1;
-                    let globalNoteVol = 50;
-                    let globalPlayingStyle = 0;
-                    let globalSongsPlayed = [];
-   				 let globalFirstTry = null;
-   				 let userLoggedIn = false;
-   				 let userId = '';
-   				 let globalLevel = 1;
-				 
-   				 const keys = document.querySelectorAll('.key, .black-key');
+                    $("document").ready(function() {
+   				    const keys = document.querySelectorAll('.key, .black-key');
                     
                     const stopBtn = document.querySelector('.stop_music');
                     const btn2 = document.querySelector('.start_game');
                     const btn3 = document.querySelector('.next_music');
                     const repeatBtn = document.querySelector('.repeat_music');
                     const startMusicBtn = document.querySelector('.start_music');
+					
+					 $(".disabledd").removeClass('disabledd');
 						
                     console.log(globalVol);
                     volume.value = globalVol;
 					//globalNoteVal = 50;
 					$("#volume2").val(50);
-				   // soundManager.setVolume(90);
+				    // soundManager.setVolume(90);
+					
+					if (globalPlayingStyle) {
+						console.log("SI");
+					} else {
+						console.log("NO");
+					}
 				   
-				   //POPUP
-				   $("#openPopup").click(function() {
+				    //POPUP
+				    $("#openPopup").click(function() {
 				     $("#popup").show();
 				   });
 
-				   $("#closePopup").click(function() {
+				    $("#closePopup").click(function() {
 				     $("#popup").hide();
 				   });
 
 			 		/* MUSIC PLAYER JS */
 
-			 		  $(".list-btn").click(function() {
+			 	    $(".list-btn").click(function() {
 			 		    $(this).parent().toggleClass("active_musicplayer");
 			 		    return $(".lists").toggleClass("active_musicplayer");
 			 		  });
 
-			 		  $(".action-button").find('a').click(function() {
+			 	    $(".action-button").find('a').click(function() {
 			 		    if ($(this).hasClass("random") || $(this).hasClass("play-pause") || $(this).hasClass("repeat")) {
 			 		  //    return $(this).toggleClass("active_musicplayer");
 			 		    }
 			 		  });
 					  
-				      // Fetch users when the page loads
-				      fetchUsers();
+					$(".settingsBtn").on("click", function() {
+						console.log("Settings");
+						$(".settings").toggleClass("hide");
+					});
+					  
+					const toggleButton = document.getElementById("toggleKeyNames");
+		            toggleButton.addEventListener("click", function() {
+						if ($("#toggleKeyNames").hasClass("on")) {
+							console.log("YES YES");
+							toggleButton.classList.add("off");
+							toggleButton.classList.remove("on");
+    		                  $(".piano span").each(function() {
+    		                      $(this).removeClass("hide");
+    		                  });
+							  globalHideKeys = false;
+						} else {
+							toggleButton.classList.remove("off");
+							toggleButton.classList.add("on");
+  		                  $(".piano span").each(function() {
+  		                      $(this).addClass("hide");
+  		                  });
+						  globalHideKeys = true;
+						}
+						sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);			   				    });
+					
+				    // Fetch users when the page loads
+				    fetchUsers();
+					
+				    
 					
                  });
 				 
@@ -1454,22 +1434,25 @@
                     const currentSong = document.querySelector('div.activa');
                     let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
                      // console.log(e.currentTarget.value);
-                    audio.volume = e.currentTarget.value / 100;
-                    globalVol = audio.volume;   
+                    audio.volume = e.currentTarget.value/100;
+                    globalVol = e.currentTarget.value;   
+					sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
                 });
 
                 volume.addEventListener("touchmove", (e) => {
-                  console.log(e.currentTarget.value);
+                  console.log(e.currentTarget.value/100);
                   const currentSong = document.querySelector('div.activa');
                     let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
                      // console.log(e.currentTarget.value);
-                    audio.volume = e.currentTarget.value / 100;
-                    globalVol = audio.volume;   
+                    audio.volume = e.currentTarget.value/100;
+                    globalVol = e.currentTarget.value;   
+					sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
                 });
 
 
                 volume2.addEventListener("input", (e) => {
                     globalNoteVol = e.currentTarget.value;
+					sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
                 });
 				
 				$(`div.action-button > .play-pause`).on('click', () => {
@@ -1504,6 +1487,92 @@
                   startMusicBtn.classList.add("hide");
                   stopBtn.classList.remove("hide");
                 });
+				
+				// Function to send user settings to server
+				function sendUserSettingsToServer(userId, globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol) {
+				    const userSettings = {
+				        magicNumber: globalPlayingStyle, 
+				        showKeyNames: globalHideKeys,
+				        keyVol: globalNoteVol, 
+				        songVol: globalVol 
+				    };
+				    console.log("User settings in HTML:", userSettings);
+					if (userLoggedIn) {
+					    fetch(`/updateUserSettings/${userId}`, {
+					        method: 'POST',
+					        headers: {
+					            'Content-Type': 'application/json'
+					        },
+					        body: JSON.stringify({ userSettings })
+					    })
+					    .then(response => {
+					        if (!response.ok) {
+					            throw new Error('Failed to update user settings');
+					        }
+					    })
+					    .catch(error => {
+					        console.error('Error updating user settings:', error);
+					    });
+					} else {
+						console.log("Not Logged In, not saving settings.");
+					}
+				  
+				}
+
+				// Function to fetch user settings for a specific user from server
+				function getUserSettingsForUser(userId) {
+				    fetch(`/getUserSettings/${userId}`)
+				    .then(response => {
+				        if (!response.ok) {
+				            throw new Error('Failed to fetch user settings');
+				        }
+				        return response.json();
+				    })
+				    .then(data => {
+				        // Process the user settings
+				        const userSettings = data.userSettings;
+				        console.log('User settings for user:', userSettings);
+
+				        // Example: Accessing magicNumber
+				        const magicNumber = userSettings.magicNumber;
+						globalPlayingStyle = magicNumber;
+				        console.log('Magic number:', magicNumber);
+				        // Trigger checkbox if magicNumber equals 1
+				        const checkBox = document.querySelector("input.switch_check");
+				        if (magicNumber === 1) {
+				            checkBox.checked = false;
+							checkBox.click();
+				        } else {
+				            checkBox.checked = true;
+							checkBox.click();
+				        }
+
+				        // Example: Accessing showKeyNames
+				        globalHideKeys = userSettings.showKeyNames;
+				        console.log('Show key names:', globalHideKeys);
+						const toggleButton = $("#toggleKeyNames");
+						if (globalHideKeys) {
+							toggleButton.removeClass("off").addClass("off").removeClass("on");
+							toggleButton.click();
+						} else {
+							toggleButton.removeClass("on").addClass("on").removeClass("off");
+							toggleButton.click();
+						}
+
+				        // Example: Accessing keyVol
+				        globalNoteVol = userSettings.keyVol;
+				        console.log('Key volume:', globalNoteVol);
+						$("#volume2").val(globalNoteVol);
+
+				        // Example: Accessing songVol
+				        globalVol = userSettings.songVol;
+				        console.log('Song volume:', globalVol);
+						$("#volume").val(globalVol);
+				    })
+				    .catch(error => {
+				        console.error('Error fetching user settings:', error);
+				    });
+				}
 				
 				// Function to send key statistics to server
 				function sendKeyStatsToServer(userId, keyStats) {
@@ -1586,24 +1655,29 @@
 					  if ($('.lists .filteredIn').length === 0) {
 					      $('.lists .song').each(function() {
 					          // Your code here
-						      // Get the value of the "data-song" attribute and convert it to a number
-						      const number = parseInt($(this).attr('data-song'));
-    
-						      // Push the number to the array if it's a valid number
-						      if (!isNaN(number)) {
-						          numbersArray.push(number);
-						      }
+							  if ($(this).attr('data-note')) {
+						        // Get the value of the "data-song" attribute and convert it to a number
+						        const number = parseInt($(this).attr('data-song'));
+								
+  						      	// Push the number to the array if it's a valid number
+  						      	if (!isNaN(number)) {
+  						          numbersArray.push(number);
+  						      	}
+						  	  }
+						      
 					      });
 					  } else {
 					      $('.lists .filteredIn').each(function() {
 					          // Your code here
-						      // Get the value of the "data-song" attribute and convert it to a number
-						      const number = parseInt($(this).attr('data-song'));
-    
-						      // Push the number to the array if it's a valid number
-						      if (!isNaN(number)) {
-						          numbersArray.push(number);
-						      }
+							  if ($(this).attr('data-note')) {
+						        // Get the value of the "data-song" attribute and convert it to a number
+						        const number = parseInt($(this).attr('data-song'));
+  						      	// Push the number to the array if it's a valid number
+  						      	if (!isNaN(number)) {
+  						          numbersArray.push(number);
+  						      	}
+						  	  }
+						      
 					      });
 					  }
 					
@@ -1636,7 +1710,7 @@
 
                 btn2.addEventListener('click', () => {
                   console.log("START GAME NOW");
-                  $(".disabledd").removeClass('disabledd');
+                 
 				     $('.levelNumber').text(globalLevel);
                   randomSong();
 				  $('.playing').addClass('lastPlayed');
@@ -1673,7 +1747,7 @@
                      if (!audio) return;
                      audio.currentTime = 0.0;
                     // if (note = 'D') {audio.currentTime = 0.8;}
-                     audio.volume = globalNoteVol;
+                     audio.volume = globalNoteVol/100;
                      audio.play();
                  }
 
@@ -1694,7 +1768,7 @@
                      if (!audio) return;
                      audio.currentTime = 0;
 					 
-                     audio.volume = globalVol;
+                     audio.volume = globalVol/100;
                      audio.play();
 					 audio.ontimeupdate = function () {
 						 $(".current_musicplayer").text(sToTime(audio.currentTime).slice(3))
@@ -1948,12 +2022,82 @@
 				         incrementScore
 				     }
 				 }
-                
-				 
-				
+		
 				 // Initialize counters in local storage if they don't exist
 				 keyStats = JSON.parse(localStorage.getItem('keyStats')) || {};
+			    
+				 songKeys.forEach(key => {
+				     key.addEventListener('mousedown', () => {
+				         const currentSong = document.querySelector('div.activa');
+				         const songPlaying = document.querySelector('div.playing');
+				         const note = key.dataset.note;
 
+				         if (currentSong != null) {
+				             $(".announcement").hide();
+				             $(".settings").addClass("noBanner");
+				             const currentKey = currentSong.dataset.note;
+				             const song = currentSong.dataset.song;
+				             console.log(note);
+				             console.log(currentKey);
+
+				             if (note == currentKey) {
+				                 key.classList.add('right');
+				                 songKeys.forEach(key1 => {
+				                     if (key != key1) { key1.classList.remove('wrong'); }
+				                 });
+				                 if (songPlaying != null) {
+				                     stopSong(song);
+				                 }
+
+   							  	 // Increment wrong count for the currentKey
+				                 keyStats[currentKey] = keyStats[currentKey] || { right: 0, wrong: 0 };
+				                 keyStats[currentKey].wrong++;
+
+				                 console.log("user ID: ", userId);
+				                 console.log("keyStats: ", keyStats);
+			 
+				                 // Send key statistics data to server
+				                 if (userLoggedIn) {
+				                     sendKeyStatsToServer(userId, keyStats);
+				                 }
+
+				                 // If it's the first try and user is logged in, increment score
+				                 if (globalFirstTry && userLoggedIn) {
+				                     console.log("true: ", globalFirstTry);
+				                     game.incrementScore();
+				                 }
+
+				                 setTimeout(function () {
+				                     key.classList.remove('right');
+				                     randomSong();
+				                 }, 600);
+				             } else {
+				                 key.classList.add('wrong');
+
+				                 // Increment wrong count for this key
+				                 keyStats[note] = (keyStats[note] || {});
+				                 keyStats[note].wrong = (keyStats[note].wrong || 0) + 1;
+
+				                 // Send key statistics data to server
+				                 if (userLoggedIn) {
+				                    sendKeyStatsToServer(userId, keyStats);
+				                 }
+
+				                 globalFirstTry = false;
+				                 console.log(globalFirstTry);
+				             }
+				         }
+				 	 });
+
+                     key.addEventListener('touchstart', () => {
+                                 /* use if you need something to be only on TOUCH. if nothing here TOUCH 
+						         uses 
+						             MOUSEDOWN                         above*/
+                             preventDefault();
+                             stopPropagation();
+                     });
+			       });
+			     
 
                  keys.forEach(key => {
                     
@@ -2015,13 +2159,33 @@
 				
 				$(checkBox).on('change', function() {
 				    if ($(this).is(':checked')) {
-				        globalPlayingStyle = 1;
-				        $("#openPopup").click();
+						globalPlayingStyle = 1;
 				    } else {
 				        globalPlayingStyle = 0;
 				    }
-				    console.log(globalPlayingStyle);
-				    populateSongs();
+				 //   console.log(globalPlayingStyle);
+					
+
+   				 // Example usage:
+   				 // When the globalPlayingStyle value changes on the client-side
+   				 sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
+				 
+
+					$(".lists ul").empty();
+					
+					// Move the code that depends on `songs` inside the callback of `populateSongs()`
+					populateSongs().then(songs => {
+					    songs.forEach(song => {
+					        song.addEventListener('mousedown', () => {
+					            const note = song.dataset.song;
+					            playSong(note);
+					            $(".list-btn").click();
+					        });
+					    });
+						console.log("HELLO");
+   			     	}).catch(error => {
+   			        	console.error('Error populating songs:', error);
+   			    	});
 				});
 
 
