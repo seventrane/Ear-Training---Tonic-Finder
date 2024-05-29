@@ -83,8 +83,8 @@ app.post('/updateKeyStats/:userId', async (req, res) => {
 	                });
 	            } else {
 	                // If the document exists, update its fields
-	                existingKeyStats.right = right || existingKeyStats.right;
-	                existingKeyStats.wrong = wrong || existingKeyStats.wrong;
+	                existingKeyStats.right = right + existingKeyStats.right;
+	                existingKeyStats.wrong = wrong + existingKeyStats.wrong;
 	            }
 
 	            // Save the updated or new KeyStats document to the database
