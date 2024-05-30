@@ -68,7 +68,7 @@ app.post('/updateKeyStats/:userId', async (req, res) => {
 	    // Process each key in keyStatsData
 	    for (const key in keyStatsData) {
 	        if (Object.hasOwnProperty.call(keyStatsData, key)) {
-	            const { right, wrong } = keyStatsData[key];
+	            const { wrong, right } = keyStatsData[key];
 
 	            // Find the existing KeyStats document for the current key and user
 	            let existingKeyStats = await KeyStats.findOne({ userId, key });

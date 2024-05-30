@@ -2026,10 +2026,12 @@
 				     }
 				 }
 		
-				 // Initialize counters in local storage if they don't exist
-				 keyStats = JSON.parse(localStorage.getItem('keyStats')) || {};
+			
 			    
 				 songKeys.forEach(key => {
+					 // Initialize counters in local storage if they don't exist
+					 keyStats = {};
+					 
 				     key.addEventListener('mousedown', () => {
 				         const currentSong = document.querySelector('div.activa');
 				         const songPlaying = document.querySelector('div.playing');
@@ -2052,34 +2054,37 @@
 				                     stopSong(song);
 				                 }
 
-   							  	 // Increment wrong count for the currentKey
-				                 keyStats[currentKey] = keyStats[currentKey] || { right: 0, wrong: 0 };
-				                 keyStats[currentKey].right++;
-
-				                 console.log("user ID: ", userId);
-				                 console.log("keyStats: ", keyStats);
-			 
-				                 // Send key statistics data to server
-				                 if (userLoggedIn) {
-				                     sendKeyStatsToServer(userId, keyStats);
-				                 }
+   							  	 
+				        
 
 				                 // If it's the first try and user is logged in, increment score
 				                 if (globalFirstTry && userLoggedIn) {
 				                     console.log("true: ", globalFirstTry);
 				                     game.incrementScore();
+									 
+	   							  	 // Increment right count for the currentKey
+									 keyStats[currentKey] = (keyStats[currentKey] || {wrong:0, right:0});
+					                 keyStats[currentKey].right = (keyStats[currentKey].right || 0) + 1;
+									 
+					                 console.log("user ID: ", userId);
+					                 console.log("keyStats: ", keyStats);
+			 
+					                 // Send key statistics data to server
+
+					                 sendKeyStatsToServer(userId, keyStats);
 				                 }
 
 				                 setTimeout(function () {
 				                     key.classList.remove('right');
+									 keyStats = {};
 				                     randomSong();
 				                 }, 600);
 				             } else {
 				                 key.classList.add('wrong');
 
 				                 // Increment wrong count for this key
-				                 keyStats[note] = (keyStats[note] || {});
-				                 keyStats[note].wrong = (keyStats[note].wrong || 0) + 1;
+				                 keyStats[currentKey] = (keyStats[currentKey] || {wrong: 0, right: 0});
+				                 keyStats[currentKey].wrong = (keyStats[currentKey].wrong || 0) + 1;
 
 				                 // Send key statistics data to server
 				                 if (userLoggedIn) {
@@ -2088,6 +2093,7 @@
 
 				                 globalFirstTry = false;
 				                 console.log(globalFirstTry);
+								 keyStats = {};
 				             }
 				         }
 				 	 });
