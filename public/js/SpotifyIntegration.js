@@ -2,7 +2,7 @@
 const fetch = require('node-fetch');
 
 // Authorization token obtained previously
-const token = 'BQD5c9p5eLZEadcf3LFGYVHRVXFfIInx3_f5tUiDePAit9BKr57LKqfMytVfktgeDp2l05x0WShd3pkvqgthCSfkNqhWyp9N2krXcy2l4WygnoQczGNbP_1qOUjphCfRoPL-73nLAt4WACkBI2CPql4QuCWyY0Gu423kwo8zh2oHh3oX2uxOZVXFYfLm1Eszr_vg92s0YydVHsoXmXMHlIlPUTN4I4j1bOKsabvpK0mBO-eg99YWvMRoJEy4v9Vg4doJOA';
+const token = process.env.AUTH_TOKEN;
 
 // Function to fetch data from the Spotify Web API
 async function fetchWebApi(endpoint, method, body) {
