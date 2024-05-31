@@ -400,7 +400,7 @@ app.get('/getUserSettings/:userId', async (req, res) => {
 // Replace 'YOUR_CLIENT_ID' and 'YOUR_CLIENT_SECRET' with your actual Spotify client ID and secret
 const CLIENT_ID = '6a67892f6508441eb817a7eb18b06037';
 const CLIENT_SECRET = '263ed6d745084ad8b88f5bed52757232';
-const REDIRECT_URI = 'https://my-app.adaptable.app:3001/callback'; // Redirect URI registered with Spotify //tonicfinder6.adaptable.app
+const REDIRECT_URI = 'https://my-app.adaptable.app/callback'; // Redirect URI registered with Spotify //tonicfinder6.adaptable.app
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
