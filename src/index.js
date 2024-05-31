@@ -154,24 +154,6 @@ app.use(session({
 
 const jwt = require('jsonwebtoken');
 
-// Routes
-app.post('/register', async (req, res) => {
-  try {
-    const { username, password, role } = req.body;
-    const user = new User({ username, password, role }); // Include role in user creation
-    await user.save();
-    res.status(201).send("User registered successfully.");
-  } catch (err) {
-    if (err.code === 11000 && err.keyPattern && err.keyPattern.username) {
-      // If the error is due to duplicate username
-      res.status(400).send("Username already exists. Please choose a different username.");
-    } else {
-      console.error("Error registering user:", err);
-      res.status(500).send("Error registering user.");
-    }
-  }
-});
-
 // Update login route to generate and send token
 app.post('/login', async (req, res) => {
   try {
@@ -190,6 +172,27 @@ app.post('/login', async (req, res) => {
     res.status(500).send("Error logging in.");
   }
 });
+
+// Routes
+app.post('/register', async (req, res) => {
+  try {
+    const { username, password, role } = req.body;
+    const user = new User({ username, password, role }); // Include role in user creation
+    await user.save();
+    res.status(201).send("User registered successfully.");
+  } catch (err) {
+    if (err.code === 11000 && err.keyPattern && err.keyPattern.username) {
+      // If the error is due to duplicate username
+      res.status(400).send("Username already exists. Please choose a different username.");
+    } else {
+      console.error("Error registering user:", err);
+      res.status(500).send("Error registering user.");
+    }
+  }
+});
+
+
+
 
 function authenticateToken(req, res, next) {
   const authorizationHeader = req.headers['authorization'];
