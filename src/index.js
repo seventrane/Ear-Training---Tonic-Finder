@@ -152,34 +152,18 @@ app.use(session({
 }));
 
 
+const jwt = require('jsonwebtoken');
 
-
-// Routes
-app.post('/register', async (req, res) => {
-  try {
-    const { username, password, role } = req.body;
-    const user = new User({ username, password, role }); // Include role in user creation
-    await user.save();
-    res.status(201).send("User registered successfully.");
-  } catch (err) {
-    if (err.code === 11000 && err.keyPattern && err.keyPattern.username) {
-      // If the error is due to duplicate username
-      res.status(400).send("Username already exists. Please choose a different username.");
-    } else {
-      console.error("Error registering user:", err);
-      res.status(500).send("Error registering user.");
-    }
-  }
-});
-
+// Update login route to generate and send token
 app.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username, password });
     if (user) {
-      // Retrieve user role
-      const { role } = user;
-      res.status(200).json({ message: "Login successful.", userId: user._id, role }); // Include role in response
+      // Generate token
+      const token = jwt.sign({ userId: user._id }, '777', { expiresIn: '1h' });
+      // Send token along with other user info
+      res.status(200).json({ message: "Login successful.", userId: user._id, role: user.role, token });
     } else {
       res.status(401).send("Invalid username or password.");
     }
@@ -189,21 +173,67 @@ app.post('/login', async (req, res) => {
   }
 });
 
+function authenticateToken(req, res, next) {
+  const authorizationHeader = req.headers['authorization'];
+  if (!authorizationHeader) {
+    return res.status(401).send("Unauthorized: Missing Authorization header");
+  }
+
+  // Check if the token starts with "Bearer "
+  if (!authorizationHeader.startsWith('Bearer ')) {
+    return res.status(401).send("Unauthorized: Invalid token format");
+  }
+
+  // Extract the token (excluding the "Bearer " keyword)
+  const token = authorizationHeader.slice(7);
+
+  // Verify if the token has the correct JWT format
+  const parts = token.split('.');
+  if (parts.length !== 3) {
+    return res.status(401).send("Unauthorized: Invalid token format");
+  }
+
+  jwt.verify(token, '777', async (err, decodedToken) => {
+    if (err) {
+      console.error("JWT Verification Error:", err);
+      return res.status(403).send("Invalid token");
+    }
+
+    // Fetch user data from your database based on decodedToken.userId
+    try {
+      const user = await User.findById(decodedToken.userId);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      // If the user exists, attach user information to the request object
+      req.user = {
+        userId: user._id,
+        username: user.username, // Get the username from the user schema
+        // Other user properties...
+      };
+
+      next(); // Proceed to the next middleware or route handler
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+}
+
+// Use the authenticateToken middleware for routes that require authentication
+app.get('/protected-route', authenticateToken, (req, res) => {
+  // Only authenticated users can access this route
+	console.log(req.user.userId);
+	console.log(req.user.username);
+  res.json({ message: "Access granted", userId: req.user.userId, username: req.user.username });
+});
 
 // Route for logout
 app.post('/logout', (req, res) => {
-    // Clear the session (if using express-session)
-    req.session.destroy((err) => {
-        if (err) {
-            console.error("Error destroying session:", err);
-            res.status(500).send("Error logging out.");
-        } else {
-            res.clearCookie('session-id'); // Clear the session cookie
-            res.status(200).send("Logged out successfully.");
-        }
-    });
+  // No action required on the server side for token-based logout
+  res.status(200).send("Logged out successfully.");
 });
-
 
 // Routes
 // GET all users
@@ -346,77 +376,148 @@ app.get('/getUserSettings/:userId', async (req, res) => {
     }
 });
 
-/*
+// Replace 'YOUR_CLIENT_ID' and 'YOUR_CLIENT_SECRET' with your actual Spotify client ID and secret
+const CLIENT_ID = '6a67892f6508441eb817a7eb18b06037';
+const CLIENT_SECRET = '263ed6d745084ad8b88f5bed52757232';
+const REDIRECT_URI = 'http://localhost:3001/callback'; // Redirect URI registered with Spotify
 
-const magicNumberSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    magicNumber: {
-        type: Number,
-        default: 0 // Default value if not provided
-    }
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
 });
 
-const MagicNumber = mongoose.model('MagicNumber', magicNumberSchema);
+// Route for initiating Spotify authentication
+app.get('/login', (req, res) => {
+	const scopes = 'user-read-playback-state user-modify-playback-state streaming';
+    res.redirect(`https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${encodeURIComponent(scopes)}`);
+});
 
-// Endpoint to update magic number for a specific user
-app.post('/updateMagicNumber/:userId', async (req, res) => {
-    const userId = req.params.userId;
-    const { magicNumber } = req.body;
+// Route for logging out
+app.get('/logout', (req, res) => {
+    // Clear tokens from session or database
+    delete req.session.accessToken;
+    delete req.session.refreshToken;
+
+    // Destroy the session (if using sessions)
+    req.session.destroy(() => {
+        // Redirect to home page or login page
+        res.redirect('/');
+    });
+});
+
+// Callback route after Spotify authentication
+app.get('/callback', async (req, res) => {
+    const code = req.query.code;
+    if (!code) {
+        res.status(400).send('Code not found');
+        return;
+    }
+	
+	//// GETTING THE TOKEN REFRESH INSTEAD OF A FUNCTION CHECK //
 
     try {
-		console.log("magicNumber in js: ", magicNumber);
-        let existingMagicNumber = await MagicNumber.findOne({ userId });
+        // Exchange authorization code for access token
+        const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')
+            },
+            body: new URLSearchParams({
+                'grant_type': 'authorization_code',
+                'code': code,
+                'redirect_uri': REDIRECT_URI
+            })
+        });
+		const tokenData = await tokenResponse.json();
 
-        if (!existingMagicNumber) {
-            // If the document doesn't exist, create a new one
-            existingMagicNumber = new MagicNumber({
-                userId,
-                magicNumber: magicNumber || 0
-            });
-        } else {
-			console.log("ELO AQUI: ",existingMagicNumber);
-            // If the document exists, update its magicNumber field
-            existingMagicNumber.magicNumber = magicNumber;
-			console.log("after modification: ", existingMagicNumber.magicNumber);
-        }
+		        // Fetching user information (including username) from Spotify API
+		        const userInfoResponse = await fetch('https://api.spotify.com/v1/me', {
+		            method: 'GET',
+		            headers: {
+		                'Authorization': `Bearer ${tokenData.access_token}`
+		            }
+		        });
+		        const userInfoData = await userInfoResponse.json();
+		        const spotifyUsername = userInfoData.id;
 
-        // Save the updated or new MagicNumber document to the database
-        await existingMagicNumber.save();
+		        // Serialize tokenData and spotifyUsername into a JSON string
+		        const responseData = {
+		            tokenData: tokenData,
+		            spotifyUsername: spotifyUsername
+		        };
+		        const responseDataJson = JSON.stringify(responseData);
+				
 
-        console.log("Magic number updated successfully");
-
-        res.sendStatus(200); // Send success response
+        // Redirect the user back to /index.html with responseDataJson as a query parameter
+        res.redirect(`/index.html?responseData=${encodeURIComponent(responseDataJson)}&fromCallback=true`);
     } catch (error) {
-        console.error('Error updating magic number:', error);
+        console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
 });
 
-// Endpoint to retrieve magic number for a specific user
-app.get('/getMagicNumber/:userId', async (req, res) => {
+// New route for fetching playlists
+app.get('/api/playlists', async (req, res) => {
+    const accessToken = req.query.access_token;
+    if (!accessToken) {
+        res.status(400).send('Access token not found');
+        return;
+    }
+
     try {
-        const userId = req.params.userId;
+        // Make a request to fetch user's playlists
+        const playlistsResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        });
 
-        // Use await to wait for the Promise returned by MagicNumber.findOne()
-        const magicNumberDoc = await MagicNumber.findOne({ userId });
-
-        if (magicNumberDoc) {
-            res.json({ magicNumber: magicNumberDoc.magicNumber });
+        if (playlistsResponse.ok) {
+            const playlistsData = await playlistsResponse.json();
+            res.json(playlistsData);
         } else {
-            // Return magicNumber as 0 if not found
-            res.json({ magicNumber: 0 });
+            res.status(playlistsResponse.status).send('Failed to fetch playlists');
         }
     } catch (error) {
-        console.error('Error retrieving magic number:', error);
-        res.status(500).send('Error retrieving magic number');
+        console.error('Error fetching playlists:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 
-*/
+// Route definition
+app.get('/spotify/track/:trackId', async (req, res) => {
+    try {
+        const trackId = req.params.trackId;
+        const accessToken = req.query.access_token; // Extracting token from query parameter
+        
+        // Making request to Spotify API
+        const url = `https://spclient.wg.spotify.com/metadata/4/track/${trackId}?market=from_token`;
+        
+        // Making GET request using fetch
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        };
+
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch data from Spotify API');
+        }
+
+        const data = await response.json();
+
+        // Sending back the data received from Spotify API
+        res.json(data);
+        
+    } catch (error) {
+        // Handling errors
+        console.error('Error:', error); // Log the error for debugging purposes
+        res.status(500).json({ error: 'Internal Server Error', message: error.message }); // Send back detailed error message
+    }
+});
 
 // Get port from environment and store in Express.
 const port = normalizePort(process.env.PORT || '3001');

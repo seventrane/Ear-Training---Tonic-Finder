@@ -110,11 +110,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		 
 	   $('#reportBtn').click(function() {
-		   
-
-		 
-		   
-		    
 	//		$(".container").css("width", "100%!important");
 	                  
 	                  if ($('.container').hasClass('visible')) {

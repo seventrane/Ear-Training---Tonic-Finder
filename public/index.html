@@ -279,15 +279,42 @@
 			visibility: visible;
 			//margin-top: 20px!important;
 		}
+		
+		.spotifyDisp {
+			position: absolute;
+			    background: forestgreen;
+			    padding: 4px;
+			    font-size: 0.5em;
+		}
+		
+		.tabcontent {
+			background: #ddd;
+			height: 371px;
+			overflow: scroll;
+			display: flex;
+		}
+		
+		.tabcontent ul {
+		    column-count: 3; /* Number of columns */
+		     /* Optionally, specify column gap */
+		     column-gap: 5px; /* Adjust as needed */
+		}
+		
     </style>
 	
 </head>
 
   <body style="overflow:hidden;">
+	 <script src="https://sdk.scdn.co/spotify-player.js"></script>
+	 
+	 <script>
+		
+		  
+	 </script>
+	 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js" ></script>
     <script type="text/javascript" src="/js/client.js" ></script>
-	<script type="text/javascript" src="/js/SpotifyIntegration.js" ></script>
 	<script src="js/soundmanager2-nodebug.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="/js/soundmanager2-nodebug.js" ></script>
@@ -485,6 +512,11 @@
          <div class="content clearfix">
             <h2 style="margin-bottom:2%;">EAR TRAINING - TONIC FINDER</h2>
 			<div id="levelIndicator">Current Level: <span class="levelNumber"></span></div>
+			<div class="spotifyDisp hide">
+				<i class="fa-brands fa-spotify"></i>
+				<label>Logged In As: </label>
+				<span class="spotifyUsername"></span>
+			</div>
             <div class="btnsWrapper">
               <div class="stop_music hide">Stop Music</div>
               <div class="start_music hide">Start Music</div>
@@ -497,11 +529,13 @@
             </div>
 			
              <div class="settings hide">
+				 <span class="close" id="closePopup2">&times;</span>
                  <div class="announcement hide">
                    <h3>1. Click Start Game</h3>
                    <h3>2. Use the keyboard to assist you identifying the tonic</h3>
                    <h3>3. Then select the tonic from the letters above the keyboard</h3>
                  </div>
+				    <div id="topSongs"></div>
                  <h4 class="">Music To Use:</h4>
                  <div class="behavior_controls ">
                    <span>App Songs</span>
@@ -511,6 +545,36 @@
                    </label>
                    <span>Your Own Songs</span>
                  </div>
+				 
+				 <div class="tab">
+				     <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'tab1')">App Songs</button>
+				     <button class="tablinks" onclick="openTab(event, 'tab2')">Your Songs</button>
+				     <button class="tablinks" onclick="openTab(event, 'tab3')">Spotify</button>
+					 <button class="tablinks disabledd" onclick="openTab(event, 'tab4')">Apple Music</button>
+				 </div>
+
+				 <div id="tab1" class="tabcontent">
+				     Content for Tab 1
+				 </div>
+
+				 <div id="tab2" class="tabcontent">
+				     Content for Tab 2
+					 <button class="selectFolder">Select New Folder</button>
+				 </div>
+
+				 <div id="tab3" class="tabcontent">
+ 				 	<button id="loginBtn">Login with Spotify</button>
+ 					<button id="logoutBtn" class="hide">Logout from Spotify</button>
+				 <ul id="spotifyPlaylists"></ul>
+				 <ul id="playlistTracks"></ul>
+				 <button id="playButton">Play Track</button>
+
+
+
+				 
+				
+				 
+				 </div>
 
                  <div class="volume_controls disabledd">
                    <label class="songVolText">Song Volume: </label>
@@ -657,9 +721,7 @@
 			    <div class="black-key" data-note="Bb4"><span>Bb4</span></div>
 			    <div class="key" data-note="B4"><span>B4</span></div>
 			</div>   
-		   
-        
-		   
+
 		    <div class="container reports">
 		      <div class="row">
 		       <div class="col">
@@ -731,6 +793,378 @@
 
 
            <script>
+			   
+			  //Function to login
+			   async function login(username, password) {
+			     try {
+			       const response = await fetch('/login', {
+			         method: 'POST',
+			         headers: {
+			           'Content-Type': 'application/json'
+			         },
+			         body: JSON.stringify({ username, password })
+			       });
+			       const data = await response.json();
+			       if (response.ok) {
+			         // Store token in localStorage
+					   console.log("client_login: ", data.token);
+			         localStorage.setItem('token', data.token);
+			         return data;
+			       } else {
+			         throw new Error(data.message);
+			       }
+			     } catch (error) {
+			       console.error('Error logging in:', error.message);
+			       throw error;
+			     }
+			   }
+
+			   // Function to retrieve stored token
+			   function getToken() {
+				   console.log(localStorage.getItem('token'));
+			     return localStorage.getItem('token');
+			   }
+
+			   // Function to access protected route
+			   async function getProtectedData() {
+			     try {
+			       const token = getToken();
+				   console.log(token);
+			       if (!token) throw new Error('Token not found');
+
+			       const response = await fetch('/protected-route', {
+			         headers: {
+			           'Authorization': `Bearer ${token}`
+			         }
+			       });
+			       const data = await response.json();
+			       if (response.ok) {
+			         return data;
+			       } else {
+			         throw new Error(data.message);
+			       }
+			     } catch (error) {
+			       console.error('Error accessing protected route:', error.message);
+			       throw error;
+			     }
+			   }
+			   
+			   // Function to logout
+			   function logout() {
+			     // Remove token from localStorage
+			     localStorage.removeItem('token');
+			   }
+
+			   // Function to check if user is logged in
+			   function isLoggedIn() {
+			     return !!getToken();
+			   }
+
+			   // On page load
+			   window.addEventListener('DOMContentLoaded', async () => {
+			     if (isLoggedIn()) {
+			       // User is logged in, retrieve protected data or update UI accordingly
+			       try {
+			         const data = await getProtectedData();
+			         // Update UI with protected data or perform necessary actions
+			         // For example, display user-specific content, fetch additional user data, etc.
+					 console.log("LOGGED IN");
+					 
+			         document.getElementById("loggedInUser").innerText = data.username;
+			         document.getElementById("loginForms").style.display = "none";
+			         document.getElementById("loggedInArea").style.display = "block";
+			         getUserSettingsForUser(data.userId);
+			         getKeyStatsReportForUser(data.userId);
+					 
+					 userLoggedIn = true;
+					 userId = data.userId;
+					 
+			       } catch (error) {
+			         console.error('Error retrieving protected data:', error.message);
+			         // Handle error - for example, redirect the user to the login page or display an error message
+			       }
+			     } else {
+			       // User is not logged in, update UI accordingly
+			       // For example, display the login form or homepage content
+			     }
+			   });
+			   
+	 		  const playTrack = (trackUri) => {
+	 			  console.log(trackUri);
+	 		      const play = {
+	 		          uris: [trackUri]
+	 		      };
+	 			  console.log(globalAccessToken);
+
+	 		      fetch(`https://api.spotify.com/v1/me/player/play`, {
+	 		          method: 'PUT',
+	 		          headers: {
+	 		              'Content-Type': 'application/json',
+	 		              'Authorization': `Bearer ${globalAccessToken}`
+	 		          },
+	 		          body: JSON.stringify(play)
+	 		      });
+	 		  };
+
+	 		  const stopTrack = () => {
+  
+
+	 		      fetch(`https://api.spotify.com/v1/me/player/pause`, {
+	 		          method: 'PUT',
+	 		          headers: {
+	 		              'Authorization': `Bearer ${globalAccessToken}`
+	 		          },
+	 		      });
+	 		  };
+			   
+			   function getTrackData(trackId, accessToken) {
+			              $.ajax({
+			                  url: `/spotify/track/${trackId}?access_token=${accessToken}`,
+			                  type: 'GET',
+			                  success: function (data) {
+			                      console.log(data); // Logging the response data
+			                      // Do something with the data received from the Spotify API
+			                  },
+			                  error: function (error) {
+			                      console.error('Error:', error); // Logging any errors
+			                  }
+			              });
+			          }
+
+			         
+			   
+			   
+			   // Function to initialize the Spotify Web Playback SDK and play a track
+			 
+			   
+			   // Function to map numeric key values to musical keys
+			   function mapKeyToMusicalKey(keyNumber) {
+			       // Mapping of key numbers to musical keys
+			       var keyMap = {
+			           0: 'C',
+			           1: 'Db',
+			           2: 'D',
+			           3: 'Eb',
+			           4: 'E',
+			           5: 'F',
+			           6: 'Gb',
+			           7: 'G',
+			           8: 'Ab',
+			           9: 'A',
+			           10: 'Bb',
+			           11: 'B'
+			       };
+
+			       // Check if the keyNumber is within the valid range
+			       if (keyNumber >= 0 && keyNumber <= 11) {
+			           return keyMap[keyNumber];
+			       } else {
+			           return 'Unknown';
+			       }
+			   }
+
+			   // Function to fetch tracks of a playlist by playlist ID
+			   function fetchPlaylistTracks(playlistId, Atoken) {
+				   $('.player .lists ul').empty();
+			       // Assuming you have obtained the access token already
+			       var accessToken = Atoken;
+
+			       // Make an AJAX request to the Spotify API to fetch tracks of the playlist
+			       $.ajax({
+			           url: 'https://api.spotify.com/v1/playlists/' + playlistId + '/tracks',
+			           method: 'GET',
+			           headers: {
+			               'Authorization': 'Bearer ' + accessToken
+			           },
+			           success: function(response) {
+			               // If request is successful, process the tracks
+			               var tracks = response.items;
+
+			               // Clear existing content or create a new container for tracks
+			               $('#playlistTracks').empty();
+
+			               // Iterate through tracks and fetch audio features
+			               tracks.forEach(function(track, index) {
+			                   var trackId = track.track.id;
+
+			                   // Make an AJAX request to fetch audio features of the track
+			                   $.ajax({
+			                       url: 'https://api.spotify.com/v1/audio-features/' + trackId,
+			                       method: 'GET',
+			                       headers: {
+			                           'Authorization': 'Bearer ' + accessToken
+			                       },
+			                       success: function(features) {
+			                           // Extract key from audio features
+			                           var key = features.key;
+
+			                           // Convert numeric key to musical key
+			                           var musicalKey = mapKeyToMusicalKey(key);
+
+									   var durationMs = track.track.duration_ms;
+			                           // Process other track details
+			                           var trackName = track.track.name;
+			                           var artistName = track.track.artists.map(artist => artist.name).join(', ');
+			                           var trackURI = track.track.uri;
+
+									   // Convert duration from milliseconds to minutes and seconds
+									   var durationMinutes = Math.floor(durationMs / 60000);
+									   var durationSeconds = ((durationMs % 60000) / 1000).toFixed(0);
+									   var formattedDuration = durationMinutes + ":" + (durationSeconds < 10 ? '0' : '') + durationSeconds;
+
+									   // Create a div for the song with data attributes
+									   var songDiv = $('<div>').addClass('song spotiSong')
+									       .attr('data-song', index + 1)
+									       .attr('data-note', key !== -1 ? musicalKey : 'Unknown') // Check if key is detected
+									       .attr('data-quality', '') // Replace 'variableQuality' with actual quality
+									       .attr('data-lang', '') // Replace 'varLang' with actual language
+									       .attr('data-uri', trackURI) // Track URI
+									       .attr('data-duration', formattedDuration) // Track duration
+									       .text(trackName + ' ' + artistName);
+										   
+										   songDiv.append('<i class="fa fa-solid fa-volume-up hide"></i>');
+										   
+										  
+										   
+										   // Attach event handler using jQuery .on() method
+										   songDiv.on('mousedown', function() {
+										       const note = $(this).data('song');
+										       // playSpong(note);
+											//   console.log("TITI");
+											   playSong(note);
+										       playTrack($(this).data('uri'));
+										       $(".list-btn").click();
+										   });
+
+			                           // Append the song div to the playlistTracks container
+			                           var listItem = $('<li>').append(songDiv);
+									   
+		                           // Create an audio element and set its source to the track URI
+		                           var audioElement = $('<audio>')
+		                               .attr('data-src', trackURI).attr('data-sound', index+1);
+
+		                           // Append the audio element after the song div
+		                           listItem.append(audioElement);
+									   
+			                           $('.player .lists ul').append(listItem);
+
+			                     
+									   $('#playlistTracks').append(listItem.clone());
+									   
+		 
+									   sendAndPop();
+									   
+				   			    //	});
+			                       },
+			                       error: function(xhr, status, error) {
+			                           console.error('Error fetching audio features for track:', error);
+			                       }
+			                   });
+			               });
+						   $("#playButton").click();
+			           },
+			           error: function(xhr, status, error) {
+			               // If request fails, handle the error
+			               console.error('Error fetching playlist tracks:', error);
+			           }
+			       });
+				   
+			   }
+				   /*
+				   // Create audio element
+				   $("#tab3 #playlistTracks .song").each(function () {
+				       // Get the data-uri attribute value of the current song
+				       var trackURI = $(this).attr('data-uri');
+
+				       // Create an audio element
+				       var audioElement = $('<audio>').attr('controls', false).attr('src', trackURI);
+
+				       // Set the data-song attribute with the same value as the current element
+				       audioElement.attr('data-song', $(this).attr('data-sound'));
+
+				       // Insert the audio element after the current song
+				       $(this).after(audioElement);
+				   });
+				   */
+			   
+			   
+			   
+	   // Function to fetch user's playlists from the server
+	           function fetchUserPlaylists(Atoken) {
+	               // Assuming you have obtained the access token already
+	               var accessToken = Atoken;
+            
+	               // Make an AJAX request to the server
+	               $.ajax({
+	                   url: '/api/playlists',
+	                   method: 'GET',
+	                   data: {
+	                       access_token: accessToken
+	                   },
+	                   success: function(response) {
+	                       // If request is successful, process the playlists
+	                       var playlists = response.items;
+                    
+	                       // Clear existing content in tab2
+	                       $('#spotifyPlaylists').empty();
+                    
+	                       // Iterate through playlists and add them to the list
+	                       playlists.forEach(function(playlist) {
+	                           var playlistName = playlist.name;
+	                           var playlistId = playlist.id;
+                        
+	                           // Create a list item for the playlist
+	                           var listItem = $('<li>').text(playlistName);
+                        
+	                           // Add a click event listener to the list item to handle further actions
+	                           listItem.click(function() {
+	                               // Example: When a playlist is clicked, alert its ID
+	                               //alert('Playlist ID: ' + playlistId);
+								   
+								   fetchPlaylistTracks(playlistId, Atoken);
+								   $("#spotifyPlaylists").addClass("hide");
+								   
+								   	globalPlayingStyle = 2;
+								   	//sendAndPop();
+	                           });
+                        
+	                           // Append the list item to the tab2 div
+	                           $('#spotifyPlaylists').append(listItem);
+	                       });
+	                   },
+	                   error: function(xhr, status, error) {
+	                       // If request fails, handle the error
+	                       console.error('Error fetching user playlists:', error);
+	                   }
+	               });
+	           }
+			   
+			   
+			   // Function to switch tabs
+			   function openTab(evt, tabName) {
+			       var i, tabcontent, tablinks;
+
+			       // Hide all tab content
+			       tabcontent = document.getElementsByClassName("tabcontent");
+			       for (i = 0; i < tabcontent.length; i++) {
+			           tabcontent[i].style.display = "none";
+			       }
+
+			       // Remove "active" class from all tab buttons
+			       tablinks = document.getElementsByClassName("tablinks");
+			       for (i = 0; i < tablinks.length; i++) {
+			           tablinks[i].classList.remove("active");
+			       }
+
+			       // Show the specific tab content
+			       document.getElementById(tabName).style.display = "block";
+
+			       // Add the "active" class to the button that opened the tab
+			       evt.currentTarget.classList.add("active");
+			   }
+
+			   // By default, open the first tab
+			 //  document.getElementById("defaultOpen").click();
 			  
 		   	  const folderPath = "./uploads";
 		   	        const urlIP= "98.113.67.183";
@@ -865,6 +1299,10 @@
 
 		           // Display success message
 		           document.getElementById('progressMessage').innerHTML += '<span class="success">Folder uploaded successfully.</span><br>';
+				   
+				   
+			$(".tab button.active").click();
+			//	$("#tab2 .lists > div").remove();
 		       } catch (error) {
 		           console.error(error);
 		           // Display error message
@@ -1151,6 +1589,7 @@
 				 let globalKeyStats = [{}];
 				 let uploadHTML = '';
 				 let globalHideKeys = false;
+				 let globalAccessToken = '';
 				/// (async () => {
 				     let globalPlayingStyle;//await fetchGlobalPlayingStyleFromServer();
 				 //    globalPlayingStyle = globalPlayingStyle ?? 0;
@@ -1166,143 +1605,112 @@
                  const btn3 = document.querySelector('.next_music');
                  const repeatBtn = document.querySelector('.repeat_music');
                  const startMusicBtn = document.querySelector('.start_music');
-				 
+				 // Function to handle login form submission
 				 document.getElementById("loginForm").addEventListener("submit", async function(event) {
-				             event.preventDefault();
-				             const username = document.getElementById("username").value;
-				             const password = document.getElementById("password").value;
+				     event.preventDefault();
+				     const username = document.getElementById("username").value;
+				     const password = document.getElementById("password").value;
 
-				             const response = await fetch('/login', {
-				                 method: 'POST',
-				                 headers: {
-				                     'Content-Type': 'application/json'
-				                 },
-				                 body: JSON.stringify({ username, password })
-				             });
-
-						
-							 const message = await response.text();
-							 const parsedMessage = JSON.parse(message); // Parse the JSON string into an object
-							 const messageElement = document.getElementById("message");
-							 messageElement.innerText = parsedMessage.message;
-							 userId = parsedMessage.userId;
-							 console.log(userId);
-
-							 // Hide the message after 3 seconds
-							 setTimeout(() => {
-							     messageElement.innerText = ""; // Clear the message
-							 }, 3000); // 3000 milliseconds = 3 seconds
-							 // 
-							 
-							 if (parsedMessage.message === "Login successful.") {
-							     document.getElementById("loggedInUser").innerText = username;
-							     document.getElementById("loginForms").style.display = "none";
-							     const loggedInArea = document.getElementById("loggedInArea");
-								 $(loggedInArea).css("display","block");
-								 $(loggedInArea).children("p").css("display", "inline-block");
-								  userLoggedIn = true;
-								  console.log(userId);
-								  getUserSettingsForUser(userId);
-								  getKeyStatsReportForUser(userId); 
-			  				      $.get('/getVariable', function(data) {
-									  if (data.myVariable) {
-									  	$(".lists ul").append(data.myVariable);
-										uploadHTML = data.myVariable;
-									  }
-									
-			  				        console.log('SongList loaded successfuly.');
-									$(".settings").css("top", "16%");
-			  				        // Use the variable as needed
-			  				      });
-							 }
+				     try {
+				         const data = await login(username, password);
+				         // Login successful, update UI or redirect to protected page
+				         document.getElementById("loggedInUser").innerText = username;
+				         document.getElementById("loginForms").style.display = "none";
+				         document.getElementById("loggedInArea").style.display = "block";
+				         getUserSettingsForUser(data.userId);
+				         getKeyStatsReportForUser(data.userId);
+				         // Fetch any additional data or update UI elements as needed
+				     } catch (error) {
+				         // Login failed, display error message
+				         console.error('Error logging in:', error.message);
+				         document.getElementById("message").innerText = error.message;
+				         // Hide the message after 3 seconds
+				         setTimeout(() => {
+				             document.getElementById("message").innerText = "";
+				         }, 3000);
+				     }
 				 });
 
-				         document.getElementById("registerForm").addEventListener("submit", async function(event) {
-				             event.preventDefault();
-				             const username = document.getElementById("regUsername").value;
-				             const password = document.getElementById("regPassword").value;
+				 // Function to handle registration form submission
+				 document.getElementById("registerForm").addEventListener("submit", async function(event) {
+				     event.preventDefault();
+				     const username = document.getElementById("regUsername").value;
+				     const password = document.getElementById("regPassword").value;
 
-				             const response = await fetch('/register', {
-				                 method: 'POST',
-				                 headers: {
-				                     'Content-Type': 'application/json'
-				                 },
-				                 body: JSON.stringify({ username, password })
-				             });
+				     try {
+				         const message = await register(username, password);
+				         // Registration successful, display success message
+				         document.getElementById("message").innerText = message;
+				         // Hide the message after 3 seconds
+				         setTimeout(() => {
+				             document.getElementById("message").innerText = "";
+				             document.getElementById("loginForms").style.display = "flex";
+				             document.getElementById("registerForm").style.display = "none";
+				         }, 3000);
+				     } catch (error) {
+				         // Registration failed, display error message
+				         console.error('Error registering:', error.message);
+				         document.getElementById("message").innerText = error.message;
+				         // Hide the message after 3 seconds
+				         setTimeout(() => {
+				             document.getElementById("message").innerText = "";
+				         }, 3000);
+				     }
+				 });
 
-				             const message = await response.text();
-				             document.getElementById("message").innerText = message;
-					         document.getElementById('registerForm').style.display = 'none';
-					         
-							 const messageElement = document.getElementById("message");
-							 messageElement.innerText = message
-							 // Hide the message after 3 seconds
-							 setTimeout(() => {
-							     messageElement.innerText = ""; // Clear the message
-								 document.getElementById('loginForms').style.display = 'flex';
-							 }, 3000); // 3000 milliseconds = 3 seconds
-							 // 
-				         });
-						 
-						 document.getElementById('showRegister').addEventListener('click', function(e) {
-						         e.preventDefault();
-						         document.getElementById('loginForms').style.display = 'none';
-						         document.getElementById('registerForm').style.display = 'flex';
-						     });
+				 // Function to handle logout button click
+				 document.getElementById("logoutButton").addEventListener("click", async function() {
+				     try {
+				         await logout();
+				         // Logout successful, update UI
+				         document.getElementById("loggedInArea").style.display = "none";
+				         document.getElementById("loginForms").style.display = "flex";
+				         clearGraphs();
+				         // Additional cleanup or UI updates as needed
+				     } catch (error) {
+				         console.error('Error logging out:', error.message);
+				         // Handle error, display message to user
+				         document.getElementById("message").innerText = error.message;
+				         // Hide the message after 3 seconds
+				         setTimeout(() => {
+				             document.getElementById("message").innerText = "";
+				         }, 3000);
+				     }
+				 });
 
-						     document.getElementById('showLogin').addEventListener('click', function(e) {
-						         e.preventDefault();
-						         document.getElementById('registerForm').style.display = 'none';
-						         document.getElementById('loginForms').style.display = 'flex';
-						     });
+				 // Function to switch to registration form
+				 document.getElementById('showRegister').addEventListener('click', function(e) {
+				     e.preventDefault();
+				     document.getElementById('loginForms').style.display = 'none';
+				     document.getElementById('registerForm').style.display = 'flex';
+				 });
 
-				         document.getElementById("logoutButton").addEventListener("click", async function() {
-				             const response = await fetch('/logout', {
-				                 method: 'POST'
-				             });
-				             const message = await response.text();
-							 
-				             if (message === "Logged out successfully.") {
-				                 
-				                 document.getElementById("loggedInArea").style.display = "none";
-								 const messageElement = document.getElementById("message");
-								 messageElement.innerText = message;
-								//clearGraphs(); $(".container").empty();
-								clearGraphs();
-								 
-								 // Hide the message after 3 seconds
-								 setTimeout(() => {
-								     messageElement.innerText = ""; // Clear the message
-									 document.getElementById("loginForms").style.display = "flex";
-								 }, 3000); // 3000 milliseconds = 3 seconds
-								 // 
-							 
-								 if ($(".playing").length > 0) {
-								 	stopGame();
-								 }
-							 }
-				         });
-					  
+				 // Function to switch to login form
+				 document.getElementById('showLogin').addEventListener('click', function(e) {
+				     e.preventDefault();
+				     document.getElementById('registerForm').style.display = 'none';
+				     document.getElementById('loginForms').style.display = 'flex';
+				 });
 						 // Modify populateSongs to return a Promise
 						 function populateSongs() {
 						     return new Promise((resolve, reject) => {
-						         if (globalPlayingStyle) {
+						         if (globalPlayingStyle == 1) {
 									 console.log("local Files");
 									 if (uploadHTML) {
-									 	 $(".lists ul").append(uploadHTML);
+									 	 $(".player .lists ul").append(uploadHTML);
 									 } else {
-				 				        	$("#openPopup").click();
+				 				        //	$("#openPopup").click();
 										
 		   								 $("#audioPlayer li").each(function() {
 		   								     var dI = parseInt($(this).index() + 1, 10);
 									 
-		   									 $(".lists ul li").eq(0).find("audio").attr('src')
+		   									 $(".player .lists ul li").eq(0).find("audio").attr('src')
 									 
 		   									 console.log(dI);
 		   								     var aFile = $(this).find('audio');
 		   									 var newSrc = aFile.attr('src');
 		   									 console.log(newSrc);
-		   									 var naFile = $(".lists ul li").eq(dI-1);
+		   									 var naFile = $(".player .lists ul li").eq(dI-1);
 		   									// naFile = naFile.find("audio");
 		   									 console.log(naFile);
 		   									 naFile.find("audio").attr('src', newSrc);
@@ -1310,8 +1718,8 @@
 									 	});
 								 	}
 									
-						             resolve($(".lists ul .song").toArray());
-						         } else {
+						             resolve($(".player .lists ul .song").toArray());
+						         } else if (globalPlayingStyle == 0) {
 						             $.getJSON('songList.json', function(data) {
 						                 var htmlContent = '';
 						                 data.forEach(function(item) {
@@ -1320,11 +1728,14 @@
  	 		 					            htmlContent += '<audio data-sound="' + item['data-song'] + '" src="' + item['audio_src'] + '"></audio>';
  	 		 					            htmlContent += '</li>';
  	 		 					        });
- 	 		 					        $('.lists ul').append(htmlContent);
-						                 resolve($(".lists ul .song").toArray());
+ 	 		 					        $('.player .lists ul').append(htmlContent);
+						                 resolve($(".player .lists ul .song").toArray());
 						             }).fail(function(jqXHR, textStatus, errorThrown) {
 						                 reject(new Error(textStatus));
 						             });
+						         } else if (globalPlayingStyle == 2) {
+									 console.log("POPULATING 3");
+									 
 						         }
 						     });
 						 }
@@ -1352,6 +1763,8 @@
 						 });
 						 
                     $("document").ready(function() {
+						
+						
    				    const keys = document.querySelectorAll('.key, .black-key');
                     
                     const stopBtn = document.querySelector('.stop_music');
@@ -1361,18 +1774,114 @@
                     const startMusicBtn = document.querySelector('.start_music');
 					
 					 $(".disabledd").removeClass('disabledd');
+					 
+					 $('#loginBtn').click(function () {
+					     window.location.href = '/login';
+					 });
+					 
+					 const spotifyDisp = $(".spotifyDisp");
+					 
+    // Function to extract query parameters from URL
+		             function getQueryParam(param) {
+		                 const urlParams = new URLSearchParams(window.location.search);
+		                 return urlParams.get(param);
+		             }
+					 
+				     const responseDataJson = getQueryParam('responseData');
+				 	 const responseData = JSON.parse(decodeURIComponent(responseDataJson));
+					 
+					 // Check if the page was accessed after coming back from /callback
+					 const fromCallback = getQueryParam('fromCallback');
+					 if (fromCallback === 'true') {
+					     // Perform the desired change on the page
+					     console.log('Page was accessed from /callback');
+
+					     const tokenData = responseData.tokenData;
+						 globalAccessToken = tokenData.access_token;
+						 
+						 
+						 
+				 		const token = globalAccessToken; // 'BQCN5E3ubwvfMgU7NviuvpThK-SevrFAJS0g66mZoQBnHGfsvUjdPne9m3b--EE_Zxs0_AxkeXpk_TJ3dnTxKJac0WA9nHy7XhKIFwwoZSjGqBQ4Qha-RSM2VIMYxqjpU6nCQi6IpPpt1S81Vr3Nygdq37fAx0v5-1sZMDGH6Tmn7dxZ1qYz62KoKFqfKqo5DIE8BbEfcg';
+		
+				 		 window.onSpotifyWebPlaybackSDKReady = () => {
+				 		 	console.log("Spotify Web Playback SDK is ready.");
+			
+			
+				 			globalAccessToken = token;
+
+				 			window.player = new Spotify.Player({
+				 			    name: 'Web Playback SDK Quick Start Player',
+				 			    getOAuthToken: cb => { cb(token); },
+				 			    volume: 0.5
+				 			});
+				 		  }
+		  
+				 		 
+		  
+						 
+						 
+						 
+						 
+					   			             const spotifyUsername = responseData.spotifyUsername;
+					   						 const spotifyPlaylists = responseData.playlists;
+						 
+					   			             // Use tokenData and spotifyUsername as needed
+					   			             console.log('Token Data:', tokenData);
+					   			             console.log('Spotify Username:', spotifyUsername);
+					   						 console.log('Spotify Playlists:', spotifyPlaylists);
+						 
+						 
+					   						 spotifyDisp.removeClass("hide");
+					   						 spotifyDisp.find('.spotifyUsername').text(spotifyUsername);
+						 
+					   						 $("#loginBtn").addClass("hide");
+					   						 $("#logoutBtn").removeClass("hide");
+											 fetchUserPlaylists(tokenData.access_token);
+						 
+					 } else {
+					     console.log("NO");
+					 }
+					 
+					 
+					 $('#logoutBtn').click(function() {
+					            // Make a request to the logout endpoint
+					            $.ajax({
+					                     url: '/logout',
+					                     method: 'POST',
+					                     success: function(response) {
+					                         console.log('Logged out successfully');
+											 $("#loginBtn").removeClass("hide");
+											 $("#logoutBtn").addClass("hide");
+											 spotifyDisp.find(".spotifyUsername").text('');
+											 spotifyDisp.addClass("hide");
+					                     },
+					                     error: function(xhr, status, error) {
+					                         console.error('Error logging out:', error);
+					                     }
+					             });
+					  });
+					 
+					 
+			  	   		$('#reportBtn').click(function() {
+		   
+			  	     		$('#topSongs').html('<h2>Top 3 Songs</h2>');
+			  	     		responseData.forEach(function (track) {
+			  	         	   $('#topSongs').append(`<p>${track.name} by ${track.artists[0].name}</p>`);
+			  	    	  	});
+							
+							
 						
-                    console.log(globalVol);
+
+						});
+		 
+					   
+					
+						
+                   // console.log(globalVol);
                     volume.value = globalVol;
 					//globalNoteVal = 50;
 					$("#volume2").val(50);
 				    // soundManager.setVolume(90);
-					
-					if (globalPlayingStyle) {
-						console.log("SI");
-					} else {
-						console.log("NO");
-					}
 				   
 				    //POPUP
 				    $("#openPopup").click(function() {
@@ -1383,6 +1892,10 @@
 				     $("#popup").hide();
 				   });
 
+
+			    	$("#closePopup2").click(function() {
+			     	   $(".settings").addClass('hide');
+			   		});
 			 		/* MUSIC PLAYER JS */
 
 			 	    $(".list-btn").click(function() {
@@ -1399,12 +1912,18 @@
 					$(".settingsBtn").on("click", function() {
 						console.log("Settings");
 						$(".settings").toggleClass("hide");
+		 			   // By default, open the first tab
+						if (userLoggedIn) {
+							$(".tab button").eq(globalPlayingStyle).click();
+						} else {
+							console.log("USER not logged in, using default songs.")
+		 			   	 	document.getElementById("defaultOpen").click();
+						}
 					});
 					  
 					const toggleButton = document.getElementById("toggleKeyNames");
 		            toggleButton.addEventListener("click", function() {
 						if ($("#toggleKeyNames").hasClass("on")) {
-							console.log("YES YES");
 							toggleButton.classList.add("off");
 							toggleButton.classList.remove("on");
     		                  $(".piano span").each(function() {
@@ -1424,8 +1943,47 @@
 				    // Fetch users when the page loads
 				    fetchUsers();
 					
-				    
 					
+					$(".tab").find('button').eq(0).on('click', ()=> {
+						console.log("TEST");
+						$("#tab1 .lists").remove();
+						//$(checkBox).click();
+						//$(checkBox).prop("checked", false);
+						globalPlayingStyle = 0;
+						$(".player .lists ul").empty();
+						sendAndPop();
+						
+
+					});
+				
+				
+				
+					$(".tab").find('button').eq(1).on('click', ()=> {
+						console.log("your songs");
+						//$("#tab2 .lists").remove();
+						//$(checkBox).prop("checked", true);
+				        globalPlayingStyle = 1;
+				        $(".player .lists ul").empty();
+						sendAndPop();
+						
+					});
+					
+					$(".tab").find('button').eq(2).on('click', ()=> {
+						console.log("Spotify Playlist");
+						$("#tab1 .lists ul").remove();
+						//$("#tab2 .lists").remove();
+						//$(checkBox).prop("checked", true);
+
+					
+						
+					});
+					
+					$(".selectFolder").on('click', ()=>{
+					 	$("#openPopup").click();
+				 	});
+				
+				
+	  				
                  });
 				 
 		 		/* End of MUSIC PLAYER JS */
@@ -1441,8 +1999,8 @@
                 });
 
                 volume.addEventListener("touchmove", (e) => {
-                  console.log(e.currentTarget.value/100);
-                  const currentSong = document.querySelector('div.activa');
+                  	console.log(e.currentTarget.value/100);
+                  	const currentSong = document.querySelector('div.activa');
                     let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
                      // console.log(e.currentTarget.value);
                     audio.volume = e.currentTarget.value/100;
@@ -1457,6 +2015,11 @@
                 });
 				
 				$(`div.action-button > .play-pause`).on('click', () => {
+					console.log("YALA");
+					
+					//const trackUri = 'spotify:track:6Y9FGnmx9PXsmgLs02UirG'; // Replace with the actual track URI
+				//	        playTrack(trackUri);
+					
 					if ($(`div.action-button > .play-pause`).hasClass("active_musicplayer")) {
 						$('.play-pause').toggleClass('active_musicplayer');
 						startMusicBtn.click();
@@ -1465,8 +2028,10 @@
 						//console.log('TESt: ', $(".playing"));
 						
 	                    //const currentSong = document.querySelector('div.playing');
-	                    stopBtn.click();;
+	                    stopBtn.click();
+						stopTrack();
 					}
+					
 				});
 
                 stopBtn.addEventListener('click', () => {
@@ -1483,11 +2048,46 @@
                 });
 
                 startMusicBtn.addEventListener('click', ()=> {
-                  const currentSong = document.querySelector('div.activa');
+                  const currentSong = document.querySelector('.lists div.activa');
+				  if (globalPlayingStyle == 2) {
+					  playTrack(currentSong.dataset.uri);
+				  }
                   playSong(currentSong.dataset.song);
                   startMusicBtn.classList.add("hide");
                   stopBtn.classList.remove("hide");
                 });
+				
+				
+				function sendAndPop() {
+  				 	sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
+		
+			
+					// Move the code that depends on `songs` inside the callback of `populateSongs()`
+					populateSongs().then(songs => {
+				    	songs.forEach(song => {
+				        	song.addEventListener('mousedown', () => {
+				           	 const note = song.dataset.song;
+				           	 playSong(note);
+				           	 $(".list-btn").click();
+				        	});
+				    	});
+						console.log("HELLO");
+						var indexTAB = $(".tab button.active").index()+1;
+						
+						// Construct the ID of the div using the index
+						var tabId = "tab" + indexTAB;
+
+						// Select the div with the constructed ID
+						var tabDiv = $("#" + tabId);
+						tabDiv.find(".lists").remove();
+						tabDiv.append($(".player .lists").clone());
+						tabDiv.find(".lists > div").remove();
+						
+  			     		}).catch(error => {
+  			        		console.error('Error populating songs:', error);
+  			    		});
+			
+				}
 				
 				// Function to send user settings to server
 				function sendUserSettingsToServer(userId, globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol) {
@@ -1538,15 +2138,7 @@
 				        const magicNumber = userSettings.magicNumber;
 						globalPlayingStyle = magicNumber;
 				        console.log('Magic number:', magicNumber);
-				        // Trigger checkbox if magicNumber equals 1
-				        const checkBox = document.querySelector("input.switch_check");
-				        if (magicNumber === 1) {
-				            checkBox.checked = false;
-							checkBox.click();
-				        } else {
-				            checkBox.checked = true;
-							checkBox.click();
-				        }
+				      
 
 				        // Example: Accessing showKeyNames
 				        globalHideKeys = userSettings.showKeyNames;
@@ -1645,7 +2237,8 @@
 				}
 
                 function randomSong() {
-                  if(globalSongsPlayed.length < $(".song").length) {
+						
+                  if (globalSongsPlayed.length < $(".lists .song").length) {
                      // console.log("CHECKED");
                      btn2.style.display = 'none';
                      btn3.style.display = 'block';
@@ -1694,6 +2287,12 @@
                         console.log("LENGTH: "+globalSongsPlayed.length);
                         randomSong();
                       } else {
+						  
+	  					if (globalPlayingStyle == 2) {
+							const sP = document.querySelector(`.player .song[data-song="${randSong}"]`);
+							playTrack(sP.dataset.uri);
+	  					}
+				
                         playSong(randSong);
                         globalSongsPlayed.push(randSong);
                         console.log("VALIDO");
@@ -1758,17 +2357,30 @@
 				 
 				 function prevSong() {
 					 console.log("PREV SONG");
-					 const prevSong = document.querySelector('div.lastPlayed');
-					 playSong(prevSong.dataset.song);
+					 const prevSong = document.querySelector('.lists div.lastPlayed');
+					 if (!prevSong) {
+						 randomSong();
+					 } else {
+					 
+					 	if (globalPlayingStyle == 2) {
+				      	  playTrack(prevSong.dataset.uri);
+						}
+						 playSong(prevSong.dataset.song);
+					 	}
 				 }
 					
                  function playSong(note) {
                      if (currPlaying = document.querySelector('div.playing')) {
                         stopSong(currPlaying.dataset.song);
                      };
-                     
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
+					 const spotiSong = document.querySelector(`.player .song[data-song="${note}"]`);
+					 console.log(spotiSong);
                      if (!audio) return;
+					if (globalPlayingStyle == 2) {
+   					 console.log("SOOO");
+   				 	 $('.duration_musicplayer').text(spotiSong.dataset.duration);
+				 } else {
                      audio.currentTime = 0;
 					 
                      audio.volume = globalVol/100;
@@ -1785,10 +2397,11 @@
 						     $(".thumb").css("left", position + "px");
 				 
 					 }
+				 }
 					 
-					 $('.duration_musicplayer').text(sToTime(audio.duration).slice(3));
-                     const songPlaying = document.querySelector(`div[data-song="${note}"]`);
-                     const songs = document.querySelectorAll('div.song');
+					 
+                     const songPlaying = document.querySelector(`.player .song[data-song="${note}"]`);
+                     const songs = document.querySelectorAll('.player .song');
                      const repeatBtn = document.querySelector('div.repeat_music');
                      const stopBtn = document.querySelector('div.stop_music');
                      const songDisplaying = document.querySelector('div.song_musicplayer > span');
@@ -1972,6 +2585,7 @@
 					 
                      setTimeout(function (){
                         audio.pause();
+						stopTrack();
                         songPlaying.classList.remove('playing');
                       }, 90000);
                  }
@@ -2146,58 +2760,137 @@
                          //stopSound(key.dataset.note);
                      });
                  });
+/*
+  			   function initializeAndPlayTrack(trackURI, accessToken) {
+				   
+  			       // Initialize the Spotify Web Playback SDK
+  			       window.onSpotifyWebPlaybackSDKReady = () => {
+  			           // Initialize the player
+  			           const player = new Spotify.Player({
+  			               name: 'Web Playback SDK Quick Start Player',
+  			               getOAuthToken: cb => { cb(accessToken); }
+  			           });
 
-                const checkBox = document.querySelector("input.switch_check");
-				const songsOff = $(".behavior_controls label").prev();
-				const songsOn = $(".behavior_controls label").next();
-				
-				songsOff.on('click', ()=> {
-					console.log("TEST");
-					//$(checkBox).click();
-					$(checkBox).prop("checked", false);
-					globalPlayingStyle = 0;
-				});
-				
-				songsOn.on('click', ()=> {
-					console.log("your songs");
-					$(checkBox).prop("checked", true);
-			        globalPlayingStyle = 1;
-			        $("#openPopup").click();
-					
-				});
-				
-				$(checkBox).on('change', function() {
-				    if ($(this).is(':checked')) {
-						globalPlayingStyle = 1;
-				    } else {
-				        globalPlayingStyle = 0;
+  			           // Error handling
+  			           player.addListener('initialization_error', ({ message }) => { console.error(message); });
+  			           player.addListener('authentication_error', ({ message }) => { console.error(message); });
+  			           player.addListener('account_error', ({ message }) => { console.error(message); });
+  			           player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+  			           // Playback status updates
+  			           player.addListener('player_state_changed', state => { console.log(state); });
+
+  			           // Ready
+  			           player.addListener('ready', ({ device_id }) => {
+  			               console.log('Ready with Device ID', device_id);
+
+  			               // Play the specified track
+  			               player._options.getOAuthToken(access_token => {
+  			                   fetch('https://api.spotify.com/v1/me/player/play', {
+  			                       method: 'PUT',
+  			                       headers: {
+  			                           'Authorization': `Bearer ${access_token}`,
+  			                           'Content-Type': 'application/json',
+  			                       },
+  			                       body: JSON.stringify({ uris: [trackURI] }),
+  			                   });
+  			               });
+  			           });
+
+  			           // Connect to the player
+  			           player.connect();
+  			       };
+  			   }
+*/
+  			   // Click event handler for the play button
+  			   $('#playButton').click(function() {
+  				   console.log("PLAY PLAY");
+		          // Example usage
+		        // const trackId = '1e763423ad0e4862b20f9dbfdadc2cb7';
+		          const accessToken = globalAccessToken; ; // Replace with your actual access token
+		          //getTrackData(trackId, accessToken);
+				  
+				//  const trackURI = 'spotify:track:1qyKIq8hw9yWkuPJ9ZjuvK';
+/*
+				  fetch('https://api.spotify.com/v1/me/player/play', {
+				    method: 'PUT',
+				    headers: {
+				      'Authorization': `Bearer ${accessToken}`,
+				      'Content-Type': 'application/json',
+				      'Accept': 'application/json'
+				    },
+				    body: JSON.stringify({ uris: [trackURI] })
+				  })
+				  .then(response => {
+				    if (!response.ok) {
+				      throw new Error('Failed to play track');
 				    }
-				 //   console.log(globalPlayingStyle);
-					
+				    console.log('Track played successfully');
+				  })
+				  .catch(error => {
+				    console.error('Error playing track:', error);
+				  });
+				  */
+  			      // var trackURI = 'spotify:track:3et6pkPCmAKFvFscw2YjMB'; // Replace with your track URI
+  			   //    var accessToken = globalAccessToken; // Replace with your Spotify access token
 
-   				 // Example usage:
-   				 // When the globalPlayingStyle value changes on the client-side
-   				 sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
+  			       // Initialize and play the track
+  			     //  initializeAndPlayTrack(trackURI, accessToken);
 				 
+				 
+				 
+				
+ 
+	   		    // Ready
+	   		     player.addListener('ready', ({ device_id }) => {
+	   		       console.log('Ready with Device ID', device_id);
+				   
+				   // Transfer playback to the selected device
+				   fetch('https://api.spotify.com/v1/me/player', {
+				     method: 'PUT',
+				     headers: {
+				       'Authorization': 'Bearer ' + accessToken,
+				       'Content-Type': 'application/json'
+				     },
+				     body: JSON.stringify({
+				       device_ids: [device_id],
+				       play: false // Set to true if you want to resume playback on the new device
+				     })
+				   })
+				   .then(response => {
+				     if (response.ok) {
+				       console.log('Playback transferred successfully.');
+				     } else {
+				       console.error('Failed to transfer playback:', response.statusText);
+				     }
+				   })
+				   .catch(error => {
+				     console.error('Error transferring playback:', error);
+				   });
+	   		     });
 
-					$(".lists ul").empty();
-					
-					// Move the code that depends on `songs` inside the callback of `populateSongs()`
-					populateSongs().then(songs => {
-					    songs.forEach(song => {
-					        song.addEventListener('mousedown', () => {
-					            const note = song.dataset.song;
-					            playSong(note);
-					            $(".list-btn").click();
-					        });
-					    });
-						console.log("HELLO");
-   			     	}).catch(error => {
-   			        	console.error('Error populating songs:', error);
-   			    	});
-				});
+	   		     // Not Ready
+	   		     player.addListener('not_ready', ({ device_id }) => {
+	   		       console.log('Device ID has gone offline', device_id);
+	   		     });
+ 
+ 
+	   		     player.addListener('initialization_error', ({ message }) => {
+	   		         console.error(message);
+	   		     });
 
+	   		     player.addListener('authentication_error', ({ message }) => {
+	   		         console.error(message);
+	   		     });
 
+	   		     player.addListener('account_error', ({ message }) => {
+	   		         console.error(message);
+	   		     });
+ 
+	   		     player.connect();
+				 
+  			   });
+			   
              </script>
 
          </div>
@@ -2205,5 +2898,6 @@
      </div>
 	 <script src='/dist/graphiq.js'></script>
 	   <script  src="/dist/script.js"></script>
+
   </body>
 </html>
