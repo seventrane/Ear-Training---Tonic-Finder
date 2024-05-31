@@ -400,14 +400,14 @@ app.get('/getUserSettings/:userId', async (req, res) => {
 // Replace 'YOUR_CLIENT_ID' and 'YOUR_CLIENT_SECRET' with your actual Spotify client ID and secret
 const CLIENT_ID = '6a67892f6508441eb817a7eb18b06037';
 const CLIENT_SECRET = '263ed6d745084ad8b88f5bed52757232';
-const REDIRECT_URI = 'https://tonicfinder6.adaptable.app/callback'; // Redirect URI registered with Spotify
+const REDIRECT_URI = 'https://tonicfinder6.adaptable.app:3001/callback'; // Redirect URI registered with Spotify //tonicfinder6.adaptable.app
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
 // Route for initiating Spotify authentication
-app.get('/login', (req, res) => {
+app.get('/spo/login', (req, res) => {
 	const scopes = 'user-read-playback-state user-modify-playback-state streaming';
     res.redirect(`https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${encodeURIComponent(scopes)}`);
 });
