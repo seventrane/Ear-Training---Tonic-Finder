@@ -24,6 +24,7 @@
     "mongod": "^2.0.0",
     "mongoose": "^8.4.0",
     "morgan": "~1.9.1",
+    "node-fetch": "^3.3.2",
     "openai": "^4.47.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",

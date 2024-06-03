@@ -6,6 +6,7 @@ const path = require('path'); // Add this line to use the 'path' module
 const OpenAI = require('openai');
 const bodyParser = require('body-parser');
 
+
 const cors = require('cors');
 
 // 
@@ -430,17 +431,17 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// Callback route after Spotify authentication
-app.get('/callback', async (req, res) => {
+async function handleCallback(req, res) {
     const code = req.query.code;
     if (!code) {
         res.status(400).send('Code not found');
         return;
     }
-	
-	//// GETTING THE TOKEN REFRESH INSTEAD OF A FUNCTION CHECK //
 
     try {
+        // Dynamically import node-fetch
+        const fetch = (await import('node-fetch')).default;
+
         // Exchange authorization code for access token
         const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
@@ -454,25 +455,25 @@ app.get('/callback', async (req, res) => {
                 'redirect_uri': REDIRECT_URI
             })
         });
-		const tokenData = await tokenResponse.json();
 
-		        // Fetching user information (including username) from Spotify API
-		        const userInfoResponse = await fetch('https://api.spotify.com/v1/me', {
-		            method: 'GET',
-		            headers: {
-		                'Authorization': `Bearer ${tokenData.access_token}`
-		            }
-		        });
-		        const userInfoData = await userInfoResponse.json();
-		        const spotifyUsername = userInfoData.id;
+        const tokenData = await tokenResponse.json();
 
-		        // Serialize tokenData and spotifyUsername into a JSON string
-		        const responseData = {
-		            tokenData: tokenData,
-		            spotifyUsername: spotifyUsername
-		        };
-		        const responseDataJson = JSON.stringify(responseData);
-				
+        // Fetching user information (including username) from Spotify API
+        const userInfoResponse = await fetch('https://api.spotify.com/v1/me', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${tokenData.access_token}`
+            }
+        });
+        const userInfoData = await userInfoResponse.json();
+        const spotifyUsername = userInfoData.id;
+
+        // Serialize tokenData and spotifyUsername into a JSON string
+        const responseData = {
+            tokenData: tokenData,
+            spotifyUsername: spotifyUsername
+        };
+        const responseDataJson = JSON.stringify(responseData);
 
         // Redirect the user back to /index.html with responseDataJson as a query parameter
         res.redirect(`/index.html?responseData=${encodeURIComponent(responseDataJson)}&fromCallback=true`);
@@ -480,7 +481,10 @@ app.get('/callback', async (req, res) => {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
-});
+}
+
+// Callback route after Spotify authentication
+app.get('/callback', handleCallback);
 
 app.get('/api/playlists', async (req, res) => {
     const accessToken = req.query.access_token;
