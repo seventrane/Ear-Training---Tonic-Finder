@@ -400,7 +400,7 @@ app.get('/getUserSettings/:userId', async (req, res) => {
 // Replace 'YOUR_CLIENT_ID' and 'YOUR_CLIENT_SECRET' with your actual Spotify client ID and secret
 const CLIENT_ID = '6a67892f6508441eb817a7eb18b06037';
 const CLIENT_SECRET = '263ed6d745084ad8b88f5bed52757232';
-const REDIRECT_URI = 'https://my-app.adaptable.app/callback'; // Redirect URI registered with Spotify //tonicfinder6.adaptable.app
+const REDIRECT_URI =  'https:tonicfinder6.adaptable.app/callback';//  'https://my-app.adaptable.app/callback'; // Redirect URI registered with Spotify //tonicfinder6.adaptable.app
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
@@ -411,17 +411,22 @@ app.get('/spo/login', (req, res) => {
 	const scopes = 'user-read-playback-state user-modify-playback-state streaming';
     res.redirect(`https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${encodeURIComponent(scopes)}`);
 });
-
 // Route for logging out
 app.get('/logout', (req, res) => {
     // Clear tokens from session or database
     delete req.session.accessToken;
     delete req.session.refreshToken;
+    console.log("LOGOUT!");
 
     // Destroy the session (if using sessions)
-    req.session.destroy(() => {
-        // Redirect to home page or login page
-        res.redirect('/');
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            res.status(500).send('Error destroying session');
+        } else {
+            // Send a response indicating successful logout
+            res.status(200).send('Logged out successfully');
+        }
     });
 });
 
@@ -477,7 +482,6 @@ app.get('/callback', async (req, res) => {
     }
 });
 
-// New route for fetching playlists
 app.get('/api/playlists', async (req, res) => {
     const accessToken = req.query.access_token;
     if (!accessToken) {
@@ -493,9 +497,30 @@ app.get('/api/playlists', async (req, res) => {
             }
         });
 
+
         if (playlistsResponse.ok) {
             const playlistsData = await playlistsResponse.json();
-            res.json(playlistsData);
+            
+            // Sort playlists by the date they were created or modified (descending)
+            const sortedPlaylists = playlistsData.items.sort((a, b) => {
+                const dateA = new Date(a.tracks.created_at || a.tracks.updated_at);
+                const dateB = new Date(b.tracks.created_at || b.tracks.updated_at);
+                return dateB - dateA;
+            });
+            
+            
+            // Reconstruct the response object with the sorted playlists
+            const sortedPlaylistsResponse = {
+                href: playlistsData.href,
+                items: sortedPlaylists,
+                limit: playlistsData.limit,
+                next: playlistsData.next,
+                offset: playlistsData.offset,
+                previous: playlistsData.previous,
+                total: playlistsData.total
+            };
+            
+            res.json(sortedPlaylistsResponse);
         } else {
             res.status(playlistsResponse.status).send('Failed to fetch playlists');
         }

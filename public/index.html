@@ -537,9 +537,9 @@
                  </div>
 				    <div id="topSongs"></div>
                  <h4 class="">Music To Use:</h4>
-                 <div class="behavior_controls ">
+                 <div class="hide behavior_controls ">
                    <span>App Songs</span>
-                   <label class="switch">
+                   <label class="hide switch">
                      <input class="switch_check" type="checkbox">
                      <span class="slider round"></span>
                    </label>
@@ -866,10 +866,25 @@
 			   
 			   // Function to logout
 			   function logout() {
-			     // Remove token from localStorage
-			     localStorage.removeItem('token');
+			       // Remove token from localStorage
+			       localStorage.removeItem('token');
+			       console.log("SALIENDO DEL APP");
+    
+			       // Make a call to the logout route
+			       fetch('/logout')
+			       .then(response => {
+			           if (response.ok) {
+			               console.log('Logged out successfully');
+			               // Redirect to home page or login page if needed
+			               window.location.href = '/';
+			           } else {
+			               console.error('Failed to logout');
+			           }
+			       })
+			       .catch(error => {
+			           console.error('Error during logout:', error);
+			       });
 			   }
-
 			   // Function to check if user is logged in
 			   function isLoggedIn() {
 			     return !!getToken();
@@ -1182,7 +1197,7 @@
 			 //  document.getElementById("defaultOpen").click();
 			  
 		   	  const folderPath = "./uploads";
-		   	        const urlIP= "98.113.67.183";
+		   	        const urlIP= "98.113.60.58";
 		   	        const urlPort = "3000";
 
 		 			async function uploadAudio() {
@@ -1634,6 +1649,7 @@
 				         document.getElementById("loggedInArea").style.display = "block";
 				         getUserSettingsForUser(data.userId);
 				         getKeyStatsReportForUser(data.userId);
+						 window.location.href = '/';
 				         // Fetch any additional data or update UI elements as needed
 				     } catch (error) {
 				         // Login failed, display error message
@@ -1879,11 +1895,7 @@
 					 
 			  	   		$('#reportBtn').click(function() {
 		   
-			  	     		$('#topSongs').html('<h2>Top 3 Songs</h2>');
-			  	     		responseData.forEach(function (track) {
-			  	         	   $('#topSongs').append(`<p>${track.name} by ${track.artists[0].name}</p>`);
-			  	    	  	});
-							
+			  	 
 							
 						
 
@@ -2044,7 +2056,7 @@
 						
 	                    //const currentSong = document.querySelector('div.playing');
 	                    stopBtn.click();
-						stopTrack();
+						//stopTrack();
 					}
 					
 				});
@@ -2224,7 +2236,7 @@
 				    });
 				}
 				
-				function guessGenreOfAudio(audioElement) {
+			/*	function guessGenreOfAudio(audioElement) {
 					console.log(audioElement);
 	            
 				    // Send the audio element to the server
@@ -2250,7 +2262,7 @@
 				        console.error('Error:', error);
 				    });
 				}
-
+*/
                 function randomSong() {
 						
                   if (globalSongsPlayed.length < $(".lists .song").length) {
@@ -2390,7 +2402,7 @@
                      };
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
 					 const spotiSong = document.querySelector(`.player .song[data-song="${note}"]`);
-					 console.log(spotiSong);
+					// console.log(spotiSong);
                      if (!audio) return;
 					if (globalPlayingStyle == 2) {
    					 console.log("SOOO");
@@ -2450,8 +2462,8 @@
 										 console.log("availKeys: ", availKeys);
 					 
 						 				 const $keyWithNote  = availKeys.filter(function() {
-											 console.log("the note: ",this.dataset.note);
-											 console.log("the currentKey: ",currentKey);
+										//	 console.log("the note: ",this.dataset.note);
+										//	 console.log("the currentKey: ",currentKey);
 						 
 					    				 	return this.dataset.note === currentKey;
 										 });
@@ -2521,21 +2533,21 @@
 										// console.log($sixthKey);
 					   
 										 $('.keysWrapper div').addClass('disabledd');
-						                 console.log(songPlaying);
+						                // console.log(songPlaying);
 	 		 
 								         switch (globalLevel) {
 											 case 1:
 												 // Conditions for level 1
 												 console.log("Reached level 1!");
-												 console.log(currentKey);
-												 console.log($keyWithNote);
+											//	 console.log(currentKey);
+											//	 console.log($keyWithNote);
 											     $keyWithNote.removeClass('disabledd');
 												 $otherKey.removeClass('disabledd');
 												 break;
 								             case 2:
 								                 // Conditions for level 2
 								                 console.log("Reached level 2!");
-												 console.log(currentKey);
+											//	 console.log(currentKey);
 												 $('.keysWrapper div').addClass('disabledd');
 												 $keyWithNote.removeClass('disabledd');
 												 $otherKey.removeClass('disabledd');
@@ -2545,7 +2557,7 @@
 								             case 3:
 								                 // Conditions for level 3
 								                 console.log("Reached level 3!");
-												 console.log(currentKey);
+											//	 console.log(currentKey);
 												 $('.keysWrapper div').addClass('disabledd');
 												 $keyWithNote.removeClass('disabledd');
 												 $otherKey.removeClass('disabledd');
@@ -2557,7 +2569,7 @@
 								             case 4:
 								                 // Conditions for level 4
 								                 console.log("Reached level 4!");
-												 console.log(currentKey);
+											//	 console.log(currentKey);
 												 $('.keysWrapper div').addClass('disabledd');
 												 $keyWithNote.removeClass('disabledd');
 												 $otherKey.removeClass('disabledd');
@@ -2570,7 +2582,7 @@
 											 case 5:
 								                 // Conditions for level 5
 								                 console.log("Reached level 5!");
-												 console.log(currentKey);
+											//	 console.log(currentKey);
 												 $('.keysWrapper div').addClass('disabledd');
 												 $keyWithNote.removeClass('disabledd');
 												 $otherKey.removeClass('disabledd');
@@ -2602,7 +2614,7 @@
                         audio.pause();
 						stopTrack();
                         songPlaying.classList.remove('playing');
-                      }, 90000);
+                      }, 180000);
                  }
 				 
 				 function sToTime(t) {
@@ -2616,7 +2628,13 @@
 
                  function stopSong(note) {
                     const audio = document.querySelector(`audio[data-sound="${note}"]`);
-                    audio.pause();
+					if (globalPlayingStyle == 2) {
+						stopTrack();
+					} else {
+						audio.pause();
+					}
+                    
+					
                     const songPlaying = document.querySelector('div.playing');
                     songPlaying.classList.remove('playing');
 					const songLastPlayed = '';
@@ -2671,8 +2689,8 @@
 				             $(".settings").addClass("noBanner");
 				             const currentKey = currentSong.dataset.note;
 				             const song = currentSong.dataset.song;
-				             console.log(note);
-				             console.log(currentKey);
+				           //  console.log(note);
+				          //   console.log(currentKey);
 
 				             if (note == currentKey) {
 				                 key.classList.add('right');
@@ -2775,48 +2793,7 @@
                          //stopSound(key.dataset.note);
                      });
                  });
-/*
-  			   function initializeAndPlayTrack(trackURI, accessToken) {
-				   
-  			       // Initialize the Spotify Web Playback SDK
-  			       window.onSpotifyWebPlaybackSDKReady = () => {
-  			           // Initialize the player
-  			           const player = new Spotify.Player({
-  			               name: 'Web Playback SDK Quick Start Player',
-  			               getOAuthToken: cb => { cb(accessToken); }
-  			           });
 
-  			           // Error handling
-  			           player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  			           player.addListener('authentication_error', ({ message }) => { console.error(message); });
-  			           player.addListener('account_error', ({ message }) => { console.error(message); });
-  			           player.addListener('playback_error', ({ message }) => { console.error(message); });
-
-  			           // Playback status updates
-  			           player.addListener('player_state_changed', state => { console.log(state); });
-
-  			           // Ready
-  			           player.addListener('ready', ({ device_id }) => {
-  			               console.log('Ready with Device ID', device_id);
-
-  			               // Play the specified track
-  			               player._options.getOAuthToken(access_token => {
-  			                   fetch('https://api.spotify.com/v1/me/player/play', {
-  			                       method: 'PUT',
-  			                       headers: {
-  			                           'Authorization': `Bearer ${access_token}`,
-  			                           'Content-Type': 'application/json',
-  			                       },
-  			                       body: JSON.stringify({ uris: [trackURI] }),
-  			                   });
-  			               });
-  			           });
-
-  			           // Connect to the player
-  			           player.connect();
-  			       };
-  			   }
-*/
   			   // Click event handler for the play button
   			   $('#playButton').click(function() {
   				   console.log("PLAY PLAY");
