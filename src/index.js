@@ -4,7 +4,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const path = require('path'); // Add this line to use the 'path' module
 const OpenAI = require('openai');
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');	
 
 
 const cors = require('cors');
@@ -494,6 +494,8 @@ app.get('/api/playlists', async (req, res) => {
     }
 
     try {
+        const fetch = (await import('node-fetch')).default;
+		
         // Make a request to fetch user's playlists
         const playlistsResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
             headers: {
@@ -550,6 +552,9 @@ app.get('/spotify/track/:trackId', async (req, res) => {
                 'Authorization': `Bearer ${accessToken}`
             }
         };
+		
+        const fetch = (await import('node-fetch')).default;
+		
 
         const response = await fetch(url, options);
 
