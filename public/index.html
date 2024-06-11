@@ -3,85 +3,327 @@
     <title>Ear training App</title>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.css" />
+		  <link rel="stylesheet" href="/dist/style1.css">
+		   <link rel="stylesheet" href="/dist/graphiq.css">
+		  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	
+	
 
-    <style>
-       /*local style*/
+  
+   <style>
+	   /* Local style */
+	   .reports {
+		   position: absolute;
+		   background: pink;
+		   z-index: 30;
+		   top: 97px;
+		   padding: 0!important;
+		   margin-left: -28px;
+		   height: 84%;
+		   width: 102%!important;
+	   }
+	   
+	   /* Toggle Button Style */
+	   .toggle-button {
+	     appearance: none;
+	     background-color: #ccc;
+	     border: none;
+	     border-radius: 20px;
+	     cursor: pointer;
+	     height: 24px;
+	     outline: none;
+	     padding: 2px;
+	     position: relative;
+	     width: 59px;
+	   }
+	   
+	   .toggle-button.on {
+		   background: #ff8533;
+	   }
 
-       /* SLIDER SWITCH STYLES */
+	   .toggle-button::before {
+	     background-color: #fff;
+	     border-radius: 50%;
+	     content: "";
+	     height: 20px;
+	     left: 2px;
+	     position: absolute;
+	     top: 2px;
+	     transition: transform 0.3s ease-in-out;
+	     width: 20px;
+	   }
 
-       .switch {
-          position: relative;
-          display: inline-block;
-          width: 60px;
-          height: 34px;
-        }
+	   .toggle-button.on::before {
+	     transform: translateX(35px);
+	   }
 
-        .switch input { 
-          opacity: 0;
-          width: 0;
-          height: 0;
-        }
+	   .toggle-button.off::before {
+	     transform: translateX(0px);
+	   }
 
-        .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: #ccc;
-          -webkit-transition: .4s;
-          transition: .4s;
-        }
+	   /* Text Style */
+	   .toggle-button span {
+	     color: #fff;
+	     font-family: Arial, sans-serif;
+	     font-size: 12px;
+	     position: absolute;
+	     top: 50%;
+	     transform: translateY(-50%);
+	     white-space: nowrap;
+	   }
+	   
+	   .toggle-button.on span.off {
+		   display: none;
+	   }
+	   
+	   .toggle-button.on span.on {
+		   display: block;
+	   }
+	   
+	   .toggle-button.off span.off {
+		   display: block;
+	   }
+	   
+	   .toggle-button.off span.on {
+		   display: none;
+	   }
 
-        .slider:before {
-          position: absolute;
-          content: "";
-          height: 26px;
-          width: 26px;
-          left: 4px;
-          bottom: 4px;
-          background-color: white;
-          -webkit-transition: .4s;
-          transition: .4s;
-        }
+	   /* Positioning */
+	   .toggle-button span.on {
+	     left: 10px;
+	   }
 
-        input:checked + .slider {
-          background-color: #2196F3;
-        }
+	   .toggle-button span.off {
+	     right: 10px;
+	   }
+	   
+	   .btnsWrapper {
+	       z-index: 20;
+	       position: relative;
+	       //right: 1.7%;
+	       width: 100%;
+	       //top: 6%;
+		   margin-bottom: 2%;
+	   }
+	   
+	   #levelIndicator {
+	       position: absolute;
+	       right: 0%;
+	       top: 1%;
+	       font-size: 0.6em; /* Adjust as needed */
+	       color: #333; /* Text color */
+	       background-color: #fff; /* Background color for the score */
+	       padding: 11px 11px 7px; /* Padding around the score */
+	       border-radius: 10px; /* Rounded corners */
+	       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
+	       text-transform: uppercase;
+	   }
 
-        input:focus + .slider {
-          box-shadow: 0 0 1px #2196F3;
-        }
+	   .topBanner {
+	       display: flex;
+	       margin: 0px auto 10px;
+	       padding: 16px;
+	       border-radius: 10px;
+	       background-color: #333;
+	       color: #fff;
+	       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	       align-items: baseline;
+	       position: relative;
+	       max-width: 1024px;
+	       width: 100%;
+	   }
 
-        input:checked + .slider:before {
-          -webkit-transform: translateX(26px);
-          -ms-transform: translateX(26px);
-          transform: translateX(26px);
-        }
+	   #score {
+	       position: absolute;
+	       right: 20px; /* Adjust as needed */
+	       font-size: 1em; /* Adjust as needed */
+	       color: #333; /* Text color */
+	       background-color: #fff; /* Background color for the score */
+	       padding: 13px 20px 7px; /* Padding around the score */
+	       border-radius: 10px; /* Rounded corners */
+	       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
+	       text-transform: uppercase;
+	   }
 
-        /* Rounded sliders */
-        .slider.round {
-          border-radius: 34px;
-        }
+	   #loginForms,
+	   #registerForm {
+	       width: 80%;
+	       display: flex;
+	       align-items: baseline;
+	   }
 
-        .slider.round:before {
-          border-radius: 50%;
-        }
+	   #loginForms form,
+	   #registerForm form {
+	       /* width: 45%; Adjust as needed */
+	       display: flex;
+	       column-gap: 5px;
+	       float: left;
+	       margin-right: 10px;
+	       margin-bottom: 0;
+	   }
 
+	   #loginForms p,
+	   #registerForm p,
+	   #loggedInArea p {
+	       margin: 0;
+	       display: inline-block;
+	   }
 
+	   input[type="text"],
+	   input[type="password"],
+	   button {
+	       /* margin-bottom: 10px; */
+	       padding: 10px;
+	       border: none;
+	       border-radius: 5px;
+	   }
+
+	   button {
+	       background-color: #ff6600; /* Button background color */
+	       color: #fff; /* Button text color */
+	       cursor: pointer;
+	   }
+
+	   button:hover {
+	       background-color: #ff8533; /* Button background color on hover */
+	   }
+
+	   a {
+	       color: #ff6600; /* Link color */
+	       text-decoration: none;
+	   }
+
+	   a:hover {
+	       text-decoration: underline; /* Underline link on hover */
+	   }
+
+	   #userManagement {
+	       padding: 2px;
+	       border: 1px solid #ccc;
+	       border-radius: 5px;
+	       background-color: #f9f9f9;
+	       margin-bottom: 20px;
+	       display: none;
+	       width: 41%;
+	   }
+
+	   #userList {
+	       margin-top: 10px;
+	   }
+
+	   .user {
+	       margin-bottom: 5px;
+	   }
+
+	   .delete-btn {
+	       margin-left: 10px;
+	       cursor: pointer;
+	   }
+	   
+	   #message {
+		   line-height: 2.9;
+	   }
+	   
+	   .filterZone {
+		   padding: 2%;
+		   padding-left: 10%;
+	   }
+	   
+	   .tag {
+	      padding: 2px 10px;
+	      border: 1px dashed #3498db;
+	      background-color: transparent;
+	      color: #fff;
+	      font-size: 16px;
+	      cursor: pointer;
+	      border-radius: 5px;
+	      outline: none;
+	      transition: background-color 0.3s;
+	      margin-bottom: 5px;
+		  float: right;
+		  margin-right: 5px;
+		  position: relative;
+	    }
+	    .tag.active {
+	      background-color: #3498db;
+	    }
+		
+		.tag:hover {
+			background-color: #3498db;
+		}
+		
+		.music-box {
+			float: left;
+		}
+		
+		.tagLabel {
+			border: none;
+			background: transparent;
+			    float: left;
+			    color: #3498db;
+			    font-weight: 900;
+			    padding-left: 4%;
+		}
+		
+		.container {
+			visibility: hidden;
+			//width: 100%!important;
+			//margin-top: -73%;
+		}
+		
+		.visible {
+			visibility: visible;
+			//margin-top: 20px!important;
+		}
+		
+		.spotifyDisp {
+			position: absolute;
+			    background: forestgreen;
+			    padding: 4px;
+			    font-size: 0.5em;
+		}
+		
+		.tabcontent {
+			background: #ddd;
+			height: 371px;
+			overflow: scroll;
+			display: flex;
+		}
+		
+		.tabcontent ul {
+		    column-count: 3; /* Number of columns */
+		     /* Optionally, specify column gap */
+		     column-gap: 5px; /* Adjust as needed */
+		}
+		
+		#playButton {
+		 visibility: hidden;	
+		}
+		
     </style>
+	
 </head>
 
-  <body>
+  <body style="overflow:hidden;">
+	 <script src="https://sdk.scdn.co/spotify-player.js"></script>
+	 
+	 <script>
+		
+		  
+	 </script>
+	 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js" ></script>
-    <script type="text/javascript" src="js/client.js" ></script>
-    <script type="text/javascript" src="js/soundmanager2-jsmin.js" ></script>
+    <script type="text/javascript" src="/js/client.js" ></script>
+	<script src="js/soundmanager2-nodebug.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="/js/soundmanager2-nodebug.js" ></script>
+	<script src="/js/graphiq.min.js"></script>
+	
 
     <script>
         soundManager.setup({
@@ -234,219 +476,219 @@
 
           }
         }).beginDelayedInit();
+		
+	    
       </script>
-     <div class="piano_zone">
+		
+	<div class="topBanner" >
+	   	 	<div id="message"></div>
+
+	   	 <div id="loginForms">
+	       	<form id="loginForm">
+	           	<input type="text" id="username" placeholder="Username"><br>
+	           	<input type="password" id="password" placeholder="Password"><br>
+	           	<button type="submit">Login</button>
+	       	</form>
+	       	<p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
+	  	 </div>
+
+	   <div id="registerForm" style="display: none;">
+	       <form>
+	           <input type="text" id="regUsername" placeholder="Username"><br>
+	           <input type="password" id="regPassword" placeholder="Password"><br>
+	           <button type="submit">Register</button>
+	       </form>
+	       <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+	   </div>
+
+	   <div id="loggedInArea" style="display: none;">
+	       <p>Welcome, <span id="loggedInUser"></span>!</p>
+	       <button id="logoutButton">Logout</button>
+	   </div>
+		  
+		<div id="score">
+			   Score: 
+		   </div>
+		   
+	</div>
+	
+    <div class="piano_zone">
          <div class="content clearfix">
-            <h2>EAR TRAINING - TONIC FINDER</h2>
-            
+            <h2 style="margin-bottom:2%;">EAR TRAINING - TONIC FINDER</h2>
+			<div id="levelIndicator">Current Level: <span class="levelNumber"></span></div>
+			<div class="spotifyDisp hide">
+				<i class="fa-brands fa-spotify"></i>
+				<label>Logged In As: </label>
+				<span class="spotifyUsername"></span>
+			</div>
             <div class="btnsWrapper">
               <div class="stop_music hide">Stop Music</div>
               <div class="start_music hide">Start Music</div>
               <div class="start_game">Start Game</div>
               <div class="next_music hide">Next Song</div>
               <div class="repeat_music hide">Repeat Song</div>
+			  
+			  <button id="reportBtn">Show Report</button>
+			  <button class="settingsBtn">Settings</button>
+            </div>
+			
+             <div class="settings hide">
+				 <span class="close" id="closePopup2">&times;</span>
+                 <div class="announcement hide">
+                   <h3>1. Click Start Game</h3>
+                   <h3>2. Use the keyboard to assist you identifying the tonic</h3>
+                   <h3>3. Then select the tonic from the letters above the keyboard</h3>
+                 </div>
+				    <div id="topSongs"></div>
+                 <h4 class="">Music To Use:</h4>
+                 <div class="hide behavior_controls ">
+                   <span>App Songs</span>
+                   <label class="hide switch">
+                     <input class="switch_check" type="checkbox">
+                     <span class="slider round"></span>
+                   </label>
+                   <span>Your Own Songs</span>
+                 </div>
+				 
+				 <div class="tab">
+				     <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'tab1')">App Songs</button>
+				     <button class="tablinks" onclick="openTab(event, 'tab2')">Your Songs</button>
+				     <button class="tablinks" onclick="openTab(event, 'tab3')">Spotify</button>
+					 <button class="tablinks disabledd" onclick="openTab(event, 'tab4')">Apple Music</button>
+				 </div>
+
+				 <div id="tab1" class="tabcontent">
+				     Content for Tab 1
+				 </div>
+
+				 <div id="tab2" class="tabcontent">
+				     Content for Tab 2
+					 <button class="selectFolder">Select New Folder</button>
+				 </div>
+
+				 <div id="tab3" class="tabcontent">
+ 				 	<button id="loginBtn">Login with Spotify</button>
+ 					<button id="logoutBtn" class="hide">Logout from Spotify</button>
+				 <ul id="spotifyPlaylists"></ul>
+				 <ul id="playlistTracks"></ul>
+				 <button id="playButton">Play Track</button>
+
+
+
+				 
+				
+				 
+				 </div>
+
+                 <div class="volume_controls disabledd">
+                   <label class="songVolText">Song Volume: </label>
+                   <input class="songVolInput" type="range" id="volume" value="100">
+                  
+                   <label class="pianoVolText">Piano Volume: </label>
+                   <input class="pianoVolInput" type="range" id="volume2" value="100">
+                 </div>
+				
+ 				<div class="disabledd" style=" float:left; display:flex;align-items: center;column-gap: 10px;justify-content:space-between;">
+ 					<div style="display: flex;align-items: center;justify-content: space-evenly;column-gap: 10px;">
+ 						<label style="font-weight: bold;">Hide Key Names:</label> 
+ 						<button id="toggleKeyNames" class="toggle-button off">
+ 							<span class="on">YES</span>
+ 							<span class="off">NO</span>
+ 						</button>
+ 					</div>
+ 					
+ 				</div>
+								
             </div>
 
+			<div class="player">
+				<!--  Music Player -->
+				
+				<div class="music-box">
+				  <div class="album">
+				    <div class="photo"></div>
+				    <div class="infos">
+				      <div class="song_musicplayer">
+						<span>Current Song</span>
+						  <small class="hide">Current Artist</small></div>
+				    </div>
+				  </div>
+				  <div class="dashboard">
+				    <div class="list">
+				      <div class="list-btn disabledd"><span></span></div>
+				    </div>
+				    <div class="player">
+				      <div class="time"><small class="current_musicplayer">0:00</small> / <small class="duration_musicplayer">0:00</small></div>
+				      <div class="time-rail">
+				        <div class="thumb"></div>
+				        <div class="track"></div>
+				      </div>
+				    </div>
+				    <div class="action-button disabledd">
+						<a class="random"><i class="fa fa-random"></i></a>
+						<a class="prev" onclick="prevSong()"><i class="fa fa-step-backward"></i></a>
+						<a class="play-pause active_musicplayer"><i class="fa fa-pause" ></i></a>
+						<a class="stop hide"><i class="fa fa-stop"></i></a>
+						<a class="next" onclick="randomSong()"><i class="fa fa-step-forward"></i></a>
+						<a class="repeat"><i class="fa fa-repeat"></i></a>
+						<a class="volume hide"><i class="fa fa-volume-up"></i></a>
+						<input type="checkbox" class="hide" id="toggleMarkForEdit">
+						<label for="toggleMarkForEdit" class="hide">Toggle Mark For Edit</label>
+					</div>
+				  </div>
+				  <div class="lists">
+				    <div class="label">SONGS</div>
+				    <div class="box"></div>
+					<ul></ul>
+				  </div>
+				</div>
+				
+				<!--  end of music player -->
+				
+				
+							
+							
+							<div class="tags filterZone">
+							  <label class="tag tagLabel">Filter Songs :::</label>
+							  <button  class="tag langEn">English</button>
+							  <button  class="tag langEs">Spanish</button>
+							  <button class="tag noteQuality minorF hide">F minor</button>
+							  <button class="tag noteQuality majorC hide">C major</button>
+							  <button class="tag noteQuality unknownUnknown hide">Unknown</button>
+							  <button class="tag noteQuality majorC hide">C major</button>
+							  <button class="tag noteQuality minorE hide">E minor</button>
+							  <button class="tag noteQuality majorDb hide">Db major</button>
+							  <button class="tag noteQuality minorGb hide">Gb minor</button>
+							  <button class="tag noteQuality minorA hide">A minor</button>
+							  <button class="tag noteQuality minorC hide">C minor</button>
+							  
+							  <button id="openPopup" style="visibility:hidden;">Open Popup</button>
+							  
+							</div>
+							
+				
+							<div id="userManagement">
+							    <h2>User Management</h2>
+							    <div id="userList"></div>
+							    <button onclick="deleteSelectedUsers()">Delete Selected Users</button>
+							    <button onclick="modifySelectedRoles()">Save Role Changes</button>
+							</div>
+				
+				
+			</div>
+			
             <div class="songsWrapper">
-              <div class="song hide" data-song="1" data-note="Bb">
-                Bohemian Rhapsody
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="0.1" src="pianoSongs/bohemianRhapsody.mp3"></audio>
-
-              <div class="song" data-song="2" data-note="G">
-                Gravity John Mayer
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="2" src="pianoSongs/gravityJohnmayer.mp3"></audio>
-
-              <div class="song" data-song="3" data-note="Bb">
-                Purple Rain Prince
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="3" src="pianoSongs/purpleRainPrince.mp3"></audio>
-
-              <div class="song" data-song="4" data-note="A">
-                September EWF
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="4" src="pianoSongs/septemberEWF.mp3"></audio>
-
-              <div class="song" data-song="5" data-note="A">
-                Stairway to Heaven Led Zeppelin
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="5" src="pianoSongs/stairwayToHeavenLed.mp3"></audio>
-
-              <div class="song" data-song="6" data-note="Gb" data-quality="minor">
-                Billie Jean Michael Jackson
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="6" src="pianoSongs/billieJeanMJ.mp3"></audio>
-
-              <div class="song" data-song="7" data-note="Gb">
-                Wonderwall Oasis
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="7" src="pianoSongs/wonderwallOasis.mp3"></audio>
-
-              <div class="song" data-song="8" data-note="F" data-quality="minor">
-                Happy Pharrell Williams
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="8" src="pianoSongs/happyPharell.mp3"></audio>
-
-              <div class="song" data-song="9" data-note="A">
-                Someone Like You Adele
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="9" src="pianoSongs/someoneLikeYouAdele.mp3"></audio>
-
-              <div class="song" data-song="10" data-note="B">
-                Hotel California The Eagles
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="10" src="pianoSongs/hotelCaliforniaEagles.mp3"></audio>
-
-              <div class="song" data-song="11" data-note="C">
-                All The Smalls Things Blink 182
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="11" src="pianoSongs/allTheSmallThingsBlink182.mp3"></audio>
-
-              <div class="song" data-song="12" data-note="F" data-quality="minor">
-                Smells Like Teen Spirit
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="12" src="pianoSongs/smellsLikeTeenSpiritNirvana.mp3"></audio>
-              
-              <div class="song" data-song="13" data-note="C" data-quality="major">
-                Build Me Up Butter Cup                
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="13" src="pianoSongs/BuildMeUpButterCup.mp3"></audio>
-                      
-              <div class="song" data-song="14" data-note="G" data-quality="major">
-                Creep Radiohead              
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="14" src="pianoSongs/creepRadiohead.mp3"></audio>
-
-              <div class="song" data-song="15" data-note="G" data-quality="major">
-                Blackbird The Beatles     
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="15" src="pianoSongs/blackbirdBeatles.mp3"></audio>
-
-              <div class="song" data-song="16" data-note="G" data-quality="major">
-                Wish You Were Here Floyd
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="16" src="pianoSongs/wishYouWereHereFloyd.mp3"></audio>
-
-              <div class="song" data-song="17" data-note="A" data-quality="minor">
-                On The Beach Neil Young
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="17" src="pianoSongs/onTheBeachNeilYoung.mp3"></audio>
-
-              <div class="song" data-song="18" data-note="E" data-quality="major">
-                Satisfaction Rolling Stones
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="18" src="pianoSongs/satisfactionRollingStones.mp3"></audio>
-
-              <div class="song" data-song="19" data-note="E" data-quality="mixo">
-                Cocaine Eric Clapton
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="19" src="pianoSongs/cocaineClapton.mp3"></audio>
-              
-              <div class="song" data-song="20" data-note="D" data-quality="minor">
-                Layla Eric Clapton
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="20" src="pianoSongs/laylaClapton.mp3"></audio>
-              
-              <div class="song" data-song="21" data-note="Ab" data-quality="major">
-                Viva La Vida ColdPlay
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="21" src="pianoSongs/vivaLaVidaColdplay.mp3"></audio>
-              
-              <div class="song" data-song="22" data-note="C" data-quality="major">
-                Hallelujah Leonard Cohen
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="22" src="pianoSongs/hallelujahLeonardCohen.mp3"></audio>
-
-              
-              <div class="song" data-song="23" data-note="B" data-quality="major">
-                I'm Yours Jason Mraz
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="23" src="pianoSongs/imYoursJasonMraz.mp3"></audio>
-
-              <div class="song" data-song="24" data-note="E" data-quality="minor">
-                Lucky Jason Mraz
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="24" src="pianoSongs/luckyJasonMraz.mp3"></audio>
-              
-              <div class="song" data-song="25" data-note="D" data-quality="major">
-                If It Kills Me Jason Mraz
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="25" src="pianoSongs/ifItKillsMeJasonMraz.mp3"></audio>
-              
-              <div class="song" data-song="26" data-note="G" data-quality="major">
-                Brown Eyed Girl Van Morrison
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="26" src="pianoSongs/BrownEyedGirlVanMorrison.mp3"></audio>
-
-              <div class="song" data-song="27" data-note="Bb" data-quality="major">
-                Walking on Sunshine Katrina
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="27" src="pianoSongs/WalkingOnSunshineKatrina.mp3"></audio>
-
-              <div class="song" data-song="28" data-note="Bb" data-quality="major">
-                Roar Katy Perry
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="28" src="pianoSongs/roarKatyPerry.mp3"></audio>
-
-              <div class="song" data-song="29" data-note="B" data-quality="major">
-                The Lazy Song Bruno Mars
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="29" src="pianoSongs/theLazySongBruno Mars.mp3"></audio>
-
-              <div class="song" data-song="30" data-note="Db" data-quality="minor">
-                Shape of You Ed Sheeran
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="30" src="pianoSongs/shapeOfYouEdSheeran.mp3"></audio>
-
-              <div class="song" data-song="31" data-note="E" data-quality="major">
-                Hey, Soul Sister Train
-                <i class="fa fa-solid fa-volume-up hide"></i>
-              </div>
-              <audio data-sound="31" src="pianoSongs/heySoulSisterTrain.mp3"></audio>
-
-
-              
 
               <div></div>
             </div>
 
-            <div class="keysWrapper">
+            <div class="keysWrapper disabledd">
               <div data-note="C">C</div>
               <div data-note="Db">Db</div>
               <div data-note="D">D</div>
               <div data-note="Eb">Eb</div>
               <div data-note="E">E</div>
+			  <div style="visibility:hidden;"></div>
               <div data-note="F">F</div>
               <div data-note="Gb">Gb</div>
               <div data-note="G">G</div>
@@ -456,105 +698,1363 @@
               <div data-note="B">B</div>
             </div>
 
-            <div class="piano">
-                <div class="key" data-note="C3"></div>
-                <div class="black-key" data-note="Db3"></div>
-                <div class="key" data-note="D3"></div>
-                <div class="black-key" data-note="Eb3"></div>
-                <div class="key" data-note="E3"></div>
-                <div class="key half" data-note="F3"></div>
-                <div class="black-key" data-note="Gb3"></div>
-                <div class="key" data-note="G3"></div>
-                <div class="black-key" data-note="Ab3"></div>
-                <div class="key" data-note="A3"></div>
-                <div class="black-key" data-note="Bb3"></div>
-                <div class="key" data-note="B3"></div>
+			<div class="piano disabledd">
+			    <div class="key" data-note="C3"><span>C3</span></div>
+			    <div class="black-key" data-note="Db3"><span>Db3</span></div>
+			    <div class="key" data-note="D3"><span>D3</span></div>
+			    <div class="black-key" data-note="Eb3"><span>Eb3</span></div>
+			    <div class="key" data-note="E3"><span>E3</span></div>
+			    <div class="key half" data-note="F3"><span>F3</span></div>
+			    <div class="black-key" data-note="Gb3"><span>Gb3</span></div>
+			    <div class="key" data-note="G3"><span>G3</span></div>
+			    <div class="black-key" data-note="Ab3"><span>Ab3</span></div>
+			    <div class="key" data-note="A3"><span>A3</span></div>
+			    <div class="black-key" data-note="Bb3"><span>Bb3</span></div>
+			    <div class="key" data-note="B3"><span>B3</span></div>
 
-                <div class="key half" data-note="C4"></div>
-                <div class="black-key" data-note="Db4"></div>
-                <div class="key" data-note="D4"></div>
-                <div class="black-key" data-note="Eb4"></div>
-                <div class="key" data-note="E4"></div>
-                <div class="key half" data-note="F4"></div>
-                <div class="black-key" data-note="Gb4"></div>
-                <div class="key" data-note="G4"></div>
-                <div class="black-key" data-note="Ab4"></div>
-                <div class="key" data-note="A4"></div>
-                <div class="black-key" data-note="Bb4"></div>
-                <div class="key" data-note="B4"></div>
-              </div>
+			    <div class="key half" data-note="C4"><span>C4</span></div>
+			    <div class="black-key" data-note="Db4"><span>Db4</span></div>
+			    <div class="key" data-note="D4"><span>D4</span></div>
+			    <div class="black-key" data-note="Eb4"><span>Eb4</span></div>
+			    <div class="key" data-note="E4"><span>E4</span></div>
+			    <div class="key half" data-note="F4"><span>F4</span></div>
+			    <div class="black-key" data-note="Gb4"><span>Gb4</span></div>
+			    <div class="key" data-note="G4"><span>G4</span></div>
+			    <div class="black-key" data-note="Ab4"><span>Ab4</span></div>
+			    <div class="key" data-note="A4"><span>A4</span></div>
+			    <div class="black-key" data-note="Bb4"><span>Bb4</span></div>
+			    <div class="key" data-note="B4"><span>B4</span></div>
+			</div>   
 
-              <div class="settings">
-                <div class="announcement">
-                  <h3>1. Click Start Game</h3>
-                  <h3>2. Use the keyboard to assist you identifying the tonic</h3>
-                  <h3>3. Then select the tonic from the letters above the keyboard</h3>
-                </div>
-                <h4 class="hide">Songs Will Play:</h4>
-                <div class="behavior_controls hide">
-                  <span>Manual</span>
-                  <label class="switch">
-                    <input class="switch_check" type="checkbox">
-                    <span class="slider round"></span>
-                  </label>
-                  <span>Auto</span>
-                </div>
+		    <div class="container reports">
+		      <div class="row">
+		       <div class="col">
+		         <h1>Graph Report</h1>
+		  
+		       </div>
+		     </div>
+		       <div class="row">
+		           <div class="col s-12">
+		               <p>Keys you get right the most</p>
+		               <div class="graph-songs"></div>
+		           </div>
+			   </div>
+			   <div class="row" style="margin-top:0!important;">
+		           <div class="col s-12">
+		                   <p>Keys you get wrong the most</p>
+		               <div class="graph-coffees"></div>
+		           </div>
+		       </div>
+		       
+		     </div>
+			</div> 
+			
+			<div class="popup" id="popup">
+			   <div class="popup-content">
+			     <span class="close" id="closePopup">&times;</span>
+ 
+			     <h1 class="text-center" id="todo">Use Your Own Audio Files:</h1>
+				 
+			     <section style="background-color:rgb(4 0 255 / 6%);">
+			       <div class="container-lg p-3">
+			         <div class="row d-flex justify-content-center align-items-center">
+			           <div class="col col-xl-10">
+			             <div class="card">
+			               <div class="card-body p-3 flex-colx">
+			   			  	 	<form id="uploadForm" action="/api/uploadFolder" method="POST" enctype="multipart/form-data">
+			   		    	  <input type="file" name="folderPath" id="folderPath" webkitdirectory directory multiple>
+			   		    	  <button type="submit" style="margin-top: 10%;">Upload Folder</button>
+			   		  	  </form>
+			               </div>
+			             </div>
+			           </div>
+			         </div>
+			       </div>
+			     </section>
+				 
+				  <div id="audioPlayer"></div>
+				 
+			     <section style="background-color:rgb(4 0 255 / 6%);">
+			       <div class="container-lg p-2">
+			         <div class="row d-flex justify-content-center align-items-center">
+			           <div class="col col-xl-10">
+			             <div class="card">
+			               <div class="card-body p-4 flex-colx">
+			                 <input type="file" class="hide UPLOADSINGLEFILE" id="audioFileInput" accept="audio/*">
+			                 <button class="hide upload_btn" onclick="uploadAudio()">Upload</button>
+							 <p>Activity:</p>
+			                 <div id="progressMessage" class="progressMessage"></div> <!-- Add a div to display progress messages -->
+			               </div>
+			             </div>
+			           </div>
+			         </div>
+			       </div>
+			     </section>
+				 
+			    
+			   </div>
+			</div>
 
-                <div class="volume_controls">
-                  <label class="songVolText">Song Volume: </label>
-                  <input class="songVolInput" type="range" id="volume" value="100">
-                  
-                  <label class="pianoVolText">Piano Volume: </label>
-                  <input class="pianoVolInput" type="range" id="volume2" value="100">
-                </div>
-              </div>
 
-              <script>
-                 let globalVol = 0.1;
-                 let globalNoteVol = 1;
-                 let globalPlayingStyle = 0;
+           <script>
+			   
+			   async function register(username, password) {
+			     const response = await fetch('/register', {
+			       method: 'POST',
+			       headers: {
+			         'Content-Type': 'application/json',
+			       },
+			       body: JSON.stringify({ username, password }),
+			     });
+			     if (!response.ok) {
+			       const errorMessage = await response.text();
+			       throw new Error(errorMessage);
+			     }
+			     return await response.text();
+			   }
+			   
+			   async function login(username, password) {
+			     try {
+			       const response = await fetch('/login', {
+			         method: 'POST',
+			         headers: {
+			           'Content-Type': 'application/json'
+			         },
+			         body: JSON.stringify({ username, password })
+			       });
+			       const data = await response.json();
+			       if (response.ok) {
+			         // Store token in localStorage
+					   console.log("client_login: ", data.token);
+			         localStorage.setItem('token', data.token);
+			         return data;
+			       } else {
+			         throw new Error(data.message);
+			       }
+			     } catch (error) {
+			       console.error('Error logging in:', error.message);
+			       throw error;
+			     }
+			   }
+
+			   function getToken() {
+				//   console.log(localStorage.getItem('token'));
+			     return localStorage.getItem('token');
+			   }
+
+			   async function getProtectedData() {
+			     try {
+			       const token = getToken();
+				   //console.log(token);
+			       if (!token) throw new Error('Token not found');
+
+			       const response = await fetch('/protected-route', {
+			         headers: {
+			           'Authorization': `Bearer ${token}`
+			         }
+			       });
+			       const data = await response.json();
+			       if (response.ok) {
+			         return data;
+			       } else {
+			         throw new Error(data.message);
+			       }
+			     } catch (error) {
+			       console.error('Error accessing protected route:', error.message);
+			       throw error;
+			     }
+			   }
+			   
+			   function logout() {
+			       // Remove token from localStorage
+			       localStorage.removeItem('token');
+			       console.log("SALIENDO DEL APP");
+    
+			       // Make a call to the logout route
+			       fetch('/logout')
+			       .then(response => {
+			           if (response.ok) {
+			               console.log('Logged out successfully');
+			               // Redirect to home page or login page if needed
+			               window.location.href = '/';
+			           } else {
+			               console.error('Failed to logout');
+			           }
+			       })
+			       .catch(error => {
+			           console.error('Error during logout:', error);
+			       });
+			   }
+			   // Function to check if user is logged in
+			   function isLoggedIn() {
+			     return !!getToken();
+			   }
+
+			   // On page load
+			   window.addEventListener('DOMContentLoaded', async () => {
+			     if (isLoggedIn()) {
+			       // User is logged in, retrieve protected data or update UI accordingly
+			       try {
+			         const data = await getProtectedData();
+			         // Update UI with protected data or perform necessary actions
+			         // For example, display user-specific content, fetch additional user data, etc.
+					 console.log("LOGGED IN");
+					 
+			         document.getElementById("loggedInUser").innerText = data.username;
+			         document.getElementById("loginForms").style.display = "none";
+			         document.getElementById("loggedInArea").style.display = "block";
+			         getUserSettingsForUser(data.userId);
+			         getKeyStatsReportForUser(data.userId);
+					 
+					 userLoggedIn = true;
+					 userId = data.userId;
+					 
+			       } catch (error) {
+			         console.error('Error retrieving protected data:', error.message);
+			         // Handle error - for example, redirect the user to the login page or display an error message
+			       }
+			     } else {
+			       // User is not logged in, update UI accordingly
+			       // For example, display the login form or homepage content
+			     }
+			   });
+			   
+	 		  const playTrack = (trackUri) => {
+	 			  console.log(trackUri);
+	 		      const play = {
+	 		          uris: [trackUri]
+	 		      };
+	 			 // console.log(globalAccessToken);
+
+	 		      fetch(`https://api.spotify.com/v1/me/player/play`, {
+	 		          method: 'PUT',
+	 		          headers: {
+	 		              'Content-Type': 'application/json',
+	 		              'Authorization': `Bearer ${globalAccessToken}`
+	 		          },
+	 		          body: JSON.stringify(play)
+	 		      });
+	 		  };
+
+	 		  const stopTrack = () => {
+  
+
+	 		      fetch(`https://api.spotify.com/v1/me/player/pause`, {
+	 		          method: 'PUT',
+	 		          headers: {
+	 		              'Authorization': `Bearer ${globalAccessToken}`
+	 		          },
+	 		      });
+	 		  };
+			   
+			   function getTrackData(trackId, accessToken) {
+			              $.ajax({
+			                  url: `/spotify/track/${trackId}?access_token=${accessToken}`,
+			                  type: 'GET',
+			                  success: function (data) {
+			                      console.log(data); // Logging the response data
+			                      // Do something with the data received from the Spotify API
+			                  },
+			                  error: function (error) {
+			                      console.error('Error:', error); // Logging any errors
+			                  }
+			              });
+			          }
+			 
+			   
+			   // Function to map numeric key values to musical keys
+			   function mapKeyToMusicalKey(keyNumber) {
+			       // Mapping of key numbers to musical keys
+			       var keyMap = {
+			           0: 'C',
+			           1: 'Db',
+			           2: 'D',
+			           3: 'Eb',
+			           4: 'E',
+			           5: 'F',
+			           6: 'Gb',
+			           7: 'G',
+			           8: 'Ab',
+			           9: 'A',
+			           10: 'Bb',
+			           11: 'B'
+			       };
+
+			       // Check if the keyNumber is within the valid range
+			       if (keyNumber >= 0 && keyNumber <= 11) {
+			           return keyMap[keyNumber];
+			       } else {
+			           return 'Unknown';
+			       }
+			   }
+
+			   // Function to fetch tracks of a playlist by playlist ID
+			   function fetchPlaylistTracks(playlistId, Atoken) {
+				   $('.player .lists ul').empty();
+			       // Assuming you have obtained the access token already
+			       var accessToken = Atoken;
+
+			       // Make an AJAX request to the Spotify API to fetch tracks of the playlist
+			       $.ajax({
+			           url: 'https://api.spotify.com/v1/playlists/' + playlistId + '/tracks',
+			           method: 'GET',
+			           headers: {
+			               'Authorization': 'Bearer ' + accessToken
+			           },
+			           success: function(response) {
+			               // If request is successful, process the tracks
+			               var tracks = response.items;
+
+			               // Clear existing content or create a new container for tracks
+			               $('#playlistTracks').empty();
+
+			               // Iterate through tracks and fetch audio features
+			               tracks.forEach(function(track, index) {
+			                   var trackId = track.track.id;
+
+			                   // Make an AJAX request to fetch audio features of the track
+			                   $.ajax({
+			                       url: 'https://api.spotify.com/v1/audio-features/' + trackId,
+			                       method: 'GET',
+			                       headers: {
+			                           'Authorization': 'Bearer ' + accessToken
+			                       },
+			                       success: function(features) {
+			                           // Extract key from audio features
+			                           var key = features.key;
+
+			                           // Convert numeric key to musical key
+			                           var musicalKey = mapKeyToMusicalKey(key);
+
+									   var durationMs = track.track.duration_ms;
+			                           // Process other track details
+			                           var trackName = track.track.name;
+			                           var artistName = track.track.artists.map(artist => artist.name).join(', ');
+			                           var trackURI = track.track.uri;
+
+									   // Convert duration from milliseconds to minutes and seconds
+									   var durationMinutes = Math.floor(durationMs / 60000);
+									   var durationSeconds = ((durationMs % 60000) / 1000).toFixed(0);
+									   var formattedDuration = durationMinutes + ":" + (durationSeconds < 10 ? '0' : '') + durationSeconds;
+
+									   // Create a div for the song with data attributes
+									   var songDiv = $('<div>').addClass('song spotiSong')
+									       .attr('data-song', index + 1)
+									       .attr('data-note', key !== -1 ? musicalKey : 'Unknown') // Check if key is detected
+									       .attr('data-quality', '') // Replace 'variableQuality' with actual quality
+									       .attr('data-lang', '') // Replace 'varLang' with actual language
+									       .attr('data-uri', trackURI) // Track URI
+									       .attr('data-duration', formattedDuration) // Track duration
+									       .text(trackName + ' ' + artistName);
+										   
+										   songDiv.append('<i class="fa fa-solid fa-volume-up hide"></i>');
+										   
+										  
+										   
+										   // Attach event handler using jQuery .on() method
+										   songDiv.on('mousedown', function() {
+										       const note = $(this).data('song');
+										       // playSpong(note);
+											//   console.log("TITI");
+											   playSong(note);
+										       playTrack($(this).data('uri'));
+										       $(".list-btn").click();
+										   });
+
+			                           // Append the song div to the playlistTracks container
+			                           var listItem = $('<li>').append(songDiv);
+									   
+		                           // Create an audio element and set its source to the track URI
+		                           var audioElement = $('<audio>')
+		                               .attr('data-src', trackURI).attr('data-sound', index+1);
+
+		                           // Append the audio element after the song div
+		                           listItem.append(audioElement);
+									   
+			                           $('.player .lists ul').append(listItem);
+
+			                     
+									   $('#playlistTracks').append(listItem.clone());
+									   
+		 
+									   sendAndPop();
+									   
+				   			    //	});
+			                       },
+			                       error: function(xhr, status, error) {
+			                           console.error('Error fetching audio features for track:', error);
+			                       }
+			                   });
+			               });
+						   $("#playButton").click();
+			           },
+			           error: function(xhr, status, error) {
+			               // If request fails, handle the error
+			               console.error('Error fetching playlist tracks:', error);
+			           }
+			       });
+				   
+			   }
+				   /*
+				   // Create audio element
+				   $("#tab3 #playlistTracks .song").each(function () {
+				       // Get the data-uri attribute value of the current song
+				       var trackURI = $(this).attr('data-uri');
+
+				       // Create an audio element
+				       var audioElement = $('<audio>').attr('controls', false).attr('src', trackURI);
+
+				       // Set the data-song attribute with the same value as the current element
+				       audioElement.attr('data-song', $(this).attr('data-sound'));
+
+				       // Insert the audio element after the current song
+				       $(this).after(audioElement);
+				   });
+				   */
+			   
+			   
+			   
+	   // Function to fetch user's playlists from the server
+	           function fetchUserPlaylists(Atoken) {
+	               // Assuming you have obtained the access token already
+	               var accessToken = Atoken;
+            
+	               // Make an AJAX request to the server
+	               $.ajax({
+	                   url: '/api/playlists',
+	                   method: 'GET',
+	                   data: {
+	                       access_token: accessToken
+	                   },
+	                   success: function(response) {
+	                       // If request is successful, process the playlists
+	                       var playlists = response;
+                    	 //  console.log(response);
+	                       // Clear existing content in tab2
+	                       $('#spotifyPlaylists').empty();
+                    
+	                       // Iterate through playlists and add them to the list
+	                       playlists.forEach(function(playlist) {
+	                           var playlistName = playlist.name;
+	                           var playlistId = playlist.id;
+                        
+	                           // Create a list item for the playlist
+	                           var listItem = $('<li>').text(playlistName);
+                        
+	                           // Add a click event listener to the list item to handle further actions
+	                           listItem.click(function() {
+	                               // Example: When a playlist is clicked, alert its ID
+	                               //alert('Playlist ID: ' + playlistId);
+								   
+								   fetchPlaylistTracks(playlistId, Atoken);
+								   $("#spotifyPlaylists").addClass("hide");
+								   
+								   	globalPlayingStyle = 2;
+								   	//sendAndPop();
+	                           });
+                        
+	                           // Append the list item to the tab2 div
+	                           $('#spotifyPlaylists').append(listItem);
+	                       });
+	                   },
+	                   error: function(xhr, status, error) {
+	                       // If request fails, handle the error
+	                       console.error('Error fetching user playlists:', error);
+	                   }
+	               });
+	           }
+			   
+			   
+			   // Function to switch tabs
+			   function openTab(evt, tabName) {
+			       var i, tabcontent, tablinks;
+
+			       // Hide all tab content
+			       tabcontent = document.getElementsByClassName("tabcontent");
+			       for (i = 0; i < tabcontent.length; i++) {
+			           tabcontent[i].style.display = "none";
+			       }
+
+			       // Remove "active" class from all tab buttons
+			       tablinks = document.getElementsByClassName("tablinks");
+			       for (i = 0; i < tablinks.length; i++) {
+			           tablinks[i].classList.remove("active");
+			       }
+
+			       // Show the specific tab content
+			       document.getElementById(tabName).style.display = "block";
+
+			       // Add the "active" class to the button that opened the tab
+			       evt.currentTarget.classList.add("active");
+			   }
+
+			   // By default, open the first tab
+			 //  document.getElementById("defaultOpen").click();
+			  
+		   	  const folderPath = "./uploads";
+		   	        const urlIP= "98.113.60.58";
+		   	        const urlPort = "3000";
+
+		 			async function uploadAudio() {
+		 			  const fileInput = document.getElementById('audioFileInput');
+		 			  const file = fileInput.files[0];
+
+		 			  if (!file) {
+		 			    console.error('No file selected');
+		 			    return;
+		 			  }
+
+		 			  const formData = new FormData();
+		 			  formData.append('audioFile', file);
+					  
+		 			  document.getElementById('progressMessage').innerHTML = '<span class="step">Starting key signature detection...</span><br>'; // Display progress message
+
+		
+
+		 			  // Modify fetch request options to use custom agent
+		 			  const requestOptions = {
+		 			    method: 'POST',
+		 			    body: formData
+		 			  };
+
+		 			  console.log('Sending request:', requestOptions);
+
+		 			  fetch(`http://${encodeURIComponent(urlIP)}:${encodeURIComponent(urlPort)}/api/uploadFile`, requestOptions)
+		 			    .then(response => {
+		 			      console.log('Response received:', response);
+		 			      if (!response.ok) {
+		 			        throw new Error('Failed to upload file');
+		 			      }
+		 			      return response.json();
+		 			    })
+		 			    .then(data => {
+		 			      console.log('Upload success:', data.result);
+		 			      document.getElementById('progressMessage').innerHTML += '<span class="step">Uploaded successfully...</span> <br>'; // Display progress message
+		 			      document.getElementById('progressMessage').innerHTML += '<span class="step">Preparing audio data...</span><br>'; // Display progress message
+		 			      fetchKeys();  
+		 			    })
+		 			    .catch(error => {
+		 			      console.error('Upload failed:', error);
+		 			      // Log the response if available
+		 			      if (error.response) {
+		 			        console.error('Response:', error.response);
+		 			      }
+		 			      document.getElementById('progressMessage').innerHTML = '<span class="error">Upload failed. Please try again.</span>'; // Display error message
+		 			    });
+		 			}
+			
+		  
+		   // Get the form element
+		   const form = document.getElementById('uploadForm');
+
+		   // Add a submit event listener to the form
+		   form.addEventListener('submit', async (event) => {
+		       event.preventDefault(); // Prevent the default form submission
+
+		       // Get the selected folder path
+		       const folderPath = document.getElementById('folderPath').files;
+
+		       // Create a FormData object to send data in multipart/form-data format
+		       const formData = new FormData();
+
+		       // Iterate over each file in the selected folder
+		       for (let i = 0; i < folderPath.length; i++) {
+		           // Append each file to the FormData object with the same key
+		           formData.append('audioFiles', folderPath[i]);
+		       }
+
+		       // Log the FormData object to the console
+		       console.log($(formData));
+			   console.log(folderPath);
+
+		       // Display progress message
+		       document.getElementById('progressMessage').innerHTML = '<span class="step">Starting key signature detection...</span><br>';
+
+		       // Send the POST request using fetch
+		       try {
+		           const response = await fetch(`http://${encodeURIComponent(urlIP)}:${encodeURIComponent(urlPort)}/api/upload`, {
+		               method: 'POST',
+		               body: formData
+		           });
+
+		           // Check if the request was successful
+		           if (!response.ok) {
+		               throw new Error('Failed to upload folder');
+		           }
+
+		           // Parse the JSON response
+		           const data = await response.json();
+		           console.log(data); // Do something with the response data
+
+		           // Display progress messages based on the response data
+		           data.results.forEach(result => {
+		               if (Array.isArray(result) && result.length >= 2) {
+		 				  result.forEach(inResult => {
+		 	                  const filePath = inResult[0];
+		 	                  const key = inResult[1];
+		 	                  document.getElementById('progressMessage').innerHTML += `<span class="success">Key signature detected for ${filePath}:</span> ${key}<br>`;
+		 	              });
+		 				  }
+				  
+                 
+		           });
+		  
+		 		  // Example usage:
+		 		  const startIndex = 0; // Starting index for data-song
+
+		 		  const html = generateSongListHTML(data.results, startIndex);
+		 		  console.log(html);
+				  uploadHTML = html;
+				  if (userLoggedIn) {
+					  $.ajax({
+					     url: '/saveVariable',
+					     method: 'POST',
+					     contentType: 'application/json',
+					     data: JSON.stringify({ myVariable: uploadHTML }),
+					     success: function(response) {
+					       console.log('Variable saved successfully.');
+					     },
+					     error: function(xhr, status, error) {
+					       console.error('Error saving variable:', error);
+					     }
+					   });
+				  } else { console.log("You are not logged in. Not saving playlisst.");}
+						
+				  populateSongs();
+
+		           // Display success message
+		           document.getElementById('progressMessage').innerHTML += '<span class="success">Folder uploaded successfully.</span><br>';
+				   
+				   
+			$(".tab button.active").click();
+			//	$("#tab2 .lists > div").remove();
+		       } catch (error) {
+		           console.error(error);
+		           // Display error message
+		           document.getElementById('progressMessage').innerHTML += `<span class="error">Error: ${error.message}</span><br>`;
+		       }
+		   });
+  
+		   function fetchKeys() {
+		       const folderPath = "./uploads";
+		       const urlIP= "98.113.67.183";
+		       const urlPort = "3000";
+	  
+		       document.getElementById('progressMessage').innerHTML += '<span class="success">Audio data prepared successfully.</span><br>'; // Display progress message
+		       document.getElementById('progressMessage').innerHTML += '<span class="step">Running key signature detection...</span><br>'; // Display progress message
+
+		       fetch(`http://${encodeURIComponent(urlIP)}:${encodeURIComponent(urlPort)}/api/myFunction?folderPath=${encodeURIComponent(folderPath)}`)
+		           .then(response => {
+		               if (!response.ok) {
+		                   throw new Error('Network response was not ok');
+		               }
+		               return response.json();
+		           })
+		 		  .then(response => {
+		 		      // Check if 'result' property exists and is an array
+		 		      if (!response.result || !Array.isArray(response.result)) {
+		 		          console.error('Result is not an array:', response.result);
+		 		          return; // Exit early if 'result' is not an array
+		 		      }
+
+		 		      // Access the 'result' array
+		 		      const data = response.result;
+			  	
+		 		      // Assuming data is an array of arrays with [path, key] structure
+		 		      data.forEach(innerArray => {
+		 		          if (!Array.isArray(innerArray)) {
+		 		              console.error('Inner array is not iterable:', innerArray);
+		 		              return; // Exit early if 'innerArray' is not an array
+		 		          }
+
+		 		          const [path, key] = innerArray; // Destructuring assignment to extract path and key
+		 		          document.getElementById('progressMessage').innerHTML += `<span class="success">Key signature detected.</span><br><span class="info">Key signature:</span> ${key}<br>`; // Display progress message
+		 		      });
+
+		 		      document.getElementById('progressMessage').innerHTML += '<span class="success">Key signatures fetched successfully.</span>'; // Display success message
+		 		  })
+		           .catch(error => {
+		               console.error('Failed to fetch key signatures:', error);
+		               document.getElementById('progressMessage').innerHTML = '<span class="error">Failed to fetch key signatures. Please try again.</span>'; // Display error message
+		           });
+		   }
+  
+  
+		   function generateSongListHTML(results, startIndex) {
+		     let songIndex = startIndex;
+
+		     return results.map(result => {
+		       return result.map(song => {
+		         const [filePath, key] = song;
+		         const fileName = filePath.split('/').pop().split('.')[0];
+		         const [note, quality] = key.split(' ');
+
+		 		songIndex++;
+		
+		         return `
+		           <li>
+		             <div class="song" data-song="${songIndex}" data-note="${note}" data-quality="${quality}">
+		               ${fileName}
+		               <i class="fa fa-solid fa-volume-up hide"></i>
+		             </div>
+		             <audio data-sound="${songIndex}" src="${filePath}"></audio>
+		           </li>
+		         `;
+		       }).join('');
+		     }).join('');
+		   }
+		   
+		   
+		   
+		   /// TEST MULTIPLE FILES ADDED TO PLAYER 
+		   
+		   
+		   const filePicker = document.getElementById('folderPath');
+		   const audioPlayer = document.getElementById('audioPlayer');
+
+		   filePicker.addEventListener('change', async (event) => {
+		       const files = event.target.files;
+		       if (!files || files.length === 0) return;
+
+		       try {
+		           // Clear existing audio player
+		           audioPlayer.innerHTML = '';
+				   var fileNumber = 0;
+		           for (const file of files) {
+					   fileNumber++;
+		               // Use FileReader to read the file content as an ArrayBuffer
+		               const fileContents = await readFileAsArrayBuffer(file);
+		               // Create a Blob from the ArrayBuffer
+		               const blob = new Blob([fileContents], { type: file.type });
+		               // Create an object URL from the Blob
+		               const audioURL = URL.createObjectURL(blob);
+		               // Create an audio element for each file
+		               const audio = document.createElement('audio');
+					   audio.setAttribute('data-song', fileNumber);
+		               audio.src = audioURL;
+		               // Add controls to the audio element
+		               audio.controls = false;
+		               // Create a list item to hold the audio element
+					   // Create a <ul> element
+					 //  var ul = document.createElement('ul');
+
+					   // Create a <li> element
+					   var listItem = document.createElement('li');
+
+					   // Now you can append the <li> element to the <ul>
+					//   ul.appendChild(listItem);
+		               listItem.appendChild(audio);
+		               // Add the list item to the player
+		               audioPlayer.appendChild(listItem);
+		           }
+		       } catch (error) {
+		           console.error('Error creating object URL:', error);
+		       }
+		   });
+
+		   // Function to read file content as ArrayBuffer
+		   function readFileAsArrayBuffer(file) {
+		       return new Promise((resolve, reject) => {
+		           const reader = new FileReader();
+		           reader.onload = () => resolve(reader.result);
+		           reader.onerror = reject;
+		           reader.readAsArrayBuffer(file);
+		       });
+		   }
+		   
+		   
+		   ////
+		   
+				  // Check if the logged-in user is an admin
+				  function isAdminLoggedIn() {
+				      // Implement logic to check if the logged-in user is an admin
+				      // For example, you can check the user's role stored in session or local storage
+				      // Return true if the user is an admin, false otherwise
+					  
+				  // Retrieve user role from session storage
+				      const userId = sessionStorage.getItem('userId');
+					  console.log(userId);
+
+				      // Check if the user role is 'admin'
+				      return userId === '664a717472d3a827a9665919';
+				  }
+
+				  // Function to toggle visibility of user management interface based on admin login status
+				  function toggleUserManagementVisibility() {
+				      const userManagementDiv = document.getElementById('userManagement');
+				      if (isAdminLoggedIn()) {
+				          userManagementDiv.style.display = 'block'; // Show the interface for admin
+				      } else {
+				          userManagementDiv.style.display = 'none'; // Hide the interface for non-admin users
+				      }
+				  }
+
+				  
+				  
+				  // Function to fetch users from the server
+				  async function fetchUsers() {
+				      try {
+				          const response = await fetch('/users');
+				          const users = await response.json();
+				          displayUsers(users);
+				      } catch (error) {
+				          console.error('Error fetching users:', error.message);
+				      }
+				  }
+				
+				
+				  // Function to display users in the interface
+				  function displayUsers(users) {
+				      const userListElement = document.getElementById('userList');
+				      userListElement.innerHTML = ''; // Clear existing user list
+
+				      users.forEach(user => {
+				          const userDiv = document.createElement('div');
+				          userDiv.classList.add('user');
+
+				          // Create a checkbox for user selection
+				          const checkbox = document.createElement('input');
+				          checkbox.type = 'checkbox';
+				          checkbox.value = user._id; // Assuming user ID is stored in the _id field
+				          userDiv.appendChild(checkbox);
+
+				          // Create a dropdown menu for selecting user roles
+				          const roleSelect = document.createElement('select');
+				          roleSelect.classList.add('role-select');
+				          const adminOption = document.createElement('option');
+				          adminOption.value = 'admin';
+				          adminOption.textContent = 'Admin';
+				          const regularOption = document.createElement('option');
+				          regularOption.value = 'regular';
+				          regularOption.textContent = 'Regular';
+				          roleSelect.appendChild(adminOption);
+				          roleSelect.appendChild(regularOption);
+				          roleSelect.value = user.role; // Set the default role based on user's current role
+				          userDiv.appendChild(roleSelect);
+
+				          // Display username
+				          const usernameSpan = document.createElement('span');
+				          usernameSpan.textContent = user.username;
+				          userDiv.appendChild(usernameSpan);
+
+				          userListElement.appendChild(userDiv);
+				      });
+				  }
+
+				  // Function to delete selected users
+				  async function deleteSelectedUsers() {
+				      const checkboxes = document.querySelectorAll('.user input[type="checkbox"]:checked');
+				      const userIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+				      try {
+				          const responses = await Promise.all(userIds.map(userId => fetch(`/users/${userId}`, { method: 'DELETE' })));
+				          const success = responses.every(response => response.ok);
+				          if (success) {
+				              // Refresh user list after deletion
+				              fetchUsers();
+				          } else {
+				              throw new Error('Failed to delete some users');
+				          }
+				      } catch (error) {
+				          console.error('Error deleting users:', error.message);
+				      }
+				  }
+
+				  // Function to modify roles of selected users
+				  async function modifySelectedRoles() {
+				      const checkboxes = document.querySelectorAll('.user input[type="checkbox"]:checked');
+				      const updates = Array.from(checkboxes).map(checkbox => {
+				          const userId = checkbox.value;
+				          const userDiv = checkbox.parentElement;
+				          const roleSelect = userDiv.querySelector('.role-select'); // Select the role dropdown within the user div
+				          const role = roleSelect.value; // Get the selected role from the dropdown
+				          return { userId, role };
+				      });
+
+				      try {
+				          const responses = await Promise.all(updates.map(({ userId, role }) => fetch(`/users/${userId}`, { method: 'PATCH', body: JSON.stringify({ role }), headers: { 'Content-Type': 'application/json' } })));
+				          const success = responses.every(response => response.ok);
+				          if (success) {
+				              // Refresh user list after role modification
+				              fetchUsers();
+				          } else {
+				              throw new Error('Failed to modify roles for some users');
+				          }
+				      } catch (error) {
+				          console.error('Error modifying roles:', error.message);
+				      }
+				  }
+				  
+				  function toggleMarkForEdit() {
+				      // Select all elements with class "song" and "playing"
+				      const songsPlaying = document.querySelectorAll('.song.playing');
+    
+				      // Loop through each element
+				      songsPlaying.forEach(song => {
+				          // Get the parent <li> element
+				          const parentLi = song.closest('li');
+        
+				          // Toggle class "markForEdit" on the parent <li>
+				          parentLi.classList.toggle('markForEdit');
+				      });
+				  }
+				
+				  document.getElementById('toggleMarkForEdit').addEventListener('change', function() {
+				          toggleMarkForEdit();
+				  }); 
+
+				  
+                 let globalVol;
+                 let globalNoteVol;
                  let globalSongsPlayed = [];
-                 const keys = document.querySelectorAll('.key, .black-key');
-
+				 let globalFirstTry = null;
+				 let userLoggedIn = false;
+				 let userId = '';
+				 let globalLevel = 1;
+				 let globalKeyStats = [{}];
+				 let uploadHTML = '';
+				 let globalHideKeys = false;
+				 let globalAccessToken = '';
+				/// (async () => {
+				     let globalPlayingStyle;//await fetchGlobalPlayingStyleFromServer();
+				 //    globalPlayingStyle = globalPlayingStyle ?? 0;
+				  ///   console.log('Initial global playing style:', globalPlayingStyle);
+				/// })();
+				 
+				 const keys = document.querySelectorAll('.key, .black-key');
                  const songs = document.querySelectorAll('.song');
+				 
                  const songKeys = document.querySelectorAll('.keysWrapper > div');
                  const stopBtn = document.querySelector('.stop_music');
                  const btn2 = document.querySelector('.start_game');
                  const btn3 = document.querySelector('.next_music');
                  const repeatBtn = document.querySelector('.repeat_music');
                  const startMusicBtn = document.querySelector('.start_music');
+				 // Function to handle login form submission
+				 document.getElementById("loginForm").addEventListener("submit", async function(event) {
+				     event.preventDefault();
+				     const username = document.getElementById("username").value;
+				     const password = document.getElementById("password").value;
 
-                 $("document").ready(function() {
-                    console.log(globalVol);
+				     try {
+				         const data = await login(username, password);
+				         // Login successful, update UI or redirect to protected page
+				         document.getElementById("loggedInUser").innerText = username;
+				         document.getElementById("loginForms").style.display = "none";
+				         document.getElementById("loggedInArea").style.display = "block";
+				         getUserSettingsForUser(data.userId);
+				         getKeyStatsReportForUser(data.userId);
+						 window.location.href = '/';
+				         // Fetch any additional data or update UI elements as needed
+				     } catch (error) {
+				         // Login failed, display error message
+				         console.error('Error logging in:', error.message);
+				         document.getElementById("message").innerText = error.message;
+				         // Hide the message after 3 seconds
+				         setTimeout(() => {
+				             document.getElementById("message").innerText = "";
+				         }, 3000);
+				     }
+				 });
+
+				 // Function to handle registration form submission
+				 document.getElementById("registerForm").addEventListener("submit", async function(event) {
+				     event.preventDefault();
+				     const username = document.getElementById("regUsername").value;
+				     const password = document.getElementById("regPassword").value;
+
+				     try {
+				         const message = await register(username, password);
+				         // Registration successful, display success message
+				         document.getElementById("message").innerText = message;
+				         // Hide the message after 3 seconds
+				         setTimeout(() => {
+				             document.getElementById("message").innerText = "";
+				             document.getElementById("loginForms").style.display = "flex";
+				             document.getElementById("registerForm").style.display = "none";
+				         }, 3000);
+				     } catch (error) {
+				         // Registration failed, display error message
+				         console.error('Error registering:', error.message);
+				         document.getElementById("message").innerText = error.message;
+				         // Hide the message after 3 seconds
+				         setTimeout(() => {
+				             document.getElementById("message").innerText = "";
+				         }, 3000);
+				     }
+				 });
+
+				 // Function to handle logout button click
+				 document.getElementById("logoutButton").addEventListener("click", async function() {
+				     try {
+				         await logout();
+				         // Logout successful, update UI
+				         document.getElementById("loggedInArea").style.display = "none";
+				         document.getElementById("loginForms").style.display = "flex";
+				         clearGraphs();
+				         // Additional cleanup or UI updates as needed
+				     } catch (error) {
+				         console.error('Error logging out:', error.message);
+				         // Handle error, display message to user
+				         document.getElementById("message").innerText = error.message;
+				         // Hide the message after 3 seconds
+				         setTimeout(() => {
+				             document.getElementById("message").innerText = "";
+				         }, 3000);
+				     }
+				 });
+
+				 // Function to switch to registration form
+				 document.getElementById('showRegister').addEventListener('click', function(e) {
+				     e.preventDefault();
+				     document.getElementById('loginForms').style.display = 'none';
+				     document.getElementById('registerForm').style.display = 'flex';
+				 });
+
+				 // Function to switch to login form
+				 document.getElementById('showLogin').addEventListener('click', function(e) {
+				     e.preventDefault();
+				     document.getElementById('registerForm').style.display = 'none';
+				     document.getElementById('loginForms').style.display = 'flex';
+				 });
+						 // Modify populateSongs to return a Promise
+						 function populateSongs() {
+						     return new Promise((resolve, reject) => {
+						         if (globalPlayingStyle == 1) {
+									 console.log("local Files");
+									 if (uploadHTML) {
+									 	 $(".player .lists ul").append(uploadHTML);
+									 } else {
+				 				        //	$("#openPopup").click();
+										
+		   								 $("#audioPlayer li").each(function() {
+		   								     var dI = parseInt($(this).index() + 1, 10);
+									 
+		   									 $(".player .lists ul li").eq(0).find("audio").attr('src')
+									 
+		   									 console.log(dI);
+		   								     var aFile = $(this).find('audio');
+		   									 var newSrc = aFile.attr('src');
+		   									 console.log(newSrc);
+		   									 var naFile = $(".player .lists ul li").eq(dI-1);
+		   									// naFile = naFile.find("audio");
+		   									 console.log(naFile);
+		   									 naFile.find("audio").attr('src', newSrc);
+		   									 console.log(naFile);
+									 	});
+								 	}
+									
+						             resolve($(".player .lists ul .song").toArray());
+						         } else if (globalPlayingStyle == 0) {
+						             $.getJSON('songList.json', function(data) {
+						                 var htmlContent = '';
+						                 data.forEach(function(item) {
+ 	 		 					            htmlContent += '<li>';
+ 	 		 					            htmlContent += '<div class="song" data-song="' + item['data-song'] + '" data-note="' + item['data-note'] + '" data-quality="' + item['data-quality'] + '"data-lang="' + item['lang'] + '">' + item['song'] + '  <i class="fa fa-solid fa-volume-up hide"></i>' + '</div>';
+ 	 		 					            htmlContent += '<audio data-sound="' + item['data-song'] + '" src="' + item['audio_src'] + '"></audio>';
+ 	 		 					            htmlContent += '</li>';
+ 	 		 					        });
+ 	 		 					        $('.player .lists ul').append(htmlContent);
+						                 resolve($(".player .lists ul .song").toArray());
+						             }).fail(function(jqXHR, textStatus, errorThrown) {
+						                 reject(new Error(textStatus));
+						             });
+						         } else if (globalPlayingStyle == 2) {
+									// console.log("POPULATING 3");
+									 
+						         }
+						     });
+						 }
+						 
+						 const buttons = document.querySelectorAll('.tag');
+
+						 buttons.forEach(button => {
+						   button.addEventListener('click', () => {
+						     const isActive = button.classList.toggle('active');
+						     const buttonText = button.textContent;
+						     console.log(`Button state: ${buttonText} is ${isActive ? 'On' : 'Off'}`);
+							 
+						//	 const buttonText = button.textContent;
+							 const divsWithMatchingLang = $('div.song[data-lang="' + buttonText + '"]');
+							 if (isActive) {
+							 	console.log(divsWithMatchingLang);
+								divsWithMatchingLang.addClass("filteredIn");
+								divsWithMatchingLang.removeClass("filteredOut");
+							 } else {
+ 								divsWithMatchingLang.removeClass("filteredIn");
+ 								divsWithMatchingLang.addClass("filteredOut");
+							 }
+							 
+						   });
+						 });
+						 
+                    $("document").ready(function() {
+						
+						
+   				    const keys = document.querySelectorAll('.key, .black-key');
+                    
+                    const stopBtn = document.querySelector('.stop_music');
+                    const btn2 = document.querySelector('.start_game');
+                    const btn3 = document.querySelector('.next_music');
+                    const repeatBtn = document.querySelector('.repeat_music');
+                    const startMusicBtn = document.querySelector('.start_music');
+					
+					 $(".disabledd").removeClass('disabledd');
+					 
+					 $('#loginBtn').click(function () {
+					     window.location.href = '/spo/login';
+					 });
+					 
+					 const spotifyDisp = $(".spotifyDisp");
+					 
+    // Function to extract query parameters from URL
+		             function getQueryParam(param) {
+		                 const urlParams = new URLSearchParams(window.location.search);
+		                 return urlParams.get(param);
+		             }
+					 
+				     const responseDataJson = getQueryParam('responseData');
+				 	 const responseData = JSON.parse(decodeURIComponent(responseDataJson));
+					 
+					 // Check if the page was accessed after coming back from /callback
+					 const fromCallback = getQueryParam('fromCallback');
+					 if (fromCallback === 'true') {
+					     // Perform the desired change on the page
+					     console.log('Page was accessed from /callback');
+
+					     const tokenData = responseData.tokenData;
+						 globalAccessToken = tokenData.access_token;
+						 
+						 
+						 
+				 		const token = globalAccessToken; // 'BQCN5E3ubwvfMgU7NviuvpThK-SevrFAJS0g66mZoQBnHGfsvUjdPne9m3b--EE_Zxs0_AxkeXpk_TJ3dnTxKJac0WA9nHy7XhKIFwwoZSjGqBQ4Qha-RSM2VIMYxqjpU6nCQi6IpPpt1S81Vr3Nygdq37fAx0v5-1sZMDGH6Tmn7dxZ1qYz62KoKFqfKqo5DIE8BbEfcg';
+		
+				 		 window.onSpotifyWebPlaybackSDKReady = () => {
+				 		 	console.log("Spotify Web Playback SDK is ready.");
+			
+			
+				 			globalAccessToken = token;
+
+				 			window.player = new Spotify.Player({
+				 			    name: 'Web Playback SDK Quick Start Player',
+				 			    getOAuthToken: cb => { cb(token); },
+				 			    volume: 0.5
+				 			});
+				 		  }
+		  
+				 		 
+		  
+						 
+						 
+						 
+						 
+					   			             const spotifyUsername = responseData.spotifyUsername;
+					   						 const spotifyPlaylists = responseData.playlists;
+						 
+					   			             // Use tokenData and spotifyUsername as needed
+					   			           //  console.log('Token Data:', tokenData);
+					   			             console.log('Spotify Username:', spotifyUsername);
+					   						// console.log('Spotify Playlists:', spotifyPlaylists);
+						 
+						 
+					   						 spotifyDisp.removeClass("hide");
+					   						 spotifyDisp.find('.spotifyUsername').text(spotifyUsername);
+						 
+					   						 $("#loginBtn").addClass("hide");
+					   						 $("#logoutBtn").removeClass("hide");
+											 fetchUserPlaylists(tokenData.access_token);
+						 
+					 } else {
+					  //   console.log("NO");
+					 }
+					 
+					 
+					 $('#logoutBtn').click(function() {
+					            // Make a request to the logout endpoint
+					            $.ajax({
+					                     url: '/logout',
+					                     method: 'POST',
+					                     success: function(response) {
+					                         console.log('Logged out successfully');
+											 $("#loginBtn").removeClass("hide");
+											 $("#logoutBtn").addClass("hide");
+											 spotifyDisp.find(".spotifyUsername").text('');
+											 spotifyDisp.addClass("hide");
+					                     },
+					                     error: function(xhr, status, error) {
+					                         console.error('Error logging out:', error);
+					                     }
+					             });
+					  });
+					 
+					 
+			  	   		$('#reportBtn').click(function() {
+		   
+			  	 
+							
+						
+
+						});
+		 
+					   
+					
+						
+                   // console.log(globalVol);
                     volume.value = globalVol;
+					//globalNoteVal = 50;
+					$("#volume2").val(50);
+				    // soundManager.setVolume(90);
+				   
+				    //POPUP
+				    $("#openPopup").click(function() {
+				     $("#popup").show();
+				   });
+
+				    $("#closePopup").click(function() {
+				     $("#popup").hide();
+				   });
+
+
+			    	$("#closePopup2").click(function() {
+			     	   $(".settings").addClass('hide');
+			   		});
+			 		/* MUSIC PLAYER JS */
+
+			 	    $(".list-btn").click(function() {
+			 		    $(this).parent().toggleClass("active_musicplayer");
+			 		    return $(".lists").toggleClass("active_musicplayer");
+			 		  });
+
+			 	    $(".action-button").find('a').click(function() {
+			 		    if ($(this).hasClass("random") || $(this).hasClass("play-pause") || $(this).hasClass("repeat")) {
+			 		  //    return $(this).toggleClass("active_musicplayer");
+			 		    }
+			 		  });
+					  
+					$(".settingsBtn").on("click", function() {
+						console.log("Settings");
+						$(".settings").toggleClass("hide");
+		 			   // By default, open the first tab
+						if (userLoggedIn) {
+							$(".tab button").eq(globalPlayingStyle).click();
+						} else {
+							console.log("USER not logged in, using default songs.")
+		 			   	 	document.getElementById("defaultOpen").click();
+						}
+					});
+					  
+					const toggleButton = document.getElementById("toggleKeyNames");
+		            toggleButton.addEventListener("click", function() {
+						if ($("#toggleKeyNames").hasClass("on")) {
+							toggleButton.classList.add("off");
+							toggleButton.classList.remove("on");
+    		                  $(".piano span").each(function() {
+    		                      $(this).removeClass("hide");
+    		                  });
+							  globalHideKeys = false;
+						} else {
+							toggleButton.classList.remove("off");
+							toggleButton.classList.add("on");
+  		                  $(".piano span").each(function() {
+  		                      $(this).addClass("hide");
+  		                  });
+						  globalHideKeys = true;
+						}
+						sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);			   				    });
+					
+				    // Fetch users when the page loads
+				    fetchUsers();
+					
+					
+					$(".tab").find('button').eq(0).on('click', ()=> {
+					//	console.log("TEST");
+						$("#tab1 .lists").remove();
+						//$(checkBox).click();
+						//$(checkBox).prop("checked", false);
+						globalPlayingStyle = 0;
+						$(".player .lists ul").empty();
+						sendAndPop();
+						
+
+					});
+				
+				
+				
+					$(".tab").find('button').eq(1).on('click', ()=> {
+						//console.log("your songs");
+						//$("#tab2 .lists").remove();
+						//$(checkBox).prop("checked", true);
+				        globalPlayingStyle = 1;
+				        $(".player .lists ul").empty();
+						sendAndPop();
+						
+					});
+					
+					$(".tab").find('button').eq(2).on('click', ()=> {
+					//	console.log("Spotify Playlist");
+						$("#tab1 .lists ul").remove();
+						//$("#tab2 .lists").remove();
+						//$(checkBox).prop("checked", true);
+
+					
+						
+					});
+					
+					$(".selectFolder").on('click', ()=>{
+					 	$("#openPopup").click();
+				 	});
+				
+				
+	  				
                  });
+				 
+		 		/* End of MUSIC PLAYER JS */
+				 
 
                  volume.addEventListener("input", (e) => {
-                    const currentSong = document.querySelector('div.playing');
+                    const currentSong = document.querySelector('div.activa');
                     let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
                      // console.log(e.currentTarget.value);
-                    audio.volume = e.currentTarget.value / 100;
-                    globalVol = audio.volume;   
+                    audio.volume = e.currentTarget.value/100;
+                    globalVol = e.currentTarget.value;   
+					sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
                 });
 
                 volume.addEventListener("touchmove", (e) => {
-                  console.log(e.currentTarget.value);
-                  const currentSong = document.querySelector('div.playing');
+                  	console.log(e.currentTarget.value/100);
+                  	const currentSong = document.querySelector('div.activa');
                     let audio = document.querySelector(`audio[data-sound="${currentSong.dataset.song}"]`);
                      // console.log(e.currentTarget.value);
-                    audio.volume = e.currentTarget.value / 100;
-                    globalVol = audio.volume;   
+                    audio.volume = e.currentTarget.value/100;
+                    globalVol = e.currentTarget.value;   
+					sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
                 });
 
 
                 volume2.addEventListener("input", (e) => {
-                    const currentKey = document.querySelector('.key');
-                    
-                    let audio = document.querySelector(`audio[data-sound="${currentKey.dataset.note}"]`);
-                    
-                    audio.volume = e.currentTarget.value / 100;
-                    globalNoteVol = audio.volume;   
+                    globalNoteVol = e.currentTarget.value;
+					sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
                 });
+				
+				$(`div.action-button > .play-pause`).on('click', () => {
+					//console.log("YALA");
+					
+					//const trackUri = 'spotify:track:6Y9FGnmx9PXsmgLs02UirG'; // Replace with the actual track URI
+				//	        playTrack(trackUri);
+					
+					if ($(`div.action-button > .play-pause`).hasClass("active_musicplayer")) {
+						$('.play-pause').toggleClass('active_musicplayer');
+						startMusicBtn.click();
+					} else {
+						$('.play-pause').toggleClass('active_musicplayer');
+						//console.log('TESt: ', $(".playing"));
+						
+	                    //const currentSong = document.querySelector('div.playing');
+	                    stopBtn.click();
+						//stopTrack();
+					}
+					
+				});
 
                 stopBtn.addEventListener('click', () => {
                   const currentSong = document.querySelector('div.playing');
@@ -570,42 +2070,289 @@
                 });
 
                 startMusicBtn.addEventListener('click', ()=> {
-                  const currentSong = document.querySelector('div.activa');
+                  const currentSong = document.querySelector('.lists div.activa');
+				  if (globalPlayingStyle == 2) {
+					  playTrack(currentSong.dataset.uri);
+				  }
                   playSong(currentSong.dataset.song);
                   startMusicBtn.classList.add("hide");
                   stopBtn.classList.remove("hide");
                 });
+				
+				
+				function sendAndPop() {
+  				 	sendUserSettingsToServer(userId,globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol);
+		
+			
+					// Move the code that depends on `songs` inside the callback of `populateSongs()`
+					populateSongs().then(songs => {
+				    	songs.forEach(song => {
+				        	song.addEventListener('mousedown', () => {
+				           	 const note = song.dataset.song;
+				           	 playSong(note);
+				           	 $(".list-btn").click();
+				        	});
+				    	});
+					//	console.log("HELLO");
+						var indexTAB = $(".tab button.active").index()+1;
+						
+						// Construct the ID of the div using the index
+						var tabId = "tab" + indexTAB;
 
+						// Select the div with the constructed ID
+						var tabDiv = $("#" + tabId);
+						tabDiv.find(".lists").remove();
+						tabDiv.append($(".player .lists").clone());
+						tabDiv.find(".lists > div").remove();
+						
+  			     		}).catch(error => {
+  			        		console.error('Error populating songs:', error);
+  			    		});
+			
+				}
+				
+				// Function to send user settings to server
+				function sendUserSettingsToServer(userId, globalPlayingStyle,globalHideKeys,globalNoteVol,globalVol) {
+				    const userSettings = {
+				        magicNumber: globalPlayingStyle, 
+				        showKeyNames: globalHideKeys,
+				        keyVol: globalNoteVol, 
+				        songVol: globalVol 
+				    };
+				 //   console.log("User settings in HTML:", userSettings);
+					if (userLoggedIn) {
+					    fetch(`/updateUserSettings/${userId}`, {
+					        method: 'POST',
+					        headers: {
+					            'Content-Type': 'application/json'
+					        },
+					        body: JSON.stringify({ userSettings })
+					    })
+					    .then(response => {
+					        if (!response.ok) {
+					            throw new Error('Failed to update user settings');
+					        }
+					    })
+					    .catch(error => {
+					        console.error('Error updating user settings:', error);
+					    });
+					} else {
+						console.log("Not Logged In, not saving settings.");
+					}
+				  
+				}
+
+				// Function to fetch user settings for a specific user from server
+				function getUserSettingsForUser(userId) {
+				    fetch(`/getUserSettings/${userId}`)
+				    .then(response => {
+				        if (!response.ok) {
+				            throw new Error('Failed to fetch user settings');
+				        }
+				        return response.json();
+				    })
+				    .then(data => {
+				        // Process the user settings
+				        const userSettings = data.userSettings;
+				        console.log('User settings for user:', userSettings);
+
+				        // Example: Accessing magicNumber
+				        const magicNumber = userSettings.magicNumber;
+						globalPlayingStyle = magicNumber;
+				        console.log('Magic number:', magicNumber);
+				      
+
+				        // Example: Accessing showKeyNames
+				        globalHideKeys = userSettings.showKeyNames;
+				        console.log('Show key names:', globalHideKeys);
+						const toggleButton = $("#toggleKeyNames");
+						if (globalHideKeys) {
+							toggleButton.removeClass("off").addClass("off").removeClass("on");
+							toggleButton.click();
+						} else {
+							toggleButton.removeClass("on").addClass("on").removeClass("off");
+							toggleButton.click();
+						}
+
+				        // Example: Accessing keyVol
+				        globalNoteVol = (typeof userSettings !== 'undefined' && typeof userSettings.keyVol !== 'undefined') ? userSettings.keyVol : 50;
+				        console.log('Key volume:', globalNoteVol);
+						$("#volume2").val(globalNoteVol);
+
+				        // Example: Accessing songVol
+						globalVol = (typeof userSettings !== 'undefined' && typeof userSettings.songVol !== 'undefined') ? userSettings.songVol : 20;
+				        console.log('Song volume:', globalVol);
+						$("#volume").val(globalVol);
+				    })
+				    .catch(error => {
+				        console.error('Error fetching user settings:', error);
+				    });
+				}
+				
+				// Function to send key statistics to server
+				function sendKeyStatsToServer(userId, keyStats) {
+					console.log("SENDING KEYS TO SERVER: ");
+					console.log(keyStats);
+								    fetch(`/updateKeyStats/${userId}`, {
+								        method: 'POST',
+								        headers: {
+								            'Content-Type': 'application/json'
+								        },
+								        body: JSON.stringify(keyStats)
+								    })
+								    .then(response => {
+								        if (!response.ok) {
+								            throw new Error('Failed to update key stats');
+								        }
+								    })
+								    .catch(error => {
+								        console.error('Error updating key stats:', error);
+								    });
+			     }
+									
+				// Function to fetch key stats report for a specific user from server
+				function getKeyStatsReportForUser(userId) {
+				    fetch(`/getKeyStatsReport/${userId}`)
+				    .then(response => {
+				        if (!response.ok) {
+				            throw new Error('Failed to fetch key stats report');
+				        }
+				        return response.json();
+				    })
+				    .then(report => {
+				        // Process the key stats report
+				        console.log('Key stats report for user:', report);
+						generateGraph(report);
+						globalKeyStats = report;
+						
+				    })
+				    .catch(error => {
+				        console.error('Error fetching key stats report:', error);
+				    });
+				}
+				
+			/*	function guessGenreOfAudio(audioElement) {
+					console.log(audioElement);
+	            
+				    // Send the audio element to the server
+				    fetch('http://localhost:3001/guess-genre', {
+				        method: 'POST',
+				        headers: {
+				            'Content-Type': 'application/json'
+				        },
+				        body: JSON.stringify({ audioElement: audioElement })
+				    })
+				    .then(response => {
+				        if (!response.ok) {
+				            throw new Error(`Failed to fetch: ${response.statusText}`);
+				        }
+				        return response.json();
+				    })
+				    .then(data => {
+				        // Process the response, which should contain the predicted genre
+				        console.log('Predicted genre:', data.genre);
+				    })
+				    .catch(error => {
+				        // Handle errors
+				        console.error('Error:', error);
+				    });
+				}
+*/
                 function randomSong() {
-                  if(globalSongsPlayed.length < $(".song").length) {
+						
+                  if (globalSongsPlayed.length < $(".lists .song").length) {
                      // console.log("CHECKED");
                      btn2.style.display = 'none';
                      btn3.style.display = 'block';
-                      var randSong = Math. floor(Math. random()*$(".song").length) + 1;
+                      // var randSong = Math. floor(Math. random()*$(".song").length) + 1;
+					  
+					  // Initialize an empty array to store the numbers
+					  let numbersArray = [];
+
+					  // Iterate over each div element with the class "song"
+					  if ($('.lists .filteredIn').length === 0) {
+					      $('.lists .song').each(function() {
+					          // Your code here
+							  if ($(this).attr('data-note')) {
+						        // Get the value of the "data-song" attribute and convert it to a number
+						        const number = parseInt($(this).attr('data-song'));
+								
+  						      	// Push the number to the array if it's a valid number
+  						      	if (!isNaN(number)) {
+  						          numbersArray.push(number);
+  						      	}
+						  	  }
+						      
+					      });
+					  } else {
+					      $('.lists .filteredIn').each(function() {
+					          // Your code here
+							  if ($(this).attr('data-note')) {
+						        // Get the value of the "data-song" attribute and convert it to a number
+						        const number = parseInt($(this).attr('data-song'));
+  						      	// Push the number to the array if it's a valid number
+  						      	if (!isNaN(number)) {
+  						          numbersArray.push(number);
+  						      	}
+						  	  }
+						      
+					      });
+					  }
+					
+					  // Generate a random index within the range of the array length
+					  const randomIndex = Math.floor(Math.random() * numbersArray.length);
+
+					  // Get the random number from the array using the random index
+					  var randSong = numbersArray[randomIndex];
+					  
                       if(globalSongsPlayed.includes(randSong)) {
                         console.log("LENGTH: "+globalSongsPlayed.length);
                         randomSong();
                       } else {
+						  
+	  					if (globalPlayingStyle == 2) {
+							const sP = document.querySelector(`.player .song[data-song="${randSong}"]`);
+							playTrack(sP.dataset.uri);
+	  					}
+				
                         playSong(randSong);
                         globalSongsPlayed.push(randSong);
-                        console.log("VALIDO");
-                        console.log(randSong);
+                    //    console.log("VALIDO");
+                     //   console.log(randSong);
 
                       }
                     } else {
                       //console.log("NOT CHECKED");
                       globalSongsPlayed.length = 0;
-                      console.log("STYLE: "+globalPlayingStyle);
+                   //   console.log("STYLE: "+globalPlayingStyle);
                       btn2.style.display = 'block';
                       btn3.style.display = 'none';
                       //randomSong();
                     }
                 }
+				let game; // Declaring game variable in the outer scope
 
                 btn2.addEventListener('click', () => {
                   console.log("START GAME NOW");
-                  
+                 
+				     $('.levelNumber').text(globalLevel);
                   randomSong();
+				  $('.playing').addClass('lastPlayed');
+				  	$('#score').html('Score: ' + 0);
+				  
+		    	  // these functions are used to respond when score/level changes
+		       		const scoreSubscriber = function(newScore) {
+		       			$('#score').html('Score: ' + newScore);
+		     		  }
+			   
+		    	   const levelSubscriber = function(newLevel) {
+		      		 alert('You reached level ' + newLevel);
+		     	  }
+
+		      	 // initialise game
+		     	  game = createGame(scoreSubscriber, levelSubscriber);
+				//  console.log(game);
+			   
                 });
 
                 btn3.addEventListener('click', () => {
@@ -624,99 +2371,384 @@
                      if (!audio) return;
                      audio.currentTime = 0.0;
                     // if (note = 'D') {audio.currentTime = 0.8;}
-                     audio.volume = globalNoteVol;
+                     audio.volume = globalNoteVol/100;
                      audio.play();
                  }
 
-                 function stopSound(note) {
-                  
-                  /*
-                     const audio = document.querySelector(`audio[data-sound="${note}"]`);
-                     if (!audio) return;
-                     audio.pause();
-                 */
-                    }
-
+                 function stopSound(note) {}
+				 
+				 function prevSong() {
+					 console.log("PREV SONG");
+					 const prevSong = document.querySelector('.lists div.lastPlayed');
+					 if (!prevSong) {
+						 randomSong();
+					 } else {
+					 
+					 	if (globalPlayingStyle == 2) {
+				      	  playTrack(prevSong.dataset.uri);
+						}
+						 playSong(prevSong.dataset.song);
+					 	}
+				 }
+					
                  function playSong(note) {
                      if (currPlaying = document.querySelector('div.playing')) {
                         stopSong(currPlaying.dataset.song);
                      };
-                     
                      const audio = document.querySelector(`audio[data-sound="${note}"]`);
+					 const spotiSong = document.querySelector(`.player .song[data-song="${note}"]`);
+					// console.log(spotiSong);
                      if (!audio) return;
+					if (globalPlayingStyle == 2) {
+   					// console.log("SOOO");
+   				 	 $('.duration_musicplayer').text(spotiSong.dataset.duration);
+				 } else {
                      audio.currentTime = 0;
-                     audio.volume = globalVol;
+					 
+                     audio.volume = globalVol/100;
                      audio.play();
-                     const songPlaying = document.querySelector(`div[data-song="${note}"]`);
-                     const songs = document.querySelectorAll('div.song');
+					 audio.ontimeupdate = function () {
+						 $(".current_musicplayer").text(sToTime(audio.currentTime).slice(3))
+						 
+		   			         var railWidth = (audio.currentTime / audio.duration) * 100; // Calculate the percentage width
+		   					// console.log(audio.currentTime);
+		   			         // Update the width of the thumb element
+						     var position = (audio.currentTime / audio.duration) * railWidth; // Calculate the position
+
+						           // Update the left position of the thumb element
+						     $(".thumb").css("left", position + "px");
+				 
+					 }
+				 }
+					 
+					 
+                     const songPlaying = document.querySelector(`.player .song[data-song="${note}"]`);
+                     const songs = document.querySelectorAll('.player .song');
                      const repeatBtn = document.querySelector('div.repeat_music');
                      const stopBtn = document.querySelector('div.stop_music');
-
+                     const songDisplaying = document.querySelector('div.song_musicplayer > span');
+					 const artistDisplaying = document.querySelector('div.song_musicplayer > small');
+					 const playBtn = document.querySelector('a.play-pause');
+					 let availKeys = $('.keysWrapper div[data-note]').filter(function() {
+										     return $(this).data('note').length <= 2;
+										 });
+					 globalFirstTry = true;
+					 
                      songs.forEach(song => {
                         song.classList.remove('activa');
                      });
 
+					 songPlaying.classList.remove('hide');
+					 songDisplaying.innerText = songPlaying.innerText;
+					 $('.song_musicplayer').find('br').remove();
+					 //console.log(songDisplaying.innerText);
+					 playBtn.classList.remove('active_musicplayer');
+					 
                      songPlaying.classList.add('playing');
                      songPlaying.classList.add('activa');
                      btn2.classList.add('hide');
                      btn3.classList.remove('hide');
                      repeatBtn.classList.remove('hide');
                      stopBtn.classList.remove('hide');
+					 
+					 
+					 const currentKey = songPlaying.dataset.note;
+				
+										 console.log("availKeys: ", availKeys);
+					 
+						 				 const $keyWithNote  = availKeys.filter(function() {
+										//	 console.log("the note: ",this.dataset.note);
+										//	 console.log("the currentKey: ",currentKey);
+						 
+					    				 	return this.dataset.note === currentKey;
+										 });
+					 
+										 console.log($keyWithNote);
+					
+										 availKeys = availKeys.not($keyWithNote);
+
+										 console.log(availKeys);
+					 
+										 // Generate a random index within the length of availKeys array
+										 const randomIndex = Math.floor(Math.random() * availKeys.length);
+
+										 // Select the random div
+										 const randomDiv = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $otherKey = randomDiv;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv);
+					 
+										 console.log(availKeys);
+					 
+										 // Select the random div
+										 const randomDiv2 = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $thirdKey = randomDiv2;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv2);
+					 
+					
+										 // Select the random div
+										 const randomDiv3 = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $fourthKey = randomDiv3;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv3);
+					 
+					
+
+										 // Select the random div
+										 const randomDiv4 = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $fifthKey = randomDiv4;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv4);
+					 
+					
+
+										 // Select the random div
+										 const randomDiv5 = availKeys.eq(randomIndex);
+
+										 // Assign $otherKey to the random div
+										 const $sixthKey = randomDiv5;
+
+										 // Remove the random div from availKeys
+										 availKeys = availKeys.not(randomDiv5);
+					 
+				    
+										// console.log($sixthKey);
+					   
+										 $('.keysWrapper div').addClass('disabledd');
+						                // console.log(songPlaying);
+	 		 
+								         switch (globalLevel) {
+											 case 1:
+												 // Conditions for level 1
+												 console.log("Reached level 1!");
+											//	 console.log(currentKey);
+											//	 console.log($keyWithNote);
+											     $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 break;
+								             case 2:
+								                 // Conditions for level 2
+								                 console.log("Reached level 2!");
+											//	 console.log(currentKey);
+												 $('.keysWrapper div').addClass('disabledd');
+												 $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 $thirdKey.removeClass('disabledd');
+							 
+								                 break;
+								             case 3:
+								                 // Conditions for level 3
+								                 console.log("Reached level 3!");
+											//	 console.log(currentKey);
+												 $('.keysWrapper div').addClass('disabledd');
+												 $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 $thirdKey.removeClass('disabledd');
+												 $fourthKey.removeClass('disabledd');
+												 console.log($fourthKey);
+			                 
+												 break;
+								             case 4:
+								                 // Conditions for level 4
+								                 console.log("Reached level 4!");
+											//	 console.log(currentKey);
+												 $('.keysWrapper div').addClass('disabledd');
+												 $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 $thirdKey.removeClass('disabledd');
+												 $fourthKey.removeClass('disabledd');
+												 $fifthKey.removeClass('disabledd');
+												 console.log($fifthKey);
+			                 
+												 break;  
+											 case 5:
+								                 // Conditions for level 5
+								                 console.log("Reached level 5!");
+											//	 console.log(currentKey);
+												 $('.keysWrapper div').addClass('disabledd');
+												 $keyWithNote.removeClass('disabledd');
+												 $otherKey.removeClass('disabledd');
+												 $thirdKey.removeClass('disabledd');
+												 $fourthKey.removeClass('disabledd');
+												 $fifthKey.removeClass('disabledd');
+												 $sixthKey.removeClass('disabledd');
+												 console.log($fifthKey);
+								                 console.log($sixthKey);
+												 console.log($fourthKey);
+							 
+												 break;
+											 case 6:
+										     case 7:
+											 case 8:
+											 case 9:
+								                 // Conditions for level 5
+								                 console.log("Reached level Advanced!");
+												  $('.keysWrapper div').removeClass('disabledd');
+							  
+												  break;
+								             // Add more cases for additional levels
+								             default:
+								                 // Default case
+								                 console.log("Default level reached!");
+								         }
+					 
                      setTimeout(function (){
                         audio.pause();
+						stopTrack();
                         songPlaying.classList.remove('playing');
-                      }, 30000);
+                      }, 360000);
                  }
+				 
+				 function sToTime(t) {
+				   return padZero(parseInt((t / (60 * 60)) % 24)) + ":" +
+				          padZero(parseInt((t / (60)) % 60)) + ":" + 
+				          padZero(parseInt((t) % 60));
+				 }
+				 function padZero(v) {
+				   return (v < 10) ? "0" + v : v;
+				 }
 
                  function stopSong(note) {
                     const audio = document.querySelector(`audio[data-sound="${note}"]`);
-                    audio.pause();
+					if (globalPlayingStyle == 2) {
+						stopTrack();
+					} else {
+						audio.pause();
+					}
+                    
+					
                     const songPlaying = document.querySelector('div.playing');
                     songPlaying.classList.remove('playing');
+					const songLastPlayed = '';
+					if (songLastplayed = document.querySelector('div.lastPlayed')) {
+						songLastplayed.classList.remove('lastPlayed');
+					}
+                    songPlaying.classList.add('lastPlayed');
+				 	const playBtn = document.querySelector('a.play-pause');
+				 	playBtn.classList.add('active_musicplayer');
+					
                  }
+				 
+				 function stopGame() {
+					 console.log("STOPPING GAME");
+					 stopBtn.click();
+				 }
+				 
+				 function createGame(onScoreChanged, onLevelChanged) {
+				     let score = 0;
+				     const scoreIncrement = 10;
+				     let level = 1;
 
-                 songs.forEach(song => {
-                    song.addEventListener('mousedown', () => {
-                      const note = song.dataset.song;
-                      playSong(note);
-                    });
-                 });
+					 const incrementScore = () => {
+									     score += scoreIncrement;
+									     onScoreChanged(score);
+									     if (score >= (level * 100)) {
+									         onLevelChanged(++level);
+									         globalLevel = level; // Update globalLevel to match the current level
+											 $('.levelNumber').text(level);
+									        // console.log(`Reached level ${level}!`);
+									     }
+									 }
+    
+				     return {
+				         incrementScore
+				     }
+				 }
+		
+			
+			    
+				 songKeys.forEach(key => {
+					 // Initialize counters in local storage if they don't exist
+					 keyStats = {};
+					 
+				     key.addEventListener('mousedown', () => {
+				         const currentSong = document.querySelector('div.activa');
+				         const songPlaying = document.querySelector('div.playing');
+				         const note = key.dataset.note;
 
-                 songKeys.forEach(key => {
-                  key.addEventListener('mousedown', () => {
-                      const currentSong = document.querySelector('div.activa');
-                      const songPlaying = document.querySelector('div.playing');
-                      const note = key.dataset.note;
-                  if(currentSong != null) {
-                        $(".announcement").hide();
-                        $(".settings").addClass("noBanner");
-                        const currentKey = currentSong.dataset.note;
-                        const song = currentSong.dataset.song;
-                        console.log(note);
-                        if(note == currentKey) {
-                          key.classList.add('right');
-                          songKeys.forEach(key1 => {
-                            if(key != key1) {key1.classList.remove('wrong');}
-                          });
-                          if(songPlaying != null) {
-                            stopSong(song);
-                          }
-                          setTimeout(function (){
-                              key.classList.remove('right');
-                              randomSong();
-                          }, 600);
-                         } else {
-                          key.classList.add('wrong');
-                         }
-                      }
-                 });
+				         if (currentSong != null) {
+				             $(".announcement").hide();
+				             $(".settings").addClass("noBanner");
+				             const currentKey = currentSong.dataset.note;
+				             const song = currentSong.dataset.song;
+				           //  console.log(note);
+				          //   console.log(currentKey);
 
-                 key.addEventListener('touchstart', () => {
-                    /* use if you need something to be only on TOUCH. if nothing here TOUCH uses MOUSEDOWN above*/
-                    preventDefault();
-                    stopPropagation();
-                 });
-                });
+				             if (note == currentKey) {
+				                 key.classList.add('right');
+				                 songKeys.forEach(key1 => {
+				                     if (key != key1) { key1.classList.remove('wrong'); }
+				                 });
+				                 if (songPlaying != null) {
+				                     stopSong(song);
+				                 }
+
+   							  	 
+				        
+
+				                 // If it's the first try and user is logged in, increment score
+				                 if (globalFirstTry && userLoggedIn) {
+				                     console.log("true: ", globalFirstTry);
+				                     game.incrementScore();
+									 
+	   							  	 // Increment right count for the currentKey
+									 keyStats[currentKey] = (keyStats[currentKey] || {wrong:0, right:0});
+					                 keyStats[currentKey].right = (keyStats[currentKey].right || 0) + 1;
+									 
+					                 console.log("user ID: ", userId);
+					                 console.log("keyStats: ", keyStats);
+			 
+					                 // Send key statistics data to server
+
+					                 sendKeyStatsToServer(userId, keyStats);
+				                 }
+
+				                 setTimeout(function () {
+				                     key.classList.remove('right');
+									 keyStats = {};
+				                     randomSong();
+				                 }, 600);
+				             } else {
+				                 key.classList.add('wrong');
+
+				                 // Increment wrong count for this key
+				                 keyStats[currentKey] = (keyStats[currentKey] || {wrong: 0, right: 0});
+				                 keyStats[currentKey].wrong = (keyStats[currentKey].wrong || 0) + 1;
+
+				                 // Send key statistics data to server
+				                 if (userLoggedIn) {
+				                    sendKeyStatsToServer(userId, keyStats);
+				                 }
+
+				                 globalFirstTry = false;
+				              //   console.log(globalFirstTry);
+								 keyStats = {};
+				             }
+				         }
+				 	 });
+
+                     key.addEventListener('touchstart', () => {
+                                 /* use if you need something to be only on TOUCH. if nothing here TOUCH 
+						         uses 
+						             MOUSEDOWN                         above*/
+                             preventDefault();
+                             stopPropagation();
+                     });
+			       });
+			     
 
                  keys.forEach(key => {
                     
@@ -724,7 +2756,9 @@
                       const currentSong = document.querySelector('div.playing');
                          const note = key.dataset.note;
                          soundManager.stopAll();
+						 soundManager.setVolume(globalNoteVol);
                          soundManager.play(note);
+							
                           //playSound(note);
                          key.classList.add('active');
                      });
@@ -755,37 +2789,102 @@
                      });
                  });
 
-                 window.addEventListener('keydown', (event) => {
-                  const currentSong = document.querySelector('div.playing');
-                         const note = key.dataset.note;
-                         soundManager.stopAll();
-                         soundManager.play(note);
-                          //playSound(note);
-                         key.classList.add('active');
-                 });
+  			   // Click event handler for the play button
+  			   $('#playButton').click(function() {
+  				 //  console.log("PLAY PLAY");
+		          // Example usage
+		        // const trackId = '1e763423ad0e4862b20f9dbfdadc2cb7';
+		          const accessToken = globalAccessToken; ; // Replace with your actual access token
+		          //getTrackData(trackId, accessToken);
+				  
+				//  const trackURI = 'spotify:track:1qyKIq8hw9yWkuPJ9ZjuvK';
+/*
+				  fetch('https://api.spotify.com/v1/me/player/play', {
+				    method: 'PUT',
+				    headers: {
+				      'Authorization': `Bearer ${accessToken}`,
+				      'Content-Type': 'application/json',
+				      'Accept': 'application/json'
+				    },
+				    body: JSON.stringify({ uris: [trackURI] })
+				  })
+				  .then(response => {
+				    if (!response.ok) {
+				      throw new Error('Failed to play track');
+				    }
+				    console.log('Track played successfully');
+				  })
+				  .catch(error => {
+				    console.error('Error playing track:', error);
+				  });
+				  */
+  			      // var trackURI = 'spotify:track:3et6pkPCmAKFvFscw2YjMB'; // Replace with your track URI
+  			   //    var accessToken = globalAccessToken; // Replace with your Spotify access token
 
-                 window.addEventListener('keyup', (event) => {
-                     const key = event.key.toUpperCase();
-                     const keyElement = document.querySelector(`.key[data-note="${key}"]`);
-                     if (!keyElement) return;
-                     keyElement.classList.remove('active');
-                     // stopSound(key.dataset.note);
-                 });
+  			       // Initialize and play the track
+  			     //  initializeAndPlayTrack(trackURI, accessToken);
+				 
+				 
+				 
+				
+ 
+	   		    // Ready
+	   		     player.addListener('ready', ({ device_id }) => {
+	   		       console.log('Ready with Device ID', device_id);
+				   
+				   // Transfer playback to the selected device
+				   fetch('https://api.spotify.com/v1/me/player', {
+				     method: 'PUT',
+				     headers: {
+				       'Authorization': 'Bearer ' + accessToken,
+				       'Content-Type': 'application/json'
+				     },
+				     body: JSON.stringify({
+				       device_ids: [device_id],
+				       play: false // Set to true if you want to resume playback on the new device
+				     })
+				   })
+				   .then(response => {
+				     if (response.ok) {
+				       console.log('Playback transferred successfully.');
+				     } else {
+				       console.error('Failed to transfer playback:', response.statusText);
+				     }
+				   })
+				   .catch(error => {
+				     console.error('Error transferring playback:', error);
+				   });
+	   		     });
 
-                const checkBox = document.querySelector("input.switch_check");
-                checkBox.addEventListener('click', ()=> {
-                    if(checkBox.checked) {
-                      globalPlayingStyle = 1;
-                    } else {
-                      globalPlayingStyle = 0
-                    }
-                    console.log(globalPlayingStyle);
-                });
+	   		     // Not Ready
+	   		     player.addListener('not_ready', ({ device_id }) => {
+	   		       console.log('Device ID has gone offline', device_id);
+	   		     });
+ 
+ 
+	   		     player.addListener('initialization_error', ({ message }) => {
+	   		         console.error(message);
+	   		     });
 
+	   		     player.addListener('authentication_error', ({ message }) => {
+	   		         console.error(message);
+	   		     });
 
+	   		     player.addListener('account_error', ({ message }) => {
+	   		         console.error(message);
+	   		     });
+ 
+	   		     player.connect();
+				 
+  			   });
+			   
              </script>
 
          </div>
+		
      </div>
+	 <script src='/dist/graphiq.js'></script>
+	   <script  src="/dist/script.js"></script>
+
   </body>
 </html>
