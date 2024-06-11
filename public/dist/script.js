@@ -116,7 +116,6 @@ document.addEventListener("DOMContentLoaded", function() {
 						  $('.container').toggleClass('visible');
 	                      $('#reportBtn').text('Show Report');
 						  $(".settings").css("top", "16%");
-						  console.log("NINE");
 	                  } else {
 	                     
 						   
