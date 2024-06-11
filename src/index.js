@@ -401,7 +401,7 @@ app.get('/getUserSettings/:userId', async (req, res) => {
 // Replace 'YOUR_CLIENT_ID' and 'YOUR_CLIENT_SECRET' with your actual Spotify client ID and secret
 const CLIENT_ID = '6a67892f6508441eb817a7eb18b06037';
 const CLIENT_SECRET = '263ed6d745084ad8b88f5bed52757232';
-const REDIRECT_URI =  'https://tonicfinder6.adaptable.app/callback';//  'https://my-app.adaptable.app/callback'; // Redirect URI registered with Spotify //tonicfinder6.adaptable.app
+const REDIRECT_URI =  'https://tonicfinder6.adaptable.app/callback'; //'https://tonicfinder6.adaptable.app/callback';//  'https://my-app.adaptable.app/callback'; // Redirect URI registered with Spotify //tonicfinder6.adaptable.app
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
@@ -409,7 +409,7 @@ app.get('/', (req, res) => {
 
 // Route for initiating Spotify authentication
 app.get('/spo/login', (req, res) => {
-	const scopes = 'user-read-playback-state user-modify-playback-state streaming';
+	const scopes = 'user-read-playback-state playlist-read-private playlist-read-collaborative user-modify-playback-state streaming';
     res.redirect(`https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${encodeURIComponent(scopes)}`);
 });
 // Route for logging out
@@ -493,49 +493,45 @@ app.get('/api/playlists', async (req, res) => {
         return;
     }
 
+    const limit = 50; // Set the limit to 50 to get maximum items per request
+    let offset = 0; // Start with offset 0
+    let allPlaylists = []; // Array to hold all playlists
+
     try {
         const fetch = (await import('node-fetch')).default;
 		
-        // Make a request to fetch user's playlists
-        const playlistsResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
-            headers: {
-                'Authorization': 'Bearer ' + accessToken
-            }
-        });
-
-
-        if (playlistsResponse.ok) {
-            const playlistsData = await playlistsResponse.json();
-            
-            // Sort playlists by the date they were created or modified (descending)
-            const sortedPlaylists = playlistsData.items.sort((a, b) => {
-                const dateA = new Date(a.tracks.created_at || a.tracks.updated_at);
-                const dateB = new Date(b.tracks.created_at || b.tracks.updated_at);
-                return dateB - dateA;
+        // Loop until all playlists are fetched
+        while (true) {
+            // Make a request to fetch user's playlists with limit and offset
+            const playlistsResponse = await fetch(`https://api.spotify.com/v1/me/playlists?limit=${limit}&offset=${offset}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                }
             });
-            
-            
-            // Reconstruct the response object with the sorted playlists
-            const sortedPlaylistsResponse = {
-                href: playlistsData.href,
-                items: sortedPlaylists,
-                limit: playlistsData.limit,
-                next: playlistsData.next,
-                offset: playlistsData.offset,
-                previous: playlistsData.previous,
-                total: playlistsData.total
-            };
-            
-            res.json(sortedPlaylistsResponse);
-        } else {
-            res.status(playlistsResponse.status).send('Failed to fetch playlists');
+
+            if (playlistsResponse.ok) {
+                const playlistsData = await playlistsResponse.json();
+                allPlaylists = allPlaylists.concat(playlistsData.items);
+
+                // If there are more playlists, update the offset and continue
+                if (playlistsData.next) {
+                    offset += limit;
+                } else {
+                    // If there are no more playlists, break the loop
+                    break;
+                }
+            } else {
+                res.status(playlistsResponse.status).send('Failed to fetch playlists');
+                return;
+            }
         }
+        
+        res.json(allPlaylists);
     } catch (error) {
         console.error('Error fetching playlists:', error);
         res.status(500).send('Internal Server Error');
     }
 });
-
 // Route definition
 app.get('/spotify/track/:trackId', async (req, res) => {
     try {

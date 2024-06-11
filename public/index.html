@@ -300,6 +300,10 @@
 		     column-gap: 5px; /* Adjust as needed */
 		}
 		
+		#playButton {
+		 visibility: hidden;	
+		}
+		
     </style>
 	
 </head>
@@ -809,7 +813,6 @@
 			     return await response.text();
 			   }
 			   
-			  //Function to login
 			   async function login(username, password) {
 			     try {
 			       const response = await fetch('/login', {
@@ -834,17 +837,15 @@
 			     }
 			   }
 
-			   // Function to retrieve stored token
 			   function getToken() {
-				   console.log(localStorage.getItem('token'));
+				//   console.log(localStorage.getItem('token'));
 			     return localStorage.getItem('token');
 			   }
 
-			   // Function to access protected route
 			   async function getProtectedData() {
 			     try {
 			       const token = getToken();
-				   console.log(token);
+				   //console.log(token);
 			       if (!token) throw new Error('Token not found');
 
 			       const response = await fetch('/protected-route', {
@@ -864,7 +865,6 @@
 			     }
 			   }
 			   
-			   // Function to logout
 			   function logout() {
 			       // Remove token from localStorage
 			       localStorage.removeItem('token');
@@ -924,7 +924,7 @@
 	 		      const play = {
 	 		          uris: [trackUri]
 	 		      };
-	 			  console.log(globalAccessToken);
+	 			 // console.log(globalAccessToken);
 
 	 		      fetch(`https://api.spotify.com/v1/me/player/play`, {
 	 		          method: 'PUT',
@@ -960,11 +960,6 @@
 			                  }
 			              });
 			          }
-
-			         
-			   
-			   
-			   // Function to initialize the Spotify Web Playback SDK and play a track
 			 
 			   
 			   // Function to map numeric key values to musical keys
@@ -1133,8 +1128,8 @@
 	                   },
 	                   success: function(response) {
 	                       // If request is successful, process the playlists
-	                       var playlists = response.items;
-                    
+	                       var playlists = response;
+                    	   console.log(response);
 	                       // Clear existing content in tab2
 	                       $('#spotifyPlaylists').empty();
                     
@@ -1765,7 +1760,7 @@
 						                 reject(new Error(textStatus));
 						             });
 						         } else if (globalPlayingStyle == 2) {
-									 console.log("POPULATING 3");
+									// console.log("POPULATING 3");
 									 
 						         }
 						     });
@@ -1857,9 +1852,9 @@
 					   						 const spotifyPlaylists = responseData.playlists;
 						 
 					   			             // Use tokenData and spotifyUsername as needed
-					   			             console.log('Token Data:', tokenData);
+					   			           //  console.log('Token Data:', tokenData);
 					   			             console.log('Spotify Username:', spotifyUsername);
-					   						 console.log('Spotify Playlists:', spotifyPlaylists);
+					   						// console.log('Spotify Playlists:', spotifyPlaylists);
 						 
 						 
 					   						 spotifyDisp.removeClass("hide");
@@ -1870,7 +1865,7 @@
 											 fetchUserPlaylists(tokenData.access_token);
 						 
 					 } else {
-					     console.log("NO");
+					  //   console.log("NO");
 					 }
 					 
 					 
@@ -1972,7 +1967,7 @@
 					
 					
 					$(".tab").find('button').eq(0).on('click', ()=> {
-						console.log("TEST");
+					//	console.log("TEST");
 						$("#tab1 .lists").remove();
 						//$(checkBox).click();
 						//$(checkBox).prop("checked", false);
@@ -1986,7 +1981,7 @@
 				
 				
 					$(".tab").find('button').eq(1).on('click', ()=> {
-						console.log("your songs");
+						//console.log("your songs");
 						//$("#tab2 .lists").remove();
 						//$(checkBox).prop("checked", true);
 				        globalPlayingStyle = 1;
@@ -1996,7 +1991,7 @@
 					});
 					
 					$(".tab").find('button').eq(2).on('click', ()=> {
-						console.log("Spotify Playlist");
+					//	console.log("Spotify Playlist");
 						$("#tab1 .lists ul").remove();
 						//$("#tab2 .lists").remove();
 						//$(checkBox).prop("checked", true);
@@ -2042,7 +2037,7 @@
                 });
 				
 				$(`div.action-button > .play-pause`).on('click', () => {
-					console.log("YALA");
+					//console.log("YALA");
 					
 					//const trackUri = 'spotify:track:6Y9FGnmx9PXsmgLs02UirG'; // Replace with the actual track URI
 				//	        playTrack(trackUri);
@@ -2098,7 +2093,7 @@
 				           	 $(".list-btn").click();
 				        	});
 				    	});
-						console.log("HELLO");
+					//	console.log("HELLO");
 						var indexTAB = $(".tab button.active").index()+1;
 						
 						// Construct the ID of the div using the index
@@ -2124,7 +2119,7 @@
 				        keyVol: globalNoteVol, 
 				        songVol: globalVol 
 				    };
-				    console.log("User settings in HTML:", userSettings);
+				 //   console.log("User settings in HTML:", userSettings);
 					if (userLoggedIn) {
 					    fetch(`/updateUserSettings/${userId}`, {
 					        method: 'POST',
@@ -2322,14 +2317,14 @@
 				
                         playSong(randSong);
                         globalSongsPlayed.push(randSong);
-                        console.log("VALIDO");
-                        console.log(randSong);
+                    //    console.log("VALIDO");
+                     //   console.log(randSong);
 
                       }
                     } else {
                       //console.log("NOT CHECKED");
                       globalSongsPlayed.length = 0;
-                      console.log("STYLE: "+globalPlayingStyle);
+                   //   console.log("STYLE: "+globalPlayingStyle);
                       btn2.style.display = 'block';
                       btn3.style.display = 'none';
                       //randomSong();
@@ -2356,7 +2351,7 @@
 
 		      	 // initialise game
 		     	  game = createGame(scoreSubscriber, levelSubscriber);
-				  console.log(game);
+				//  console.log(game);
 			   
                 });
 
@@ -2405,7 +2400,7 @@
 					// console.log(spotiSong);
                      if (!audio) return;
 					if (globalPlayingStyle == 2) {
-   					 console.log("SOOO");
+   					// console.log("SOOO");
    				 	 $('.duration_musicplayer').text(spotiSong.dataset.duration);
 				 } else {
                      audio.currentTime = 0;
@@ -2614,7 +2609,7 @@
                         audio.pause();
 						stopTrack();
                         songPlaying.classList.remove('playing');
-                      }, 180000);
+                      }, 360000);
                  }
 				 
 				 function sToTime(t) {
@@ -2739,7 +2734,7 @@
 				                 }
 
 				                 globalFirstTry = false;
-				                 console.log(globalFirstTry);
+				              //   console.log(globalFirstTry);
 								 keyStats = {};
 				             }
 				         }
@@ -2796,7 +2791,7 @@
 
   			   // Click event handler for the play button
   			   $('#playButton').click(function() {
-  				   console.log("PLAY PLAY");
+  				 //  console.log("PLAY PLAY");
 		          // Example usage
 		        // const trackId = '1e763423ad0e4862b20f9dbfdadc2cb7';
 		          const accessToken = globalAccessToken; ; // Replace with your actual access token
