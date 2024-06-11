@@ -1,10 +1,15 @@
-Ear Training App, Tonic Finder
-current version: 6
+Ear Training App, Tonic Finder - - Current Version: 6
+
 Author: Seven Minaya
 
+<br>
 Stay up to date with the updates by following the news channel on Telegram.
+
 Tonic Finder Dev News: https://t.me/tonicfinderdevnews
+
 Tonic Finder Dev Chat: https://t.me/+wwgWoV93G9Q2ZDFh
+
+<br>
 
 Features:
 1. Use your own audio files
