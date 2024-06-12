@@ -300,6 +300,11 @@
 		     column-gap: 5px; /* Adjust as needed */
 		}
 		
+		.progressMessage {
+			max-height: 166px;
+			overflow: scroll;
+		}
+		
 		#playButton {
 		 visibility: hidden;	
 		}
@@ -772,7 +777,7 @@
 			       </div>
 			     </section>
 				 
-				  <div id="audioPlayer"></div>
+				  <div id="audioPlayer" style="max-height:1px;list-style:none;"></div>
 				 
 			     <section style="background-color:rgb(4 0 255 / 6%);">
 			       <div class="container-lg p-2">
@@ -1192,8 +1197,8 @@
 			 //  document.getElementById("defaultOpen").click();
 			  
 		   	  const folderPath = "./uploads";
-		   	        const urlIP= "98.113.60.58";
-		   	        const urlPort = "3000";
+			  const urlIP= "98.113.65.76";
+		   	  const urlPort = "3000";
 
 		 			async function uploadAudio() {
 		 			  const fileInput = document.getElementById('audioFileInput');
@@ -2606,9 +2611,12 @@
 								         }
 					 
                      setTimeout(function (){
-                        audio.pause();
-						stopTrack();
-                        songPlaying.classList.remove('playing');
+						if (globalPlayingStyle == 2 ) {
+							stopTrack();
+						} else {
+							 audio.pause();
+						}
+						songPlaying.classList.remove('playing');
                       }, 360000);
                  }
 				 
