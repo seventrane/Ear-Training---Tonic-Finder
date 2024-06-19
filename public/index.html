@@ -1279,7 +1279,9 @@
 		       try {
 		           const response = await fetch(`https://${encodeURIComponent(urlIP)}:${encodeURIComponent('444')}/api/upload`, {
 		               method: 'POST',
-		               body: formData
+		               body: formData,
+    				   // Add the following to ignore SSL certificate errors (not recommended for production):
+    				   agent: new https.Agent({ rejectUnauthorized: false })
 		           });
 
 		           // Check if the request was successful
