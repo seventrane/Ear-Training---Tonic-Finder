@@ -412,6 +412,7 @@ app.get('/spo/login', (req, res) => {
 	const scopes = 'user-read-playback-state playlist-read-private playlist-read-collaborative user-modify-playback-state streaming';
     res.redirect(`https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${encodeURIComponent(scopes)}`);
 });
+
 // Route for logging out
 app.get('/logout', (req, res) => {
     // Clear tokens from session or database
